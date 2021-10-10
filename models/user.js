@@ -2,7 +2,7 @@
 const {
   Model
 } = require('sequelize');
-const { hashPassword } = require('../helpers/bcryptjs')
+const { hashPassword } = require('../../server/helpers/bcryptjs')
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -12,11 +12,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      User.belongsTo(models.Province, { foreignKey: "provinceId" })
+      // User.hasMany(models.Registration, {foreignKey: 'UserId'})
+      // User.hasMany(models.Transaction, {foreignKey: 'UserId'})
     }
   };
   User.init({
-    phoneNumber: {
+    phone_number: {
       type: DataTypes.STRING,
       allowNull: false,
       validate : {
@@ -24,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
         notNull: { msg: "Please fill the Phone Number's Column"}
       }
     },
-    fullName: {
+    full_name: {
       type: DataTypes.STRING,
       allowNull: false,
       validate : {
@@ -32,16 +33,16 @@ module.exports = (sequelize, DataTypes) => {
         notNull: { msg: "Please fill the Full Name's Column"}
       }
     },
-    identityCardNumber: {
-      type: DataTypes.INTEGER,
+    identity_card_number: {
+      type: DataTypes.STRING,
       allowNull: false,
       validate : {
         notEmpty: { msg: "Please fill the Identity Card Number's Column"},
         notNull: { msg: "Please fill the Identity Card Number's Column"}
       }
     },
-    identityCardAddress: {
-      type: DataTypes.STRING,
+    identity_card_address: {
+      type: DataTypes.TEXT,
       allowNull: false,
       validate : {
         notEmpty: { msg: "Please fill the Identity Card Address's Column"},
@@ -56,7 +57,7 @@ module.exports = (sequelize, DataTypes) => {
         notNull: { msg: "Please fill the Gender's Column"}
       }
     },
-    dateOfBirth: {
+    date_of_birth: {
       type: DataTypes.DATE,
       allowNull: false,
       validate : {
@@ -66,66 +67,19 @@ module.exports = (sequelize, DataTypes) => {
     },
     email: {
       type: DataTypes.STRING,
+      unique: true,
       allowNull: false,
       validate : {
         notEmpty: { msg: "Please fill the Email's Column"},
         notNull: { msg: "Please fill the Email's Column"}
       }
     },
-    address: {
+    domisili_address: {
       type: DataTypes.STRING,
       allowNull: false,
       validate : {
         notEmpty: { msg: "Please fill the Address's Column"},
         notNull: { msg: "Please fill the Address's Column"}
-      }
-    },
-    provinceId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      validate : {
-        notEmpty: { msg: "Please fill the Province's Column"},
-        notNull: { msg: "Please fill the Province's Column"}
-      }
-    },
-    city: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate : {
-        notEmpty: { msg: "Please fill the City's Column"},
-        notNull: { msg: "Please fill the City's Column"}
-      }
-    },
-    district: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate : {
-        notEmpty: { msg: "Please fill the District's Column"},
-        notNull: { msg: "Please fill the District's Column"}
-      }
-    },
-    rw: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      validate : {
-        notEmpty: { msg: "Please fill the RW's Column"},
-        notNull: { msg: "Please fill the RW's Column"}
-      }
-    },
-    rt: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      validate : {
-        notEmpty: { msg: "Please fill the RT's Column"},
-        notNull: { msg: "Please fill the RT's Column"}
-      }
-    },
-    nationality: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate : {
-        notEmpty: { msg: "Please fill the Nationality's Column"},
-        notNull: { msg: "Please fill the Nationality's Column"}
       }
     },
     password: {
@@ -142,6 +96,7 @@ module.exports = (sequelize, DataTypes) => {
     hooks: {
       beforeCreate: (user, options) => {
         user.password = hashPassword(user.password)
+        user.date_of_birth = new Date(user.date_of_birth).toLocaleString()
       }
     }
   });

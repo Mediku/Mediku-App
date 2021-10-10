@@ -8,65 +8,36 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      phoneNumber: {
+      phone_number: {
         allowNull: false,
         type: Sequelize.STRING
       },
-      fullName: {
+      full_name: {
         allowNull: false,
         type: Sequelize.STRING
       },
-      identityCardNumber: {
-        allowNull: false,
-        type: Sequelize.INTEGER
-      },
-      identityCardAddress: {
+      identity_card_number: {
         allowNull: false,
         type: Sequelize.STRING
+      },
+      identity_card_address: {
+        allowNull: false,
+        type: Sequelize.TEXT
       },
       gender: {
         allowNull: false,
         type: Sequelize.STRING
       },
-      dateOfBirth: {
+      date_of_birth: {
         allowNull: false,
         type: Sequelize.DATE
       },
       email: {
         allowNull: false,
+        unique: true,
         type: Sequelize.STRING
       },
-      address: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
-      provinceId: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-        references: {
-          model: "Provinces",
-          key: "id"
-        },
-        onUpdate: 'cascade',
-        onDelete: 'cascade'
-      },
-      city: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
-      district: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
-      rw: {
-        allowNull: false,
-        type: Sequelize.INTEGER
-      },
-      rt: {
-        allowNull: false,
-        type: Sequelize.INTEGER
-      },
-      nationality: {
+      domisili_address: {
         allowNull: false,
         type: Sequelize.STRING
       },
