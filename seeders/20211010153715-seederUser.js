@@ -1,6 +1,6 @@
 'use strict';
 const fs = require('fs')
-const { hashPassword } = require('../../server/helpers/bcryptjs')
+const { hashPassword } = require('../helpers/bcryptjs')
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     const data = JSON.parse(fs.readFileSync('./seeders/users.json', 'utf-8'))

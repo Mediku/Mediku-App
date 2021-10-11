@@ -19,11 +19,11 @@ module.exports = (sequelize, DataTypes) => {
   User.init({
     phone_number: {
       type: DataTypes.STRING,
-      allowNull: false,
-      validate : {
-        notEmpty: { msg: "Please fill the Phone Number's Column"},
-        notNull: { msg: "Please fill the Phone Number's Column"}
-      }
+      // allowNull: false,
+      // validate : {
+      //   notEmpty: { msg: "Please fill the Phone Number's Column"},
+      //   notNull: { msg: "Please fill the Phone Number's Column"}
+      // }
     },
     full_name: {
       type: DataTypes.STRING,
@@ -35,35 +35,35 @@ module.exports = (sequelize, DataTypes) => {
     },
     identity_card_number: {
       type: DataTypes.STRING,
-      allowNull: false,
-      validate : {
-        notEmpty: { msg: "Please fill the Identity Card Number's Column"},
-        notNull: { msg: "Please fill the Identity Card Number's Column"}
-      }
+      // allowNull: false,
+      // validate : {
+      //   notEmpty: { msg: "Please fill the Identity Card Number's Column"},
+      //   notNull: { msg: "Please fill the Identity Card Number's Column"}
+      // }
     },
     identity_card_address: {
       type: DataTypes.TEXT,
-      allowNull: false,
-      validate : {
-        notEmpty: { msg: "Please fill the Identity Card Address's Column"},
-        notNull: { msg: "Please fill the Identity Card Address's Column"}
-      }
+      // allowNull: false,
+      // validate : {
+      //   notEmpty: { msg: "Please fill the Identity Card Address's Column"},
+      //   notNull: { msg: "Please fill the Identity Card Address's Column"}
+      // }
     },
     gender: {
       type: DataTypes.STRING,
-      allowNull: false,
-      validate : {
-        notEmpty: { msg: "Please fill the Gender's Column"},
-        notNull: { msg: "Please fill the Gender's Column"}
-      }
+      // allowNull: false,
+      // validate : {
+      //   notEmpty: { msg: "Please fill the Gender's Column"},
+      //   notNull: { msg: "Please fill the Gender's Column"}
+      // }
     },
     date_of_birth: {
       type: DataTypes.DATE,
-      allowNull: false,
-      validate : {
-        notEmpty: { msg: "Please fill the Date of Birth's Column"},
-        notNull: { msg: "Please fill the Date of Birth's Column"}
-      }
+      // allowNull: false,
+      // validate : {
+      //   notEmpty: { msg: "Please fill the Date of Birth's Column"},
+      //   notNull: { msg: "Please fill the Date of Birth's Column"}
+      // }
     },
     email: {
       type: DataTypes.STRING,
@@ -76,11 +76,11 @@ module.exports = (sequelize, DataTypes) => {
     },
     domisili_address: {
       type: DataTypes.STRING,
-      allowNull: false,
-      validate : {
-        notEmpty: { msg: "Please fill the Address's Column"},
-        notNull: { msg: "Please fill the Address's Column"}
-      }
+      // allowNull: false,
+      // validate : {
+      //   notEmpty: { msg: "Please fill the Address's Column"},
+      //   notNull: { msg: "Please fill the Address's Column"}
+      // }
     },
     password: {
       type: DataTypes.STRING,

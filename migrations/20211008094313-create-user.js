@@ -9,7 +9,6 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       phone_number: {
-        allowNull: false,
         type: Sequelize.STRING
       },
       full_name: {
@@ -17,19 +16,15 @@ module.exports = {
         type: Sequelize.STRING
       },
       identity_card_number: {
-        allowNull: false,
         type: Sequelize.STRING
       },
       identity_card_address: {
-        allowNull: false,
         type: Sequelize.TEXT
       },
       gender: {
-        allowNull: false,
         type: Sequelize.STRING
       },
       date_of_birth: {
-        allowNull: false,
         type: Sequelize.DATE
       },
       email: {
@@ -38,7 +33,6 @@ module.exports = {
         type: Sequelize.STRING
       },
       domisili_address: {
-        allowNull: false,
         type: Sequelize.STRING
       },
       password: {
