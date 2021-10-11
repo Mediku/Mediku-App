@@ -1,0 +1,16 @@
+$root-width: 1rem 5rem;
+.container {
+  padding: $root-width;
+  height: 90vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  div {
+    width: 50%;
+  }
+}
+h2 {
+  font-weight: 400;
+}
