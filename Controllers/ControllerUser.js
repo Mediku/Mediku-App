@@ -73,7 +73,7 @@ class ControllerUser {
           id: user.id,
           email: user.email,
         })
-        res.status(200).json({ id: user.id, full_name: user.full_name, email: user.email, access_token })
+        res.status(200).json({ id: user.id, email: user.email, access_token })
       }
     } catch (err) {
       next(err)
