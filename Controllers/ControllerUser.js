@@ -64,7 +64,6 @@ class ControllerUser {
       const [user, created] = await User.findOrCreate({
         where: { email },
         defaults: {
-          full_name: name,
           email,
           password: email,
         }
