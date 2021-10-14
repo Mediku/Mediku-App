@@ -44,7 +44,7 @@ class ControllerUser {
     }
   }
 
-  static async editProfileUser(req, res, next) {
+  static async editUserProfile(req, res, next) {
     const { full_name, phone_number, identity_card_number, identity_card_address, gender, email, domisili_address, password, date_of_birth } = req.body
     const data = { full_name, phone_number, identity_card_number, identity_card_address, gender, email, domisili_address, password, date_of_birth }
     // console.log(hashpassword(data.password));
