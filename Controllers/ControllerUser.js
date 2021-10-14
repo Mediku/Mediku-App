@@ -1,15 +1,15 @@
 const { User } = require('../models')
 const { signToken } = require('../helpers/jwt')
-const { checkPassword } = require('../helpers/bcryptjs')
+const { checkPassword, hashPassword } = require('../helpers/bcryptjs')
 const { OAuth2Client } = require('google-auth-library')
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
 
 class ControllerUser {
   static async register(req, res, next) {
-    const { full_name, phone_number, identity_card_number, identity_card_address, gender, email, domisili_address, password, date_of_birth } = req.body
+    const { full_name, email, password } = req.body
     try {
-      const result = await User.create({ full_name, phone_number, identity_card_number, identity_card_address, gender, date_of_birth, email, domisili_address, password })
-      res.status(201).json(result)
+      const result = await User.create({ full_name, email, password })
+      res.status(201).json({ id: result.id, email: result.email, full_name: result.full_name })
     } catch (err) {
       next(err)
     }
@@ -39,6 +39,18 @@ class ControllerUser {
       } else {
         throw ({ name: 'Unauthorized' })
       }
+    } catch (err) {
+      next(err)
+    }
+  }
+
+  static async editProfileUser(req, res, next) {
+    const { full_name, phone_number, identity_card_number, identity_card_address, gender, email, domisili_address, password, date_of_birth } = req.body
+    const data = { full_name, phone_number, identity_card_number, identity_card_address, gender, email, domisili_address, password, date_of_birth }
+    // console.log(hashpassword(data.password));
+    try {
+      const result = await User.update(data, { where: { id: req.user.id }, returning: true, individualHooks: true })
+      res.status(201).json(result[1][0])
     } catch (err) {
       next(err)
     }

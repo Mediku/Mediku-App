@@ -70,6 +70,7 @@ module.exports = (sequelize, DataTypes) => {
       unique: true,
       allowNull: false,
       validate : {
+        isEmail: { msg: 'Must be email format' },
         notEmpty: { msg: "Please fill the Email's Column"},
         notNull: { msg: "Please fill the Email's Column"}
       }
@@ -96,9 +97,19 @@ module.exports = (sequelize, DataTypes) => {
     hooks: {
       beforeCreate: (user, options) => {
         user.password = hashPassword(user.password)
-        user.date_of_birth = new Date(user.date_of_birth).toLocaleString()
+        // user.date_of_birth = new Date(user.date_of_birth).toLocaleString()
+      },
+      beforeUpdate: (user, options) => {
+        user.password = hashPassword(user.password)
+        // user.date_of_birth = new Date(user.date_of_birth).toLocaleString()
       }
     }
   });
+  // User.hook('beforeUpdate', (user) => {
+  //   console.log(user);
+  //   if (user.password) {
+  //     user.password = hashPassword(user.password)
+  //   }
+  // });
   return User;
 };
