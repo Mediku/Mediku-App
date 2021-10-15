@@ -12,19 +12,20 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      User.belongsTo(models.Province, { foreignKey: "provinceId" })
+      // User.hasMany(models.Registration, {foreignKey: 'UserId'})
+      // User.hasMany(models.Transaction, {foreignKey: 'UserId'})
     }
   };
   User.init({
-    phoneNumber: {
+    phone_number: {
       type: DataTypes.STRING,
-      allowNull: false,
-      validate : {
-        notEmpty: { msg: "Please fill the Phone Number's Column"},
-        notNull: { msg: "Please fill the Phone Number's Column"}
-      }
+      // allowNull: false,
+      // validate : {
+      //   notEmpty: { msg: "Please fill the Phone Number's Column"},
+      //   notNull: { msg: "Please fill the Phone Number's Column"}
+      // }
     },
-    fullName: {
+    full_name: {
       type: DataTypes.STRING,
       allowNull: false,
       validate : {
@@ -32,101 +33,55 @@ module.exports = (sequelize, DataTypes) => {
         notNull: { msg: "Please fill the Full Name's Column"}
       }
     },
-    identityCardNumber: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      validate : {
-        notEmpty: { msg: "Please fill the Identity Card Number's Column"},
-        notNull: { msg: "Please fill the Identity Card Number's Column"}
-      }
-    },
-    identityCardAddress: {
+    identity_card_number: {
       type: DataTypes.STRING,
-      allowNull: false,
-      validate : {
-        notEmpty: { msg: "Please fill the Identity Card Address's Column"},
-        notNull: { msg: "Please fill the Identity Card Address's Column"}
-      }
+      // allowNull: false,
+      // validate : {
+      //   notEmpty: { msg: "Please fill the Identity Card Number's Column"},
+      //   notNull: { msg: "Please fill the Identity Card Number's Column"}
+      // }
+    },
+    identity_card_address: {
+      type: DataTypes.TEXT,
+      // allowNull: false,
+      // validate : {
+      //   notEmpty: { msg: "Please fill the Identity Card Address's Column"},
+      //   notNull: { msg: "Please fill the Identity Card Address's Column"}
+      // }
     },
     gender: {
       type: DataTypes.STRING,
-      allowNull: false,
-      validate : {
-        notEmpty: { msg: "Please fill the Gender's Column"},
-        notNull: { msg: "Please fill the Gender's Column"}
-      }
+      // allowNull: false,
+      // validate : {
+      //   notEmpty: { msg: "Please fill the Gender's Column"},
+      //   notNull: { msg: "Please fill the Gender's Column"}
+      // }
     },
-    dateOfBirth: {
+    date_of_birth: {
       type: DataTypes.DATE,
-      allowNull: false,
-      validate : {
-        notEmpty: { msg: "Please fill the Date of Birth's Column"},
-        notNull: { msg: "Please fill the Date of Birth's Column"}
-      }
+      // allowNull: false,
+      // validate : {
+      //   notEmpty: { msg: "Please fill the Date of Birth's Column"},
+      //   notNull: { msg: "Please fill the Date of Birth's Column"}
+      // }
     },
     email: {
       type: DataTypes.STRING,
+      unique: true,
       allowNull: false,
       validate : {
+        isEmail: { msg: 'Must be email format' },
         notEmpty: { msg: "Please fill the Email's Column"},
         notNull: { msg: "Please fill the Email's Column"}
       }
     },
-    address: {
+    domisili_address: {
       type: DataTypes.STRING,
-      allowNull: false,
-      validate : {
-        notEmpty: { msg: "Please fill the Address's Column"},
-        notNull: { msg: "Please fill the Address's Column"}
-      }
-    },
-    provinceId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      validate : {
-        notEmpty: { msg: "Please fill the Province's Column"},
-        notNull: { msg: "Please fill the Province's Column"}
-      }
-    },
-    city: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate : {
-        notEmpty: { msg: "Please fill the City's Column"},
-        notNull: { msg: "Please fill the City's Column"}
-      }
-    },
-    district: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate : {
-        notEmpty: { msg: "Please fill the District's Column"},
-        notNull: { msg: "Please fill the District's Column"}
-      }
-    },
-    rw: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      validate : {
-        notEmpty: { msg: "Please fill the RW's Column"},
-        notNull: { msg: "Please fill the RW's Column"}
-      }
-    },
-    rt: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      validate : {
-        notEmpty: { msg: "Please fill the RT's Column"},
-        notNull: { msg: "Please fill the RT's Column"}
-      }
-    },
-    nationality: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate : {
-        notEmpty: { msg: "Please fill the Nationality's Column"},
-        notNull: { msg: "Please fill the Nationality's Column"}
-      }
+      // allowNull: false,
+      // validate : {
+      //   notEmpty: { msg: "Please fill the Address's Column"},
+      //   notNull: { msg: "Please fill the Address's Column"}
+      // }
     },
     password: {
       type: DataTypes.STRING,
@@ -142,8 +97,19 @@ module.exports = (sequelize, DataTypes) => {
     hooks: {
       beforeCreate: (user, options) => {
         user.password = hashPassword(user.password)
+        // user.date_of_birth = new Date(user.date_of_birth).toLocaleString()
+      },
+      beforeUpdate: (user, options) => {
+        user.password = hashPassword(user.password)
+        // user.date_of_birth = new Date(user.date_of_birth).toLocaleString()
       }
     }
   });
+  // User.hook('beforeUpdate', (user) => {
+  //   console.log(user);
+  //   if (user.password) {
+  //     user.password = hashPassword(user.password)
+  //   }
+  // });
   return User;
 };

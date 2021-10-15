@@ -1,0 +1,13 @@
+[
+  {
+    "full_name": "test name",
+    "phone_number": "081208120812",
+    "identity_card_number": "01010101010",
+    "identity_card_address": "test identity_card_address",
+    "gender": "male",
+    "date_of_birth": "2020-04-10",
+    "email": "test@mail.com",
+    "domisili_address": "test domisili_address",
+    "password": "rahasia123"
+  }
+]
