@@ -2,6 +2,7 @@ const app = require('../app')
 const request = require('supertest')
 const { User, sequelize } = require('../models')
 const { queryInterface } = sequelize
+const { signToken } = require('../helpers/jwt')
 
 
 const user = {

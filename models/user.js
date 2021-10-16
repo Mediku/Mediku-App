@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      // User.hasMany(models.Registration, {foreignKey: 'UserId'})
+      User.hasMany(models.Registration, {foreignKey: 'UserId'})
       // User.hasMany(models.Transaction, {foreignKey: 'UserId'})
     }
   };
@@ -97,7 +97,6 @@ module.exports = (sequelize, DataTypes) => {
     hooks: {
       beforeCreate: (user, options) => {
         user.password = hashPassword(user.password)
-        // user.date_of_birth = new Date(user.date_of_birth).toLocaleString()
       },
       beforeUpdate: (user, options) => {
         user.password = hashPassword(user.password)

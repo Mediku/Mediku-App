@@ -20,6 +20,9 @@ module.exports = function (err, req, res, next) {
   } else if (err.name === "Please Login First") {
     code = 401
     message = "Please Login First"
-  } 
+  } else if (err.name === "Data Not Found") {
+    code = 404
+    message = "Data Not Found"
+  }
   res.status(code).json({ message })
 }
