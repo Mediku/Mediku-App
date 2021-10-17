@@ -1,13 +1,16 @@
 'use strict';
 const fs = require('fs')
+const { hashPassword } = require('../helpers/bcryptjs')
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    const data = JSON.parse(fs.readFileSync('./seeders/provinces.json', 'utf-8'))
+    const data = JSON.parse(fs.readFileSync('./seeders/users.json', 'utf-8'))
     data.forEach(l => {
+      l.date_of_birth = new Date(l.date_of_birth).toLocaleString()
+      l.password = hashPassword(l.password)
       l.createdAt = new Date()
       l.updatedAt = new Date()
     });
-    await queryInterface.bulkInsert('Provinces', data, {})
+    await queryInterface.bulkInsert('Users', data, {})
     /**
      * Add seed commands here.
      *
@@ -20,7 +23,7 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkDelete('Provinces', null, {})
+    await queryInterface.bulkDelete('Users', null, {})
     /**
      * Add commands to revert seed here.
      *
