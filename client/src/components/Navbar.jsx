@@ -4,7 +4,8 @@ import '../App.scss'
 import {Link} from 'react-router-dom'
 function Navbar() {
     return (
-        <nav>
+        <div className="container-navbar">
+            <nav>
             <div className="logo">
                 <Link class="router" to="/"><h1>Mediku</h1></Link>
             </div>
@@ -15,12 +16,14 @@ function Navbar() {
                     <li><Link class="router" to="/">Services</Link></li>
                     <li><Link class="router" to="/">About Us</Link></li>
                     <li><Link class="router" to="/">Contact Us</Link></li>
-                    <li><Link class="router" to="/register">Register Test</Link></li>
+                    <li><Link class="router button" to="/register">Register Test</Link></li>
 
                 </ul>
             </div>
             
         </nav>
+        </div>
+
     )
 }
 

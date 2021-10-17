@@ -1,8 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
 $root-width: 1rem 5rem;
+$primary-color: #205ceb;
 h1 {
   font-family: "Pacifico", cursive;
   font-size: 2rem;
+  color: $primary-color;
 }
 .router {
   color: #333;
@@ -11,21 +13,25 @@ h1 {
 ul {
   list-style: none;
 }
+.container-navbar {
+  background-color: #fafafa;
+}
 nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: $root-width;
+  padding: $root-width;
   ul {
     display: flex;
     li {
       padding: 0 1.5rem;
       font-weight: 600;
     }
-    .router:hover {
-      padding-bottom: 10px;
-      border-bottom: solid 2px rgb(85, 85, 85);
-      width: fit-content;
-    }
+  }
+  .button {
+    background-color: $primary-color;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 25px;
   }
 }

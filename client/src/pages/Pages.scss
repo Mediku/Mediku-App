@@ -1,16 +1,142 @@
+@import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
+
 $root-width: 1rem 5rem;
+$primary-color: #205ceb;
 .container {
-  padding: $root-width;
-  height: 90vh;
+  // padding: ;
+  height: 99vh;
   width: 100vw;
   display: flex;
   justify-content: center;
   align-items: center;
-
+  background-color: #fafafa;
+  margin: 0 5rem;
+  .photo-landing-page {
+    img {
+      width: 100rem;
+      margin-bottom: 3rem;
+      max-width: 45rem;
+    }
+  }
   div {
     width: 50%;
   }
+  .text {
+    padding-bottom: 1rem;
+  }
+}
+.landing-container {
+  background-color: #fafafa;
 }
 h2 {
   font-weight: 400;
+}
+.router {
+  color: #fff;
+  text-decoration: none;
+}
+.button {
+  background-color: $primary-color;
+  color: #fff !important;
+  padding: 0.5rem 1rem;
+  border-radius: 25px;
+}
+.heading {
+  font-size: 4rem;
+  line-height: 1.2;
+  font-weight: 600;
+  padding-bottom: 1rem;
+}
+
+.box-container {
+  background-color: #1c2c50;
+  position: absolute;
+  top: 800px;
+  z-index: 100 !important;
+  color: #fff;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 0 5rem;
+  align-items: center;
+  line-height: 1.6;
+  border-radius: 20px;
+  p {
+    color: rgb(211, 211, 211);
+  }
+  div {
+    // padding: 1rem;
+    margin: 2rem;
+  }
+  h2 {
+    font-size: 1.3rem;
+    padding-bottom: 1rem;
+  }
+  .box1 {
+    border-right: 1px solid rgb(117, 117, 117);
+  }
+  .box3 {
+    border-left: 1px solid rgb(117, 117, 117);
+  }
+}
+
+.steps {
+  margin: 0 10rem;
+  .text-bar {
+    h2 {
+      font-size: 2rem;
+      font-weight: 500;
+    }
+  }
+}
+.locations-list {
+  background-color: #fafafa;
+  border-radius: 10px;
+  padding: 1rem;
+  width: 24rem;
+  height: 25rem;
+  overflow: scroll;
+
+  color: #333;
+}
+.location-bar {
+  .daftar-lokasi {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    p {
+      font-weight: 500;
+    }
+  }
+  .text {
+    padding-bottom: 3rem;
+    h2 {
+      font-size: 2rem;
+      font-weight: 500;
+    }
+  }
+
+  margin-top: -5rem;
+
+  margin-left: 5rem;
+  margin-right: 5rem;
+  .text {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+span {
+  font-family: "Pacifico", cursive;
+  font-size: 2rem;
+  color: $primary-color;
+}
+.location-card {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  div {
+    padding-bottom: 1rem;
+  }
 }
