@@ -29,6 +29,7 @@ class ControllerUser {
             phone_number: result.phone_number,
             identity_card_number: result.identity_card_number,
             identity_card_address: result.identity_card_address,
+            gender: result.gender,
             date_of_birth: result.date_of_birth,
             domisili_address: result.domisili_address,
             access_token
@@ -47,10 +48,19 @@ class ControllerUser {
   static async editUserProfile(req, res, next) {
     const { full_name, phone_number, identity_card_number, identity_card_address, gender, email, domisili_address, password, date_of_birth } = req.body
     const data = { full_name, phone_number, identity_card_number, identity_card_address, gender, email, domisili_address, password, date_of_birth }
-    // console.log(hashpassword(data.password));
     try {
       const result = await User.update(data, { where: { id: req.user.id }, returning: true, individualHooks: true })
-      res.status(201).json(result[1][0])
+      res.status(200).json({
+        id: result[1][0].id,
+        email: result[1][0].email,
+        full_name: result[1][0].full_name,
+        phone_number: result[1][0].phone_number,
+        identity_card_number: result[1][0].identity_card_number,
+        identity_card_address: result[1][0].identity_card_address,
+        gender: result[1][0].gender,
+        date_of_birth: result[1][0].date_of_birth,
+        domisili_address: result[1][0].domisili_address,
+      })
     } catch (err) {
       next(err)
     }
@@ -60,7 +70,7 @@ class ControllerUser {
     const { id } = req.user
     try {
       const user = await User.findByPk(id)
-      res.status(200).json(user)
+      res.status(200).json({ id: user.id, phone_number: user.phone_number, full_name: user.full_name, identity_card_number: user.identity_card_address, identity_card_address: user.identity_card_address, gender: user.gender, date_of_birth: user.date_of_birth, email: user.email, domisili_address:user.domisili_address })
     } catch (err) {
       next(err)
     }
