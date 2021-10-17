@@ -14,7 +14,7 @@ module.exports = function (err, req, res, next) {
   } else if (err.name === 'Unauthorized') {
     code = 401
     message = 'Email/Password is wrong'
-  } else if (err.name === 'Invalid Token') {
+  } else if (err.name === 'JsonWebTokenError') {
     code = 401
     message = 'Invalid Token'
   } else if (err.name === "Please Login First") {
