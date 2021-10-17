@@ -125,7 +125,7 @@ function Home() {
                         </div>
                     </div>
                     <div id="map">
-                        <h2>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Porro, cumque.</h2>
+                        <h2>Map leaflet</h2>
                     </div>
                 </div>
             </div>
