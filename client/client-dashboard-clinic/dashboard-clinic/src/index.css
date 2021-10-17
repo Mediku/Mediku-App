@@ -15,3 +15,10 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/*Sidebar*/
+
+.sidebar-logo {
+  font-family: "Pacifico", cursive;
+  font-size: 2rem;
+}
