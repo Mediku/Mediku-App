@@ -1,9 +1,8 @@
-const router = require('express').Router()
-const routerUser = require('./routerUser')
-const ErrorHandler = require('../middlewares/ErrorHandler.js')
+const router = require("express").Router();
+const routerClinic = require("./routerClinic");
+const ErrorHandler = require("../middlewares/ErrorHandler.js");
 
-router.use('/', routerUser)
+router.use("/", routerClinic);
+router.use(ErrorHandler);
 
-router.use(ErrorHandler)
-
-module.exports = router
+module.exports = router;
