@@ -6,10 +6,10 @@ const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
 
 class ControllerUser {
   static async register(req, res, next) {
-    const { full_name, email, password, phone_number, identity_card_number, identity_card_address, gender, date_of_birth, province, district, sub_district, RT, RW } = req.body
+    const { full_name, email, password, phone_number, identity_card_number, identity_card_address, gender, date_of_birth, province, district, sub_district, RT, RW, regency } = req.body
     try {
-      const result = await User.create({ full_name, email, password, phone_number, identity_card_number, identity_card_address, gender, date_of_birth, province, district, sub_district, RT, RW })
-      res.status(201).json({ id: result.id, email: result.email, full_name: result.full_name, phone_number: result.phone_number, identity_card_number: result.identity_card_number, identity_card_address: result.identity_card_address, gender: result.gender, date_of_birth: result.date_of_birth, province: result.province, district: result.district, sub_district: result.sub_district, RT: result.RT, RW: result.RW })
+      const result = await User.create({ full_name, email, password, phone_number, identity_card_number, identity_card_address, gender, date_of_birth, province, district, sub_district, RT, RW, regency })
+      res.status(201).json({ id: result.id, email: result.email, full_name: result.full_name, phone_number: result.phone_number, identity_card_number: result.identity_card_number, identity_card_address: result.identity_card_address, gender: result.gender, date_of_birth: result.date_of_birth, province: result.province, regency: result.regency, district: result.district, sub_district: result.sub_district, RT: result.RT, RW: result.RW })
     } catch (err) {
       next(err)
     }
@@ -32,6 +32,7 @@ class ControllerUser {
             gender: result.gender,
             date_of_birth: result.date_of_birth,
             province: result.province,
+            regency: result.regency,
             district: result.district,
             sub_district: result.sub_district,
             RT: result.RT,
@@ -50,8 +51,8 @@ class ControllerUser {
   }
 
   static async editUserProfile(req, res, next) {
-    const { full_name, phone_number, identity_card_number, identity_card_address, gender, email, password, date_of_birth, province, district, sub_district, RT, RW } = req.body
-    const data = { full_name, phone_number, identity_card_number, identity_card_address, gender, email, password, date_of_birth, province, district, sub_district, RT, RW }
+    const { full_name, phone_number, identity_card_number, identity_card_address, gender, email, password, date_of_birth, province, district, sub_district, RT, RW, regency } = req.body
+    const data = { full_name, phone_number, identity_card_number, identity_card_address, gender, email, password, date_of_birth, province, district, sub_district, RT, RW, regency }
     try {
       const result = await User.update(data, { where: { id: req.user.id }, returning: true, individualHooks: true })
       res.status(200).json({
@@ -64,6 +65,7 @@ class ControllerUser {
         gender: result[1][0].gender,
         date_of_birth: result[1][0].date_of_birth,
         province: result[1][0].province,
+        regency: result[1][0].regency,
         district: result[1][0].district,
         sub_district: result[1][0].sub_district,
         RT: result[1][0].RT,
@@ -78,7 +80,7 @@ class ControllerUser {
     const { id } = req.user
     try {
       const user = await User.findByPk(id)
-      res.status(200).json({ id: user.id, phone_number: user.phone_number, full_name: user.full_name, identity_card_number: user.identity_card_address, identity_card_address: user.identity_card_address, gender: user.gender, date_of_birth: user.date_of_birth, email: user.email, domisili_address: user.domisili_address })
+      res.status(200).json({ id: user.id, phone_number: user.phone_number, full_name: user.full_name, identity_card_number: user.identity_card_address, identity_card_address: user.identity_card_address, gender: user.gender, date_of_birth: user.date_of_birth, email: user.email, regency: user.regency, province: user.province, district: user.district, sub_district: user.sub_district, RT: user.RT, RW: user.RW })
     } catch (err) {
       next(err)
     }
@@ -118,7 +120,8 @@ class ControllerUser {
           gender: "male",
           date_of_birth: "2020-04-10",
           province: "Sumatera Utara",
-          district: "Kota Medan",
+          regency: "Kota Medan",
+          district: "Medan Kota",
           sub_district: "Medan Kota",
           RT: "01",
           RW: "02"
@@ -135,6 +138,7 @@ class ControllerUser {
           gender: user.gender,
           date_of_birth: user.date_of_birth,
           province: user.province,
+          regency: user.regency,
           district: user.district,
           sub_district: user.sub_district,
           RT: user.RT,
@@ -150,6 +154,7 @@ class ControllerUser {
           gender: user.gender,
           date_of_birth: user.date_of_birth,
           province: user.province,
+          regency: user.regency,
           district: user.district,
           sub_district: user.sub_district,
           RT: user.RT,
