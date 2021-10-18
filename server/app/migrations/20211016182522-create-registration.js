@@ -27,6 +27,13 @@ module.exports = {
       is_paid: {
         type: Sequelize.BOOLEAN,
       },
+      is_tested: {
+        allowNull: false,
+        type: Sequelize.BOOLEAN
+      },
+      test_result: {
+        type: Sequelize.STRING
+      },
       UserId: {
         type: Sequelize.INTEGER,
       },

@@ -1,0 +1,13 @@
+[
+  {
+    "service_name": "PCR",
+    "total_price": 300000,
+    "date": "2020-10-20",
+    "time": "14:00:00",
+    "is_paid": false,
+    "is_tested": false,
+    "test_result": null,
+    "ClinicId": 1,
+    "UserId": 1
+  }
+]
