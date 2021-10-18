@@ -24,6 +24,9 @@ module.exports = {
         allowNull: false,
         type: Sequelize.TIME
       },
+      is_paid: {
+        type: Sequelize.BOOLEAN
+      },
       UserId: {
         type: Sequelize.INTEGER
       },

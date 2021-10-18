@@ -19,42 +19,43 @@ module.exports = (sequelize, DataTypes) => {
     service_name: {
       type: DataTypes.STRING,
       allowNull: false,
-      validate : {
-        notEmpty: { msg: "Please fill the Service Name's Column"},
-        notNull: { msg: "Please fill the Service Name's Column"}
+      validate: {
+        notEmpty: { msg: "Please fill the Service Name's Column" },
+        notNull: { msg: "Please fill the Service Name's Column" }
       }
     },
     total_price: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      validate : {
-        notEmpty: { msg: "Please fill the Total Price's Column"},
-        notNull: { msg: "Please fill the Total Price's Column"}
+      validate: {
+        notEmpty: { msg: "Please fill the Total Price's Column" },
+        notNull: { msg: "Please fill the Total Price's Column" }
       }
     },
     date: {
       type: DataTypes.DATE,
       allowNull: false,
-      validate : {
-        notEmpty: { msg: "Please fill the Date's Column"},
-        notNull: { msg: "Please fill the Date's Column"}
+      validate: {
+        notEmpty: { msg: "Please fill the Date's Column" },
+        notNull: { msg: "Please fill the Date's Column" }
       }
     },
     time: {
       type: DataTypes.TIME,
       allowNull: false,
-      validate : {
-        notEmpty: { msg: "Please fill the Time's Column"},
-        notNull: { msg: "Please fill the Time's Column"}
+      validate: {
+        notEmpty: { msg: "Please fill the Time's Column" },
+        notNull: { msg: "Please fill the Time's Column" }
       }
     },
+    is_paid: DataTypes.BOOLEAN,
     UserId: DataTypes.INTEGER,
     ClinicId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      validate : {
-        notEmpty: { msg: "Please choose at least one clinic"},
-        notNull: { msg: "Please choose at least one clinic"}
+      validate: {
+        notEmpty: { msg: "Please choose at least one clinic" },
+        notNull: { msg: "Please choose at least one clinic" }
       }
     }
   }, {

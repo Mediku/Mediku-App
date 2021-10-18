@@ -6,10 +6,10 @@ const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
 
 class ControllerUser {
   static async register(req, res, next) {
-    const { full_name, email, password } = req.body
+    const { full_name, email, password, phone_number, identity_card_number, identity_card_address, gender, date_of_birth, province, district, sub_district, RT, RW } = req.body
     try {
-      const result = await User.create({ full_name, email, password })
-      res.status(201).json({ id: result.id, email: result.email, full_name: result.full_name })
+      const result = await User.create({ full_name, email, password, phone_number, identity_card_number, identity_card_address, gender, date_of_birth, province, district, sub_district, RT, RW })
+      res.status(201).json({ id: result.id, email: result.email, full_name: result.full_name, phone_number: result.phone_number, identity_card_number: result.identity_card_number, identity_card_address: result.identity_card_address, gender: result.gender, date_of_birth: result.date_of_birth, province: result.province, district: result.district, sub_district: result.sub_district, RT: result.RT, RW: result.RW })
     } catch (err) {
       next(err)
     }
@@ -31,7 +31,11 @@ class ControllerUser {
             identity_card_address: result.identity_card_address,
             gender: result.gender,
             date_of_birth: result.date_of_birth,
-            domisili_address: result.domisili_address,
+            province: result.province,
+            district: result.district,
+            sub_district: result.sub_district,
+            RT: result.RT,
+            RW: result.RW,
             access_token
           })
         } else {
@@ -46,8 +50,8 @@ class ControllerUser {
   }
 
   static async editUserProfile(req, res, next) {
-    const { full_name, phone_number, identity_card_number, identity_card_address, gender, email, domisili_address, password, date_of_birth } = req.body
-    const data = { full_name, phone_number, identity_card_number, identity_card_address, gender, email, domisili_address, password, date_of_birth }
+    const { full_name, phone_number, identity_card_number, identity_card_address, gender, email, password, date_of_birth, province, district, sub_district, RT, RW } = req.body
+    const data = { full_name, phone_number, identity_card_number, identity_card_address, gender, email, password, date_of_birth, province, district, sub_district, RT, RW }
     try {
       const result = await User.update(data, { where: { id: req.user.id }, returning: true, individualHooks: true })
       res.status(200).json({
@@ -59,7 +63,11 @@ class ControllerUser {
         identity_card_address: result[1][0].identity_card_address,
         gender: result[1][0].gender,
         date_of_birth: result[1][0].date_of_birth,
-        domisili_address: result[1][0].domisili_address,
+        province: result[1][0].province,
+        district: result[1][0].district,
+        sub_district: result[1][0].sub_district,
+        RT: result[1][0].RT,
+        RW: result[1][0].RW,
       })
     } catch (err) {
       next(err)
@@ -70,7 +78,22 @@ class ControllerUser {
     const { id } = req.user
     try {
       const user = await User.findByPk(id)
-      res.status(200).json({ id: user.id, phone_number: user.phone_number, full_name: user.full_name, identity_card_number: user.identity_card_address, identity_card_address: user.identity_card_address, gender: user.gender, date_of_birth: user.date_of_birth, email: user.email, domisili_address:user.domisili_address })
+      res.status(200).json({ id: user.id, phone_number: user.phone_number, full_name: user.full_name, identity_card_number: user.identity_card_address, identity_card_address: user.identity_card_address, gender: user.gender, date_of_birth: user.date_of_birth, email: user.email, domisili_address: user.domisili_address })
+    } catch (err) {
+      next(err)
+    }
+  }
+
+  static async deleteUser(req, res, next) {
+    const { id } = req.params
+    try {
+      const foundUser = await User.findByPk(id)
+      if (!foundUser) {
+        throw ({ name: 'Data Not Found' })
+      } else {
+        await User.destroy({ where: { id } })
+        res.status(200).json({ message: `User ${foundUser.full_name} has been deleted` })
+      }
     } catch (err) {
       next(err)
     }
@@ -88,14 +111,50 @@ class ControllerUser {
         defaults: {
           email,
           password: email,
+          full_name: name,
+          phone_number: "081208120812",
+          identity_card_number: "01010101010",
+          identity_card_address: "test identity_card_address",
+          gender: "male",
+          date_of_birth: "2020-04-10",
+          province: "Sumatera Utara",
+          district: "Kota Medan",
+          sub_district: "Medan Kota",
+          RT: "01",
+          RW: "02"
         }
       })
       if (user) {
         const access_token = signToken({
           id: user.id,
           email: user.email,
+          full_name: user.full_name,
+          phone_number: user.phone_number,
+          identity_card_number: user.identity_card_number,
+          identity_card_address: user.identity_card_address,
+          gender: user.gender,
+          date_of_birth: user.date_of_birth,
+          province: user.province,
+          district: user.district,
+          sub_district: user.sub_district,
+          RT: user.RT,
+          RW: user.RW,
         })
-        res.status(200).json({ id: user.id, email: user.email, access_token })
+        res.status(200).json({
+          id: user.id,
+          email: user.email,
+          full_name: user.full_name,
+          phone_number: user.phone_number,
+          identity_card_number: user.identity_card_number,
+          identity_card_address: user.identity_card_address,
+          gender: user.gender,
+          date_of_birth: user.date_of_birth,
+          province: user.province,
+          district: user.district,
+          sub_district: user.sub_district,
+          RT: user.RT,
+          RW: user.RW, access_token
+        })
       }
     } catch (err) {
       next(err)
