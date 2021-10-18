@@ -27,14 +27,14 @@ class ControllerRegistration {
   static async createRegistration(req, res, next) {
     let is_paid;
     const { service_name, total_price, date, time, ClinicId } = req.body
-    if(req.body.is_paid == 'true') {
+    if (req.body.is_paid == 'true') {
       is_paid = true
     } else {
       is_paid = false
     }
     const UserId = req.user.id
     try {
-      const result = await Registration.create({ service_name, total_price, date, time, is_paid, ClinicId, UserId })
+      const result = await Registration.create({ service_name, total_price, date, time, is_paid, ClinicId, UserId, is_tested: false })
       res.status(201).json(result)
     } catch (err) {
       next(err)
@@ -57,16 +57,22 @@ class ControllerRegistration {
   }
 
   static async editRegistration(req, res, next) {
-    let is_paid
+    let is_paid;
+    let is_tested;
     const { id } = req.params
-    const { service_name, total_price, date, time, ClinicId } = req.body
+    const { service_name, total_price, date, time, ClinicId, test_result } = req.body
     const UserId = req.user.id
-    if(req.body.is_paid == 'true') {
+    if (req.body.is_paid == 'true') {
       is_paid = true
     } else {
       is_paid = false
     }
-    const data = { service_name, total_price, date, time, ClinicId, UserId, is_paid }
+    if (req.body.is_tested == 'true') {
+      is_tested = true
+    } else {
+      is_tested = false
+    }
+    const data = { service_name, total_price, date, time, ClinicId, UserId, is_paid, is_tested, test_result }
     try {
       const result = await Registration.update(data, { where: { id }, returning: true })
       res.status(200).json(result[1][0])
