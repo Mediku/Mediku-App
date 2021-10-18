@@ -32,11 +32,26 @@ module.exports = {
         unique: true,
         type: Sequelize.STRING
       },
-      domisili_address: {
-        type: Sequelize.STRING
-      },
       password: {
         allowNull: false,
+        type: Sequelize.STRING
+      },
+      province: {
+        type: Sequelize.STRING
+      },
+      regency: {
+        type: Sequelize.STRING
+      },
+      district: {
+        type: Sequelize.STRING
+      },
+      sub_district: {
+        type: Sequelize.STRING
+      },
+      RT: {
+        type: Sequelize.STRING
+      },
+      RW: {
         type: Sequelize.STRING
       },
       createdAt: {

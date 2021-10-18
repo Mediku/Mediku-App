@@ -13,7 +13,6 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       User.hasMany(models.Registration, {foreignKey: 'UserId'})
-      // User.hasMany(models.Transaction, {foreignKey: 'UserId'})
     }
   };
   User.init({
@@ -75,14 +74,6 @@ module.exports = (sequelize, DataTypes) => {
         notNull: { msg: "Please fill the Email's Column"}
       }
     },
-    domisili_address: {
-      type: DataTypes.STRING,
-      // allowNull: false,
-      // validate : {
-      //   notEmpty: { msg: "Please fill the Address's Column"},
-      //   notNull: { msg: "Please fill the Address's Column"}
-      // }
-    },
     password: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -91,6 +82,25 @@ module.exports = (sequelize, DataTypes) => {
         notNull: { msg: "Please fill the Password's Column"}
       }
     },
+    province: {
+      type: DataTypes.STRING,
+    },
+    regency: {
+      type: DataTypes.STRING,
+    },
+    district: {
+      type: DataTypes.STRING,
+    },
+    sub_district: {
+      type: DataTypes.STRING,
+    },
+    RT: {
+      type: DataTypes.STRING,
+    },
+    RW: {
+      type: DataTypes.STRING,
+    },
+
   }, {
     sequelize,
     modelName: 'User',
