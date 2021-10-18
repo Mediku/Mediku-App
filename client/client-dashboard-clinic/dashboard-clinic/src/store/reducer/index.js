@@ -1,6 +1,6 @@
-
 import {
-	GET_REGISTRATIONS
+	GET_REGISTRATIONS,
+	SET_REGISTRATIONS
 } from './../keys'
 
 let initialState = {
@@ -12,7 +12,12 @@ export default function reducer(state=initialState, action){
 	switch(type){
 
 		case GET_REGISTRATIONS:
-		return {...state, registrations : []}
+		return state.registrations
+		break
+
+		case SET_REGISTRATIONS:
+		return {...state, registrations: payload}
+		break
 
 		default:
 		return state
