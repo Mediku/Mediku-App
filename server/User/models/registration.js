@@ -48,7 +48,14 @@ module.exports = (sequelize, DataTypes) => {
         notNull: { msg: "Please fill the Time's Column" }
       }
     },
-    is_paid: DataTypes.BOOLEAN,
+    is_paid: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      validate: {
+        notEmpty: { msg: "Please fill the Status Paid's Column" },
+        notNull: { msg: "Please fill the Status Paid's Column" }
+      }
+    },
     UserId: DataTypes.INTEGER,
     ClinicId: {
       type: DataTypes.INTEGER,
@@ -57,7 +64,18 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: { msg: "Please choose at least one clinic" },
         notNull: { msg: "Please choose at least one clinic" }
       }
-    }
+    },
+    is_tested: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      validate: {
+        notEmpty: { msg: "Please fill the Status Test's Column" },
+        notNull: { msg: "Please fill the Status Test's Column" }
+      }
+    },
+    test_result: {
+      type: DataTypes.STRING,
+    },
   }, {
     sequelize,
     modelName: 'Registration',
