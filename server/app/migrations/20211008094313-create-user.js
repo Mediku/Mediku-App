@@ -37,21 +37,27 @@ module.exports = {
         type: Sequelize.STRING
       },
       province: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       regency: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       district: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       sub_district: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       RT: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       RW: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       createdAt: {

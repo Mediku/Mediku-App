@@ -36,7 +36,6 @@ class ClinicController {
         });
       }
     } catch (error) {
-      // console.log(error);
       next(error);
     }
   }
@@ -45,7 +44,6 @@ class ClinicController {
     try {
       let list = await Clinic.findAll({});
       for (let obj of list) {
-        console.log(obj);
         obj.operational_day_open = obj.operational_day_open.split(",");
       }
       res.status(200).json({
