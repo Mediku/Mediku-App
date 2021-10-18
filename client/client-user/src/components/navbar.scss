@@ -1,20 +1,23 @@
 @import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
 $root-width: 1rem 5rem;
 $primary-color: #205ceb;
-h1 {
-  font-family: "Pacifico", cursive;
-  font-size: 2rem;
-  color: $primary-color;
+.logo {
+  h1 {
+    font-family: "Pacifico", cursive;
+    font-size: 2rem;
+    color: $primary-color;
+  }
 }
-.router {
-  color: #333;
-  text-decoration: none;
-}
+
 ul {
   list-style: none;
 }
 .container-navbar {
   background-color: #fafafa;
+  .router {
+    color: #333;
+    text-decoration: none;
+  }
 }
 nav {
   display: flex;

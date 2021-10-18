@@ -12,10 +12,9 @@ function Navbar() {
             <div>
                 <ul>
                     <li><Link class="router" to="/">Home</Link></li>
-                    <li><Link class="router" to="/">Locations</Link></li>
-                    <li><Link class="router" to="/">Services</Link></li>
-                    <li><Link class="router" to="/">About Us</Link></li>
-                    <li><Link class="router" to="/">Contact Us</Link></li>
+                    <li><Link class="router" to="/locations">Locations</Link></li>
+                    <li><Link class="router" to="/about-us">About Us</Link></li>
+                    <li><Link class="router" to="/contact-us">Contact Us</Link></li>
                     <li><Link class="router button" to="/register">Register Test</Link></li>
 
                 </ul>

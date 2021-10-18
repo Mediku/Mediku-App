@@ -45,16 +45,17 @@ function Home() {
                 </div>
             </section>
             <div className="steps flex items-center min-h-screen justify-center">
-                <div className="grid grid-cols-2">
+                <div className="flex-box">
                     <div className="text-bar">
                         <h2>Easy steps to do SWAB Test with <span className="mediku">Mediku</span></h2>
                         <p>Choose your own schedule to do SWAB test with the easiest way and fast with mediku. Get your result within 16 hours.</p>
                     </div>
-                    <div className="grid grid-cols-4 gap-2">
-                    <div className=" row-span-2 col-span-2 bg-gray-500 p-3 rounded">1</div>
-                    <div className="col-span-2 bg-gray-500 p-3 rounded">2</div>
-                    <div className="bg-gray-500 p-3 rounded">3</div>
-                    <div className="bg-gray-500 p-3 rounded">4</div>
+                    <div className="grid-box grid grid-cols-4 gap-5">
+                    <div className="step-1 row-span-2 col-span-2 bg-gray-500 rounded"><p>Online Registration</p></div>
+                    
+                    <div className="step-2 col-span-2 bg-gray-500rounded"><p>Choose Date</p></div>
+                    <div className="step-3 bg-gray-500 rounded"><p>SWAB TEST</p></div>
+                    <div className="step-4 bg-gray-500 rounded"><p>Confirmation</p></div>
                      </div>
                 </div>
 

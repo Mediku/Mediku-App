@@ -140,3 +140,163 @@ span {
     padding-bottom: 1rem;
   }
 }
+.step-1 {
+  // background: url("../assets/images/online-register.jpeg") no-repeat;
+
+  background-image: linear-gradient(
+      to top,
+      $primary-color,
+      13%,
+      transparent 13%
+    ),
+    url(../assets/images/online-register.jpeg);
+  background-size: 24rem;
+  background-position-y: center;
+  background-position-x: center;
+
+  p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-top: 25rem;
+    font-size: 1.3rem;
+    color: #fff;
+    // font-weight: bolder;
+  }
+}
+.step-2 {
+  background-image: linear-gradient(
+      to top,
+      $primary-color,
+      23%,
+      transparent 23%
+    ),
+    url(../assets/images/choose-date.jpeg);
+  background-size: 21rem;
+  background-position-y: center;
+  background-position-x: center;
+  position: relative;
+  p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: 34%;
+    top: 80%;
+    // text-align: center;
+    // padding-bottom: -25rem;
+    font-size: 1.3rem;
+    color: #fff;
+    // font-weight: bolder;
+  }
+}
+.flex-box {
+  display: flex;
+  .text-bar {
+    width: 25rem;
+    margin-right: 5rem;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
+}
+.grid-box {
+  width: 50rem;
+  height: 28rem;
+}
+.step-3 {
+  background-image: linear-gradient(
+      to top,
+      $primary-color,
+      25%,
+      transparent 25%
+    ),
+    url(../assets/images/swab-test.jpeg);
+  background-size: 15rem;
+  background-position-y: center;
+  background-position-x: center;
+  position: relative;
+  p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: 20%;
+    top: 80%;
+    // text-align: center;
+    // padding-bottom: -25rem;
+    font-size: 1.3rem;
+    color: #fff;
+    // font-weight: bolder;
+  }
+}
+.step-4 {
+  background-image: linear-gradient(
+      to top,
+      $primary-color,
+      25%,
+      transparent 25%
+    ),
+    url(../assets/images/online-confirmation.jpeg);
+  background-size: 21rem;
+  background-position-y: center;
+  background-position-x: center;
+  position: relative;
+  p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: 20%;
+    top: 80%;
+    // text-align: center;
+    // padding-bottom: -25rem;
+    font-size: 1.3rem;
+    color: #fff;
+    // font-weight: bolder;
+  }
+}
+.locations {
+  background-color: #fafafa;
+  margin: 1rem 5rem;
+  h2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    padding: 2rem 0;
+    // font-weight: bolder;
+  }
+  .box-location {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    .flex-picture {
+      display: flex;
+      flex-direction: row;
+      .text-location {
+        width: 20rem;
+        margin-left: 2rem;
+        line-height: 2.5;
+        h1 {
+          font-size: 1.7rem;
+          font-weight: 400;
+        }
+      }
+      img {
+        width: 15rem;
+        height: 15rem;
+        border-radius: 10px;
+      }
+    }
+  }
+  .second-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    .links {
+      padding-bottom: 2rem;
+    }
+  }
+}
