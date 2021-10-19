@@ -75,6 +75,30 @@ describe("view clinic(s)", () => {
   });
 });
 
+describe("create a clinic", () => {
+  test("successfully created a clinic", (done) => {
+    let add = {
+      name: "klinik ngakak",
+      email: "klinikngakak@mail.com",
+      phone_number: "125445123689",
+      address: "jalan ngakak",
+      operational_time_open: "09:00",
+      operational_time_close: "17.00",
+      swab_pcr: true,
+      swab_antigen: false,
+      antigen_price: 300000,
+      pcr_price: 200000,
+      operational_day_open: "senin,selasa,rabu,kamis,jumat",
+      password: "ngakak",
+    };
+    request(app)
+      .post("/clinic/add")
+      .then((res) => {
+        expect(res.body).toHaveProperty("message");
+      });
+  });
+});
+
 afterAll(async () => {
   await Clinic.destroy({
     where: {},
