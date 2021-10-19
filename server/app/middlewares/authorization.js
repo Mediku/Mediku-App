@@ -1,4 +1,4 @@
-const { Registration } = require('../models')
+const { Registration, User } = require('../models')
 
 const authorizationRegistration = async (req, res, next) => {
   const id = +req.params.id
@@ -11,11 +11,29 @@ const authorizationRegistration = async (req, res, next) => {
         throw ({ name: 'You are not authorized' })
       }
     } else {
-      throw ({ name: 'Data not found' })
+      throw ({ name: 'Data Not Found' })
     }
   } catch (err) {
     next(err)
   }
 }
 
-module.exports = { authorizationRegistration }
+const authorizationUser = async (req, res, next) => {
+  const id = +req.params.id
+  try {
+    const foundUser = await User.findByPk(id)
+    if (foundUser) {
+      if (req.user.id == foundUser.id) {
+        next()
+      } else {
+        throw ({ name: 'You are not authorized' })
+      }
+    } else {
+      throw ({ name: 'Data Not Found' })
+    }
+  } catch (err) {
+    next(err)
+  }
+}
+
+module.exports = { authorizationRegistration, authorizationUser }

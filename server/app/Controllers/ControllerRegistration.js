@@ -1,4 +1,4 @@
-const { Registration } = require("../models");
+const { Registration, Clinic, User } = require("../models");
 const sendNodemailer = require("../helpers/nodemailer");
 
 class ControllerRegistration {
@@ -6,6 +6,14 @@ class ControllerRegistration {
     try {
       const result = await Registration.findAll({
         where: { UserId: req.user.id },
+        include: [
+          {
+            model: User,
+          },
+          {
+            model: Clinic,
+          },
+        ],
       });
       res.status(200).json(result);
     } catch (err) {
@@ -16,7 +24,16 @@ class ControllerRegistration {
   static async findOneRegistration(req, res, next) {
     const { id } = req.params;
     try {
-      const result = await Registration.findByPk(id);
+      const result = await Registration.findByPk(id, {
+        include: [
+          {
+            model: User,
+          },
+          {
+            model: Clinic,
+          },
+        ],
+      });
       if (!result) {
         throw { name: "Data Not Found" };
       } else {
@@ -29,26 +46,19 @@ class ControllerRegistration {
 
   static async createRegistration(req, res, next) {
     let is_paid;
+    let is_tested;
     const { service_name, total_price, date, time, ClinicId } = req.body;
     if (req.body.is_paid == "true") {
       is_paid = true;
     } else {
       is_paid = false;
     }
+    if (req.body.is_tested == "true") {
+      is_tested = true;
+    } else {
+      is_tested = false;
+    }
     const UserId = req.user.id;
-    const clinic = await Clinic.findByPk(result.ClinicId);
-    sendNodemailer(
-      req.user.email,
-      "Registration Succeess",
-      `Thank you for registering on Mediku. Here are your registration informations:
-
-      Your name: ${req.user.full_name}
-      Clinic name: ${clinic.name}
-      Service name: ${result.service_name}
-      Date: ${result.date}
-      
-      Please go to the clinic you have registered`
-    );
     try {
       const result = await Registration.create({
         service_name,
@@ -58,8 +68,27 @@ class ControllerRegistration {
         is_paid,
         ClinicId,
         UserId,
-        is_tested: false,
+        is_tested,
       });
+      res.status(201).json(result);
+      const clinic = await Clinic.findByPk(result.ClinicId);
+      console.log(clinic);
+      console.log(req.user.email);
+      console.log(req.user.full_name);
+      console.log(result.service_name);
+      console.log(result.date);
+      sendNodemailer(
+        req.user.email,
+        "Registration Succeess",
+        `Thank you for registering on Mediku. Here are your registration informations:
+
+        Your name: ${req.user.full_name}
+        Clinic name: ${clinic.name}
+        Service name: ${result.service_name}
+        Date: ${result.date}
+        
+        Please go to the clinic where you have registered`
+      );
       res.status(201).json(result);
     } catch (err) {
       next(err);
