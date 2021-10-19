@@ -33,7 +33,7 @@ function sendNodemailer(emailTo, subject, text) {
     from: "Mediku",
     to: `${emailTo}`,
     subject: `${subject}`,
-    html: `${text}`,
+    text: `${text}`,
   };
 
   transporter.sendMail(mailData, function (err, info) {
@@ -42,4 +42,4 @@ function sendNodemailer(emailTo, subject, text) {
   });
 }
 
-module.exports = sendNodemailer
+module.exports = sendNodemailer;
