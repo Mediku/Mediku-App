@@ -67,7 +67,6 @@ class ClinicController {
       data.operational_day_open = data.operational_day_open.split(",");
       res.status(200).json(data);
     } catch (err) {
-      console.log(err);
       next(err);
     }
   }

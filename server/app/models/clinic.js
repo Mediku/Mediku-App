@@ -1,5 +1,6 @@
 "use strict";
 const { Model } = require("sequelize");
+const { hashPassword } = require("../helpers/bcryptjs");
 module.exports = (sequelize, DataTypes) => {
   class Clinic extends Model {
     /**
