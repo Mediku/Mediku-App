@@ -31,8 +31,8 @@ class ClinicController {
           operational_day_open: days,
           swab_pcr: clinic.swab_pcr,
           swab_antigen: clinic.swab_antigen,
-          pcr_price: clinic.price_pcr,
-          antigen_price: clinic.price_antigen,
+          pcr_price: clinic.pcr_price,
+          antigen_price: clinic.antigen_price,
         });
       }
     } catch (error) {
