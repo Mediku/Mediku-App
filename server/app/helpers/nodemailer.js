@@ -42,4 +42,4 @@ function sendNodemailer(emailTo, subject, text) {
   });
 }
 
-module.exports = sendNodemailer;
+module.exports = sendNodemailer
