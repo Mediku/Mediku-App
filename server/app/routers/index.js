@@ -6,7 +6,7 @@ const routerDomicile = require("./routerDomicile");
 const ErrorHandler = require("../middlewares/ErrorHandler.js");
 
 router.use("/clinic", routerClinic);
-router.use("/", routerUser);
+router.use("/users", routerUser);
 router.use("/registrations", routerRegistration);
 router.use("/", routerDomicile);
 

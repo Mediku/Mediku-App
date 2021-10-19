@@ -26,6 +26,9 @@ module.exports = function (err, req, res, next) {
   } else if (err.name === "Not Found") {
     code = 404;
     message = "Clinic not found";
+  } else if (err.name === "You are not authorized") {
+    code = 403;
+    message = "You are not authorized";
   }
   res.status(code).json({ message });
 };
