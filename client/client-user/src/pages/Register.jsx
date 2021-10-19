@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom'
 import './Pages.scss'
 import {useDispatch,useSelector} from 'react-redux'
 import {addUserAsync} from '../store/action/index'
-import {fetchProvincesAsync,fetchRegenciesAsync,fetchDistrictsAsync,fetchSubDistrictsAsync, loginUserAsync} from '../store/action/index'
+import {fetchProvincesAsync,fetchRegenciesAsync,fetchDistrictsAsync,fetchSubDistrictsAsync} from '../store/action/index'
 import {useHistory} from 'react-router-dom'
 function Register() {
     const history = useHistory()
@@ -25,13 +25,7 @@ function Register() {
     const [regency, setRegency] = useState('')
     const [RT, setRT] = useState('')
     const [RW, setRW] = useState('')
-    const dataLogin = useSelector(state => state.dataLogin)
-    console.log(dataLogin, '<<');
-    useEffect(()=> {
-        setFullName(dataLogin.full_name)
-        setEmail(dataLogin.email)
-        setPassword(dataLogin.password)
-    }, [])
+
     function setAddPhoneNumber(e){
         setPhoneNumber(e.target.value)
         console.log(e.target.value);
@@ -165,9 +159,6 @@ function Register() {
                     </div>
 
 
-                    <div className="flex flex-col mb-4">
-                        <textarea className="border py-2 px-3 text-grey-800"  name="domisili_address" id="domisili address" placeholder="Domisili address"></textarea>
-                    </div>
                     <div className="flex flex-row mb-4 justify-between	">
                         <label className="mb-2  text-lg text-gray-900" for="Select">Province</label>
                         <select className="border py-2  text-grey-800 p-10 w-80" value={province} onChange={setAddProvince} required>

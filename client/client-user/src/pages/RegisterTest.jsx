@@ -13,6 +13,7 @@ function RegisterTest() {
     const [phone_number, setPhoneNumber] = useState('')
     const [identity_card_number, setIdentityCardNumber] = useState('')
     const [identity_card_address, setIdentityCardAddress] = useState('')
+    // eslint-disable-next-line
     const [gender, setGender] = useState('')
     const [date_of_birth, setDateOfBirth] = useState('')
     const [province,setProvince] = useState('')
@@ -22,15 +23,23 @@ function RegisterTest() {
     const [RT, setRT] = useState('')
     const [RW, setRW] = useState('')
     const dataLogin = useSelector(state => state.dataLogin)
-    console.log(dataLogin, '<<<');
     useEffect(()=> {
         setFullName(dataLogin.full_name)
         setEmail(dataLogin.email)
         setPassword(dataLogin.password)
+        setPhoneNumber(dataLogin.phone_number)
+        setIdentityCardNumber(dataLogin.identity_card_number)
+        setIdentityCardAddress(dataLogin.identity_card_address)
+        setGender(dataLogin.gender)
+        setDistrict(dataLogin.district)
+        setSubDistrict(dataLogin.sub_district)
+        setRegency(dataLogin.regency)
+        setRT(dataLogin.RT)
+        setRW(dataLogin.RW)
+
     }, [dataLogin])
     function setAddPhoneNumber(e){
         setPhoneNumber(e.target.value)
-        console.log(e.target.value);
     }
     function setAddFullName(e){
         setFullName(e.target.value)
@@ -115,16 +124,34 @@ function RegisterTest() {
                     </div>
                     <div className="flex flex-col mb-4 gender-box">
                         <label className="mb-2 font-bold text-lg text-gray-900" for="gender">Gender</label>
-                        <div className="gender-box2">
-                            <div>
-                            <input type="radio" id="gender" name="gender" value="Female" onChange={setAddGender}></input>
-                            <label for="female"> Female</label>
+                        
+                        {
+                            dataLogin.gender === 'Female' ? 
+                            <div className="gender-box2"> 
+                                <div>
+                                <input type="radio"  id="gender" name="gender" value="Female"  onChange={setAddGender} checked></input>
+                                <label for="female"> Female</label>
+                                
+                                </div>
+                                <div>
+                                <input type="radio" id="gender" name="gender" value="Male" onChange={setAddGender} ></input>
+                                <label for="male"> Male</label>
+                                </div>
                             </div>
-                        <div>
-                        <input type="radio" id="gender" name="gender" value="Male" onChange={setAddGender}></input>
-                        <label for="male"> Male</label>
-                        </div>
-                        </div>
+                            : 
+                            <div className="gender-box2">
+                                <div>
+                                <input type="radio"  id="gender" name="gender" value="Female"  onChange={setAddGender}></input>
+                                <label for="female"> Female</label>
+                                
+                                </div>
+                            <div>
+                                <input type="radio" id="gender" name="gender" value="Male" onChange={setAddGender} checked></input>
+                                <label for="male"> Male</label>
+                            </div>
+                            </div>
+                        }
+
                     </div>
                     <div className="flex flex-col mb-4">
                     <label className="mb-2 font-bold text-lg text-gray-900" for="date_of_birth">Date of birth</label>
@@ -135,15 +162,10 @@ function RegisterTest() {
                     <div className="flex flex-col mb-4">
                         <input className="border py-2 px-3 text-grey-800" type="email" name="email" id="email" placeholder="Email" value={email} onChange={setAddEmail}></input>
                     </div>
-
-
-                    <div className="flex flex-col mb-4">
-                        <textarea className="border py-2 px-3 text-grey-800"  name="domisili_address" id="domisili address" placeholder="Domisili address"></textarea>
-                    </div>
                     <div className="flex flex-row mb-4 justify-between	">
                         <label className="mb-2  text-lg text-gray-900" for="Select">Province</label>
                         <select className="border py-2  text-grey-800 p-10 w-80" value={province} onChange={setAddProvince} required>
-                                <option value="" selected disabled>--choose province--</option>
+                                <option value="" disabled>--choose province--</option>
                                 {
                                     provincesList.map((province)=> {
                                         return (<option value={province.nama}  key={province.id}
@@ -200,10 +222,37 @@ function RegisterTest() {
                         <input className="border py-2 px-3 text-grey-800 w-80	" type="text" name="RW" id="RW" value={RW} onChange={setAddRW}></input>
 
                     </div>
-                    
+                    <div className="flex flex-row mb-4 justify-between	">
+                        <label className="mb-2  text-lg text-gray-900">Clinic</label>
+                        <select value="ClinicId" className="border py-2  text-grey-800 p-10 w-80">
+                                <option value="" disabled>--choose clinic--</option>
+                                <option value="Clinic1">Klinik 1</option>
+                                <option value="Clinic2">Klinik 2</option>
+                                <option value="Clinic3">Klinik 3</option>
+                        </select>
+                    </div>
+                    <div className="flex flex-row mb-4 justify-between	">
+                        <label className="mb-2  text-lg text-gray-900">Service</label>
+                        <select value="service_name" className="border py-2  text-grey-800 p-10 w-80">
+                                <option value="" disabled>--choose service--</option>
+                                <option value="pcr">PCR</option>
+                                <option value="swab">SWAB</option>
+                        </select>
+                    </div>
+                    <div className="flex flex-row mb-4 justify-between">
+                        <label className="mb-2  text-lg text-gray-900" >Price</label>
+                        <input className="border py-2 px-3 text-grey-800 w-80	" type="text" name="total_price" id="total_price"></input>
+
+                    </div>
+                    <div className="flex flex-col mb-4">
+                    <label className="mb-2 font-bold text-lg text-gray-900" for="date_of_birth">Date</label>
+
+                        <input className="border py-2 px-3 text-grey-800" type="date" name="date" id="date" ></input>
+                    </div>
+
                     <div className="flex flex-col mb-4">
                         <input className="border py-2 px-3 text-grey-800"  type="password"name="password" id="password" placeholder="Password" value={password} onChange={setAddPassword}></input>
-                    </div>
+                    </div>          
                     <button className="block bg-blue-600 hover:bg-blue-900 text-white uppercase text-lg mx-auto p-4 rounded" type="submit">Submit form</button>
                     </form>
                 </div>
