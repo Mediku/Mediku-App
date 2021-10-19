@@ -96,7 +96,6 @@ class ControllerUser {
         throw { name: "Unauthorized" };
       }
     } catch (err) {
-      console.log(err);
       next(err);
     }
   }

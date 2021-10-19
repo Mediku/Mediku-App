@@ -1,6 +1,5 @@
 "use strict";
 const { Model } = require("sequelize");
-const { hashPassword } = require("../../Clinic/helpers/bcryptjs");
 module.exports = (sequelize, DataTypes) => {
   class Clinic extends Model {
     /**
@@ -9,9 +8,9 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // Clinic.hasMany(models.Registration, {
-      //   foreignKey: "clinicId",
-      // });
+      Clinic.hasMany(models.Registration, {
+        foreignKey: "ClinicId",
+      });
     }
   }
   Clinic.init(
