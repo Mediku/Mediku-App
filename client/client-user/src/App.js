@@ -6,6 +6,7 @@ import Locations from "./pages/Locations";
 import AboutUs from "./pages/AboutUs";
 import ContactUs from "./pages/ContactUs";
 import Login from "./pages/Login";
+import RegisterTest from "./pages/RegisterTest";
 import "./App.scss";
 import "./index.css";
 
@@ -33,6 +34,10 @@ function App() {
       <Route path="/login">
         <Navbar></Navbar>
         <Login></Login>
+      </Route>
+      <Route path="/register-test">
+        <Navbar></Navbar>
+        <RegisterTest></RegisterTest>
       </Route>
       <Route path="/">
         <Navbar></Navbar>

@@ -1,12 +1,8 @@
 import React, {useState,useEffect} from 'react'
-import {Link} from 'react-router-dom'
 import './Pages.scss'
 import {useDispatch,useSelector} from 'react-redux'
-import {addUserAsync} from '../store/action/index'
-import {fetchProvincesAsync,fetchRegenciesAsync,fetchDistrictsAsync,fetchSubDistrictsAsync, loginUserAsync} from '../store/action/index'
-import {useHistory} from 'react-router-dom'
-function Register() {
-    const history = useHistory()
+import {fetchProvincesAsync,fetchRegenciesAsync,fetchDistrictsAsync,fetchSubDistrictsAsync} from '../store/action/index'
+function RegisterTest() {
     const dispatch = useDispatch()
     useEffect(()=> {
         dispatch(fetchProvincesAsync())
@@ -26,12 +22,12 @@ function Register() {
     const [RT, setRT] = useState('')
     const [RW, setRW] = useState('')
     const dataLogin = useSelector(state => state.dataLogin)
-    console.log(dataLogin, '<<');
+    console.log(dataLogin, '<<<');
     useEffect(()=> {
         setFullName(dataLogin.full_name)
         setEmail(dataLogin.email)
         setPassword(dataLogin.password)
-    }, [])
+    }, [dataLogin])
     function setAddPhoneNumber(e){
         setPhoneNumber(e.target.value)
         console.log(e.target.value);
@@ -92,41 +88,17 @@ function Register() {
     function setAddPassword(e){
         setPassword(e.target.value)
     }
-
-    function addNewUser(e){
-        e.preventDefault()
-        const payload = {
-            phone_number,
-            full_name,
-            email,
-            password,
-            identity_card_number,
-            identity_card_address,
-            gender,
-            date_of_birth,
-            province,
-            district,
-            sub_district,
-            RT,
-            RW,
-            regency
-
-        }
-        dispatch(addUserAsync(payload))
-        history.push('/login')
-        
-    }
     const provincesList = useSelector(state => state.provinces)
     const regenciesList = useSelector(state => state.regencies) 
     const districtsList = useSelector(state => state.districts) 
     const subDistrictsList = useSelector(state => state.subDistricts) 
     return (
-        <div className="register">
+        <div>
+            <div className="register">
             <div className="flex justify-center items-center w-full my-10">
                 <div className="w-1/2 bg-white rounded shadow-2xl p-8 m-4">
-                    <h2 className="block w-full text-center text-gray-800 text-2xl font-bold mb-6">Form pendaftaran</h2>
-                    <p className="block w-full text-center text-gray-800 text-2xs font-bold mb-6">Daftar baru atau <Link to="/login">Login</Link></p>
-                    <form onSubmit={addNewUser}>
+                    <h2 className="block w-full text-center text-gray-800 text-2xl font-bold mb-6">Form pendaftaran test</h2>
+                    <form >
                     <div className="flex flex-col mb-4">
                         <input className="border py-2 px-3 text-grey-800" type="text" name="full_name" id="full_name" placeholder="Full Name" value={full_name} onChange={setAddFullName}></input>
                     </div>
@@ -237,7 +209,8 @@ function Register() {
                 </div>
             </div>
         </div>
+        </div>
     )
 }
 
-export default Register
+export default RegisterTest
