@@ -1,5 +1,5 @@
 const request = require("supertest");
-const app = require("../bin/www");
+const app = require("../app");
 const { Clinic } = require("../models");
 
 beforeAll(() => {
@@ -41,7 +41,7 @@ describe("view clinic(s)", () => {
 
   test("get clinic with specific ID", (done) => {
     request(app)
-      .get("clinic/list/2")
+      .get("/clinic/list/2")
       .then((res) => {
         expect(res.body).toHaveProperty("id");
         expect(res.body).toHaveProperty("name");
@@ -65,12 +65,12 @@ describe("view clinic(s)", () => {
 
   test("display error for unregistered id in Clinic entity", (done) => {
     request(app)
-      .get("/clinic/30")
+      .get("/clinic/list/30")
       .then((res) => {
         expect(res.body).toHaveProperty("message");
-        expect(res.body.message).toContain('Clinic not found')
-        expect(res.status).toBe(404)
-        done()
+        expect(res.body.message).toContain("Clinic not found");
+        expect(res.status).toBe(404);
+        done();
       });
   });
 });
