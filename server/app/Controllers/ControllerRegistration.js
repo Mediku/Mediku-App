@@ -1,4 +1,4 @@
-const { Registration, Clinic } = require("../models");
+const { Registration } = require("../models");
 const sendNodemailer = require("../helpers/nodemailer");
 
 class ControllerRegistration {
@@ -36,6 +36,19 @@ class ControllerRegistration {
       is_paid = false;
     }
     const UserId = req.user.id;
+    const clinic = await Clinic.findByPk(result.ClinicId);
+    sendNodemailer(
+      req.user.email,
+      "Registration Succeess",
+      `Thank you for registering on Mediku. Here are your registration informations:
+
+      Your name: ${req.user.full_name}
+      Clinic name: ${clinic.name}
+      Service name: ${result.service_name}
+      Date: ${result.date}
+      
+      Please go to the clinic you have registered`
+    );
     try {
       const result = await Registration.create({
         service_name,
@@ -45,20 +58,8 @@ class ControllerRegistration {
         is_paid,
         ClinicId,
         UserId,
+        is_tested: false,
       });
-      const clinic = await Clinic.findByPk(result.ClinicId);
-      sendNodemailer(
-        req.user.email,
-        "Registration Succeess",
-        `Thank you for registering on Mediku. Here are your registration informations:
-
-        Your name: ${req.user.full_name}
-        Clinic name: ${clinic.name}
-        Service name: ${result.service_name}
-        Date: ${result.date}
-        
-        Please go to the clinic you have registered`
-      );
       res.status(201).json(result);
     } catch (err) {
       next(err);
@@ -84,13 +85,20 @@ class ControllerRegistration {
 
   static async editRegistration(req, res, next) {
     let is_paid;
+    let is_tested;
     const { id } = req.params;
-    const { service_name, total_price, date, time, ClinicId } = req.body;
+    const { service_name, total_price, date, time, ClinicId, test_result } =
+      req.body;
     const UserId = req.user.id;
     if (req.body.is_paid == "true") {
       is_paid = true;
     } else {
       is_paid = false;
+    }
+    if (req.body.is_tested == "true") {
+      is_tested = true;
+    } else {
+      is_tested = false;
     }
     const data = {
       service_name,
@@ -100,6 +108,8 @@ class ControllerRegistration {
       ClinicId,
       UserId,
       is_paid,
+      is_tested,
+      test_result,
     };
     try {
       const result = await Registration.update(data, {
