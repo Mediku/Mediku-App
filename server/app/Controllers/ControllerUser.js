@@ -6,6 +6,7 @@ const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 class ControllerUser {
   static async register(req, res, next) {
+    console.log(req.body);
     const {
       full_name,
       email,
@@ -56,7 +57,6 @@ class ControllerUser {
         RW: result.RW,
       });
     } catch (err) {
-      console.log(err);
       next(err);
     }
   }

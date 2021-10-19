@@ -9,9 +9,11 @@ class ControllerRegistration {
         include: [
           {
             model: User,
+            attributes: { exclude: ["password"] },
           },
           {
             model: Clinic,
+            attributes: { exclude: ["password"] },
           },
         ],
       });
@@ -28,9 +30,11 @@ class ControllerRegistration {
         include: [
           {
             model: User,
+            attributes: { exclude: ["password"] },
           },
           {
             model: Clinic,
+            attributes: { exclude: ["password"] },
           },
         ],
       });
@@ -72,22 +76,27 @@ class ControllerRegistration {
       });
       res.status(201).json(result);
       const clinic = await Clinic.findByPk(result.ClinicId);
-      console.log(clinic);
-      console.log(req.user.email);
-      console.log(req.user.full_name);
-      console.log(result.service_name);
-      console.log(result.date);
       sendNodemailer(
         req.user.email,
         "Registration Succeess",
-        `Thank you for registering on Mediku. Here are your registration informations:
+        `Hello, ${req.user.full_name}. Thank you for registering on Mediku. Here are your registration informations:
 
         Your name: ${req.user.full_name}
         Clinic name: ${clinic.name}
         Service name: ${result.service_name}
+        Price: ${result.total_price}
         Date: ${result.date}
         
-        Please go to the clinic where you have registered`
+        Please go to the clinic you have registered`
+      );
+      sendNodemailer(
+        clinic.email,
+        `User Registration`,
+        `A user have registered on your clinic.
+        
+        Name: ${req.user.full_name}
+        Service nameL ${result.service_name}
+        Date: ${result.date}`
       );
       res.status(201).json(result);
     } catch (err) {
@@ -109,6 +118,43 @@ class ControllerRegistration {
       }
     } catch (err) {
       next(err);
+    }
+  }
+
+  static async editTestResult(req, res, next) {
+    const id = req.params.id;
+    try {
+      const foundRegistration = await Registration.findByPk(id, {
+        include: [
+          {
+            model: User,
+            attributes: { exclude: ["password"] },
+          },
+          {
+            model: Clinic,
+            attributes: { exclude: ["password"] },
+          },
+        ],
+      });
+      console.log(foundRegistration);
+      if (!foundRegistration) {
+        throw { name: "Data Not Found" };
+      } else {
+        await Registration.update(
+          { test_result: req.body.test_result },
+          { where: { id }, returning: true }
+        );
+        sendNodemailer(
+          foundRegistration.User.email,
+          `Your test result from clinic ${foundRegistration.Clinic.name}`,
+          `We have done the test with ${foundRegistration.service_name} and concluded that your test result is ${req.body.test_result}`
+        );
+        res.status(200).json({
+          message: `Registration with ID : ${foundRegistration.id} has been updated`,
+        });
+      }
+    } catch (err) {
+      console.log(err);
     }
   }
 
