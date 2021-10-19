@@ -19,10 +19,10 @@ function App() {
       <Route path="/login">
         <Login />
       </Route>
-      
-      <PrivateRoute path='/'>
+
+      <Route path="/">
         <Home />
-      </PrivateRoute>
+      </Route>
 
     </Switch> 
   );
