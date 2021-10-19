@@ -167,6 +167,14 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     {
+      hooks: {
+        beforeCreate: (data, options) => {
+          data.operational_day_open = data.operational_day_open.toLowerCase();
+        },
+        beforeUpdate: (data, options) => {
+          data.operational_day_open = data.operational_day_open.toLowerCase();
+        },
+      },
       sequelize,
       modelName: "Clinic",
     }
