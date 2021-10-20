@@ -19,7 +19,6 @@ const authorizationUser = async (req, res, next) => {
 };
 
 const authorizationUserProfile = async (req, res, next) => {
-  console.log("CEK USER PROFILE");
   const { id } = req.params;
   try {
     const foundUser = await User.findByPk(id);

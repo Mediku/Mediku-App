@@ -64,32 +64,28 @@ class ControllerUser {
     const { email, password } = req.body;
     try {
       const result = await User.findOne({ where: { email } });
-      if (result) {
-        if (checkPassword(password, result.password)) {
-          const access_token = signToken({
-            id: result.id,
-            email: result.email,
-          });
-          res.status(200).json({
-            id: result.id,
-            email: result.email,
-            full_name: result.full_name,
-            phone_number: result.phone_number,
-            identity_card_number: result.identity_card_number,
-            identity_card_address: result.identity_card_address,
-            gender: result.gender,
-            date_of_birth: result.date_of_birth,
-            province: result.province,
-            regency: result.regency,
-            district: result.district,
-            sub_district: result.sub_district,
-            RT: result.RT,
-            RW: result.RW,
-            access_token,
-          });
-        } else {
-          throw { name: "Unauthorized" };
-        }
+      if (result && checkPassword(password, result.password)) {
+        const access_token = signToken({
+          id: result.id,
+          email: result.email,
+        });
+        res.status(200).json({
+          id: result.id,
+          email: result.email,
+          full_name: result.full_name,
+          phone_number: result.phone_number,
+          identity_card_number: result.identity_card_number,
+          identity_card_address: result.identity_card_address,
+          gender: result.gender,
+          date_of_birth: result.date_of_birth,
+          province: result.province,
+          regency: result.regency,
+          district: result.district,
+          sub_district: result.sub_district,
+          RT: result.RT,
+          RW: result.RW,
+          access_token,
+        });
       } else {
         throw { name: "Unauthorized" };
       }
@@ -187,14 +183,10 @@ class ControllerUser {
     const { id } = req.params;
     try {
       const foundUser = await User.findByPk(id);
-      if (!foundUser) {
-        throw { name: "Data Not Found" };
-      } else {
-        await User.destroy({ where: { id } });
-        res
-          .status(200)
-          .json({ message: `User ${foundUser.full_name} has been deleted` });
-      }
+      await User.destroy({ where: { id } });
+      res
+        .status(200)
+        .json({ message: `User ${foundUser.full_name} has been deleted` });
     } catch (err) {
       next(err);
     }

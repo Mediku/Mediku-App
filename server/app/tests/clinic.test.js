@@ -118,6 +118,8 @@ describe("create a clinic", () => {
         expect(res.body.message).toContain("Clinic successfully registered");
         expect(res.body).toHaveProperty("id");
         expect(res.body.id).toBe(22);
+        expect(res.body).toHaveProperty("email");
+        expect(res.body.email).toContain("klinikngakak@mail.com");
         expect(res.body).toHaveProperty("name");
         expect(res.body.name).toContain("klinik ngakak");
         expect(res.body).toHaveProperty("phone_number");
@@ -934,6 +936,40 @@ describe("login as clinic admin", () => {
         done(err);
       });
   });
+  test("wrong email", (done) => {
+    request(app)
+      .post("/clinic/login")
+      .send({
+        email: "useremailcnic@mail.com",
+        password: "passwordclinic",
+      })
+      .then((res) => {
+        expect(res.body).toHaveProperty("message");
+        expect(res.body.message).toContain("Email/Password is wrong");
+        expect(res.status).toBe(401);
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+  test("wrong password", (done) => {
+    request(app)
+      .post("/clinic/login")
+      .send({
+        email: "useremailclinic@mail.com",
+        password: "passwordcli",
+      })
+      .then((res) => {
+        expect(res.body).toHaveProperty("message");
+        expect(res.body.message).toContain("Email/Password is wrong");
+        expect(res.status).toBe(401);
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
 });
 
 describe("update a clinic", () => {
@@ -950,9 +986,10 @@ describe("update a clinic", () => {
       antigen_price: 200000,
       pcr_price: 300000,
       operational_day_open: "senin,selasa,rabu,kamis",
+      password: "newpasswordngakak",
     };
     request(app)
-      .patch("/clinic/edit/2")
+      .put("/clinic/edit/2")
       .send(add)
       .then((res) => {
         expect(res.body).toHaveProperty("id");
@@ -980,6 +1017,8 @@ describe("update a clinic", () => {
         expect(res.body.pcr_price).toBe(300000);
         expect(res.body).toHaveProperty("antigen_price");
         expect(res.body.antigen_price).toBe(200000);
+        expect(res.body).toHaveProperty("password");
+        expect(res.body.password).toContain("newpasswordngakak");
         expect(res.status).toBe(200);
         done();
       })
@@ -987,10 +1026,10 @@ describe("update a clinic", () => {
         done(err);
       });
   });
-  test("return error if name is empty", (done) => {
+  test("return error if clinic not found", (done) => {
     let add = {
-      name: "",
-      email: "klinikngakak@mail.com",
+      name: "edit klinik ngakak",
+      email: "editklinikngakak@mail.com",
       phone_number: "125445123689",
       address: "jalan ngakak",
       imageURL: `ngakakimg`,
@@ -1004,7 +1043,36 @@ describe("update a clinic", () => {
       password: "ngakak",
     };
     request(app)
-      .post("/clinic/add")
+      .put("/clinic/edit/5222")
+      .send(add)
+      .then((res) => {
+        expect(res.body).toHaveProperty("message");
+        expect(res.body.message).toContain("Clinic not found");
+        expect(res.status).toBe(404);
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+  test("return error if name is empty", (done) => {
+    let add = {
+      name: "",
+      email: "editklinikngakak@mail.com",
+      phone_number: "125445123689",
+      address: "jalan ngakak",
+      imageURL: `ngakakimg`,
+      operational_time_open: "09:00",
+      operational_time_close: "17:00",
+      swab_pcr: true,
+      swab_antigen: false,
+      antigen_price: 300000,
+      pcr_price: 200000,
+      operational_day_open: "senin,selasa,rabu,kamis,jumat",
+      password: "ngakak",
+    };
+    request(app)
+      .put("/clinic/edit/2")
       .send(add)
       .then((res) => {
         expect(res.body).toHaveProperty("message");
@@ -1019,7 +1087,7 @@ describe("update a clinic", () => {
   test("return error if name is null", (done) => {
     let add = {
       name: null,
-      email: "klinikngakak@mail.com",
+      email: "editklinikngakak@mail.com",
       phone_number: "125445123689",
       address: "jalan ngakak",
       imageURL: `ngakakimg`,
@@ -1033,7 +1101,7 @@ describe("update a clinic", () => {
       password: "ngakak",
     };
     request(app)
-      .post("/clinic/add")
+      .put("/clinic/edit/2")
       .send(add)
       .then((res) => {
         expect(res.body).toHaveProperty("message");
@@ -1062,7 +1130,7 @@ describe("update a clinic", () => {
       password: "ngakak",
     };
     request(app)
-      .post("/clinic/add")
+      .put("/clinic/edit/2")
       .send(add)
       .then((res) => {
         expect(res.body).toHaveProperty("message");
@@ -1091,7 +1159,7 @@ describe("update a clinic", () => {
       password: "ngakak",
     };
     request(app)
-      .post("/clinic/add")
+      .put("/clinic/edit/2")
       .send(add)
       .then((res) => {
         expect(res.body).toHaveProperty("message");
@@ -1121,7 +1189,7 @@ describe("update a clinic", () => {
       password: "ngakak",
     };
     request(app)
-      .post("/clinic/add")
+      .put("/clinic/edit/2")
       .send(add)
       .then((res) => {
         expect(res.body).toHaveProperty("message");
@@ -1136,7 +1204,7 @@ describe("update a clinic", () => {
   test("return error if phone_number is null", (done) => {
     let add = {
       name: "klinik ngakak",
-      email: "klinikngakak@mail.com",
+      email: "editklinikngakak@mail.com",
       phone_number: null,
       address: "jalan ngakak",
       imageURL: `ngakakimg`,
@@ -1150,7 +1218,7 @@ describe("update a clinic", () => {
       password: "ngakak",
     };
     request(app)
-      .post("/clinic/add")
+      .put("/clinic/edit/2")
       .send(add)
       .then((res) => {
         expect(res.body).toHaveProperty("message");
@@ -1165,7 +1233,7 @@ describe("update a clinic", () => {
   test("return error if phone_number is empty", (done) => {
     let add = {
       name: "klinik ngakak",
-      email: "klinikngakak@mail.com",
+      email: "editklinikngakak@mail.com",
       phone_number: "",
       address: "jalan ngakak",
       imageURL: `ngakakimg`,
@@ -1179,7 +1247,7 @@ describe("update a clinic", () => {
       password: "ngakak",
     };
     request(app)
-      .post("/clinic/add")
+      .put("/clinic/edit/2")
       .send(add)
       .then((res) => {
         expect(res.body).toHaveProperty("message");
@@ -1194,7 +1262,7 @@ describe("update a clinic", () => {
   test("return error if address is null", (done) => {
     let add = {
       name: "klinik ngakak",
-      email: "klinikngakak@mail.com",
+      email: "editklinikngakak@mail.com",
       phone_number: "125445123689",
       address: null, //jalan ngakak
       operational_time_open: "09:00",
@@ -1207,7 +1275,7 @@ describe("update a clinic", () => {
       password: "ngakak",
     };
     request(app)
-      .post("/clinic/add")
+      .put("/clinic/edit/2")
       .send(add)
       .then((res) => {
         expect(res.body).toHaveProperty("message");
@@ -1222,7 +1290,7 @@ describe("update a clinic", () => {
   test("return error if address is empty", (done) => {
     let add = {
       name: "klinik ngakak",
-      email: "klinikngakak@mail.com",
+      email: "editklinikngakak@mail.com",
       phone_number: "125445123689",
       address: "", //jalan ngakak
       operational_time_open: "09:00",
@@ -1235,7 +1303,7 @@ describe("update a clinic", () => {
       password: "ngakak",
     };
     request(app)
-      .post("/clinic/add")
+      .put("/clinic/edit/2")
       .send(add)
       .then((res) => {
         expect(res.body).toHaveProperty("message");
@@ -1250,7 +1318,7 @@ describe("update a clinic", () => {
   test("return error if operational time open is null", (done) => {
     let add = {
       name: "klinik ngakak",
-      email: "klinikngakak@mail.com",
+      email: "editklinikngakak@mail.com",
       phone_number: "125445123689",
       address: "jalan ngakak",
       imageURL: `ngakakimg`,
@@ -1264,7 +1332,7 @@ describe("update a clinic", () => {
       password: "ngakak",
     };
     request(app)
-      .post("/clinic/add")
+      .put("/clinic/edit/2")
       .send(add)
       .then((res) => {
         expect(res.body).toHaveProperty("message");
@@ -1279,7 +1347,7 @@ describe("update a clinic", () => {
   test("return error if operational time open is empty", (done) => {
     let add = {
       name: "klinik ngakak",
-      email: "klinikngakak@mail.com",
+      email: "editklinikngakak@mail.com",
       phone_number: "125445123689",
       address: "jalan ngakak",
       imageURL: `ngakakimg`,
@@ -1293,7 +1361,7 @@ describe("update a clinic", () => {
       password: "ngakak",
     };
     request(app)
-      .post("/clinic/add")
+      .put("/clinic/edit/2")
       .send(add)
       .then((res) => {
         expect(res.body).toHaveProperty("message");
@@ -1308,7 +1376,7 @@ describe("update a clinic", () => {
   test("return error if operational time close is null", (done) => {
     let add = {
       name: "klinik ngakak",
-      email: "klinikngakak@mail.com",
+      email: "editklinikngakak@mail.com",
       phone_number: "125445123689",
       address: "jalan ngakak",
       imageURL: `ngakakimg`,
@@ -1322,7 +1390,7 @@ describe("update a clinic", () => {
       password: "ngakak",
     };
     request(app)
-      .post("/clinic/add")
+      .put("/clinic/edit/2")
       .send(add)
       .then((res) => {
         expect(res.body).toHaveProperty("message");
@@ -1337,7 +1405,7 @@ describe("update a clinic", () => {
   test("return error if operational time close is empty", (done) => {
     let add = {
       name: "klinik ngakak",
-      email: "klinikngakak@mail.com",
+      email: "editklinikngakak@mail.com",
       phone_number: "125445123689",
       address: "jalan ngakak",
       imageURL: `ngakakimg`,
@@ -1351,7 +1419,7 @@ describe("update a clinic", () => {
       password: "ngakak",
     };
     request(app)
-      .post("/clinic/add")
+      .put("/clinic/edit/2")
       .send(add)
       .then((res) => {
         expect(res.body).toHaveProperty("message");
@@ -1366,7 +1434,7 @@ describe("update a clinic", () => {
   test("return error if operational time close is null", (done) => {
     let add = {
       name: "klinik ngakak",
-      email: "klinikngakak@mail.com",
+      email: "editklinikngakak@mail.com",
       phone_number: "125445123689",
       address: "jalan ngakak",
       imageURL: `ngakakimg`,
@@ -1380,7 +1448,7 @@ describe("update a clinic", () => {
       password: "ngakak",
     };
     request(app)
-      .post("/clinic/add")
+      .put("/clinic/edit/2")
       .send(add)
       .then((res) => {
         expect(res.body).toHaveProperty("message");
@@ -1396,7 +1464,7 @@ describe("update a clinic", () => {
   test("return error if swab pcr is null", (done) => {
     let add = {
       name: "klinik ngakak",
-      email: "klinikngakak@mail.com",
+      email: "editklinikngakak@mail.com",
       phone_number: "125445123689",
       address: "jalan ngakak",
       imageURL: `ngakakimg`,
@@ -1410,7 +1478,7 @@ describe("update a clinic", () => {
       password: "ngakak",
     };
     request(app)
-      .post("/clinic/add")
+      .put("/clinic/edit/2")
       .send(add)
       .then((res) => {
         expect(res.body).toHaveProperty("message");
@@ -1425,7 +1493,7 @@ describe("update a clinic", () => {
   test("return error if swab pcr is empty", (done) => {
     let add = {
       name: "klinik ngakak",
-      email: "klinikngakak@mail.com",
+      email: "editklinikngakak@mail.com",
       phone_number: "125445123689",
       address: "jalan ngakak",
       imageURL: `ngakakimg`,
@@ -1439,7 +1507,7 @@ describe("update a clinic", () => {
       password: "ngakak",
     };
     request(app)
-      .post("/clinic/add")
+      .put("/clinic/edit/2")
       .send(add)
       .then((res) => {
         expect(res.body).toHaveProperty("message");
@@ -1454,7 +1522,7 @@ describe("update a clinic", () => {
   test("return error if swab antigen is null", (done) => {
     let add = {
       name: "klinik ngakak",
-      email: "klinikngakak@mail.com",
+      email: "editklinikngakak@mail.com",
       phone_number: "125445123689",
       address: "jalan ngakak",
       imageURL: `ngakakimg`,
@@ -1468,7 +1536,7 @@ describe("update a clinic", () => {
       password: "ngakak",
     };
     request(app)
-      .post("/clinic/add")
+      .put("/clinic/edit/2")
       .send(add)
       .then((res) => {
         expect(res.body).toHaveProperty("message");
@@ -1485,7 +1553,7 @@ describe("update a clinic", () => {
   test("return error if swab antigen is empty", (done) => {
     let add = {
       name: "klinik ngakak",
-      email: "klinikngakak@mail.com",
+      email: "editklinikngakak@mail.com",
       phone_number: "125445123689",
       address: "jalan ngakak",
       imageURL: `ngakakimg`,
@@ -1499,7 +1567,7 @@ describe("update a clinic", () => {
       password: "ngakak",
     };
     request(app)
-      .post("/clinic/add")
+      .put("/clinic/edit/2")
       .send(add)
       .then((res) => {
         expect(res.body).toHaveProperty("message");
@@ -1516,7 +1584,7 @@ describe("update a clinic", () => {
   test("return error if antigen price is less than 0", (done) => {
     let add = {
       name: "klinik ngakak",
-      email: "klinikngakak@mail.com",
+      email: "editklinikngakak@mail.com",
       phone_number: "125445123689",
       address: "jalan ngakak",
       imageURL: `ngakakimg`,
@@ -1530,7 +1598,7 @@ describe("update a clinic", () => {
       password: "ngakak",
     };
     request(app)
-      .post("/clinic/add")
+      .put("/clinic/edit/2")
       .send(add)
       .then((res) => {
         expect(res.body).toHaveProperty("message");
@@ -1545,7 +1613,7 @@ describe("update a clinic", () => {
   test("return error if pcr price is less than 0", (done) => {
     let add = {
       name: "klinik ngakak",
-      email: "klinikngakak@mail.com",
+      email: "editklinikngakak@mail.com",
       phone_number: "125445123689",
       address: "jalan ngakak",
       imageURL: `ngakakimg`,
@@ -1559,7 +1627,7 @@ describe("update a clinic", () => {
       password: "ngakak",
     };
     request(app)
-      .post("/clinic/add")
+      .put("/clinic/edit/2")
       .send(add)
       .then((res) => {
         expect(res.body).toHaveProperty("message");
@@ -1574,7 +1642,7 @@ describe("update a clinic", () => {
   test("return error if operational day open is null", (done) => {
     let add = {
       name: "klinik ngakak",
-      email: "klinikngakak@mail.com",
+      email: "editklinikngakak@mail.com",
       phone_number: "125445123689",
       address: "jalan ngakak",
       imageURL: `ngakakimg`,
@@ -1588,7 +1656,7 @@ describe("update a clinic", () => {
       password: "ngakak",
     };
     request(app)
-      .post("/clinic/add")
+      .put("/clinic/edit/2")
       .send(add)
       .then((res) => {
         expect(res.body).toHaveProperty("message");
@@ -1605,7 +1673,7 @@ describe("update a clinic", () => {
   test("return error if operational day open is empty", (done) => {
     let add = {
       name: "klinik ngakak",
-      email: "klinikngakak@mail.com",
+      email: "editklinikngakak@mail.com",
       phone_number: "125445123689",
       address: "jalan ngakak",
       imageURL: `ngakakimg`,
@@ -1619,7 +1687,7 @@ describe("update a clinic", () => {
       password: "ngakak",
     };
     request(app)
-      .post("/clinic/add")
+      .put("/clinic/edit/2")
       .send(add)
       .then((res) => {
         expect(res.body).toHaveProperty("message");
@@ -1636,7 +1704,7 @@ describe("update a clinic", () => {
   test("return error if password is null", (done) => {
     let add = {
       name: "klinik ngakak",
-      email: "klinikngakak@mail.com",
+      email: "editklinikngakak@mail.com",
       phone_number: "125445123689",
       address: "jalan ngakak",
       imageURL: `ngakakimg`,
@@ -1650,7 +1718,7 @@ describe("update a clinic", () => {
       password: null,
     };
     request(app)
-      .post("/clinic/add")
+      .put("/clinic/edit/2")
       .send(add)
       .then((res) => {
         expect(res.body).toHaveProperty("message");
@@ -1665,7 +1733,7 @@ describe("update a clinic", () => {
   test("return error if password is empty", (done) => {
     let add = {
       name: "klinik ngakak",
-      email: "klinikngakak@mail.com",
+      email: "editklinikngakak@mail.com",
       phone_number: "125445123689",
       address: "jalan ngakak",
       imageURL: `ngakakimg`,
@@ -1679,9 +1747,11 @@ describe("update a clinic", () => {
       password: "",
     };
     request(app)
-      .post("/clinic/add")
+      .put("/clinic/edit/2")
       .send(add)
       .then((res) => {
+        console.log(res.body);
+        console.log("LINE 1751");
         expect(res.body).toHaveProperty("message");
         expect(res.body.message).toContain("PLEASE INSERT PASSWORD");
         expect(res.status).toBe(400);
@@ -1703,6 +1773,19 @@ describe("delete a clinic", () => {
           `Clinic with name 'klinik ngakak' successfully deleted`
         );
         expect(res.status).toBe(200);
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+  test("return error if clinic not found", (done) => {
+    request(app)
+      .delete("/clinic/5555")
+      .then((res) => {
+        expect(res.body).toHaveProperty("message");
+        expect(res.body.message).toContain(`Clinic not found`);
+        expect(res.status).toBe(404);
         done();
       })
       .catch((err) => {

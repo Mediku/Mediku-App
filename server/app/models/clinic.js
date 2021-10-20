@@ -179,15 +179,11 @@ module.exports = (sequelize, DataTypes) => {
         beforeCreate: (data, options) => {
           data.operational_day_open = data.operational_day_open.toLowerCase();
           const hashedPwd = hashPassword(data.password);
-          console.log(hashedPwd);
-          console.log("HASHING PASSWORD CREATE");
           data.password = hashedPwd;
         },
         beforeUpdate: (data, options) => {
           data.operational_day_open = data.operational_day_open.toLowerCase();
           const hashedPwd = hashPassword(data.password);
-          console.log(hashedPwd);
-          console.log("HASHING PASSWORD UPDATE");
           data.password = hashedPwd;
         },
       },

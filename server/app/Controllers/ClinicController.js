@@ -12,8 +12,6 @@ class ClinicController {
         },
       });
       if (clinic) {
-        console.log(clinic);
-        console.log("CEK KLINIK");
         const checkPass = checkPassword(password, clinic.password);
         if (checkPass) {
           const access_token = signToken({
@@ -26,6 +24,8 @@ class ClinicController {
             email: clinic.email,
             access_token,
           });
+        } else {
+          throw { name: "Unauthorized" };
         }
       } else {
         throw { name: "Unauthorized" };
@@ -53,42 +53,37 @@ class ClinicController {
     };
     try {
       const clinic = await Clinic.create(data);
-      if (clinic) {
-        let days = clinic.operational_day_open.split(",");
-        res.status(201).json({
-          message: "Clinic successfully registered",
-          id: clinic.id,
-          name: clinic.name,
-          phone_number: clinic.phone_number,
-          address: clinic.address,
-          imageURL: clinic.imageURL,
-          operational_time_open: clinic.operational_time_open,
-          operational_time_close: clinic.operational_time_close,
-          operational_day_open: days,
-          swab_pcr: clinic.swab_pcr,
-          swab_antigen: clinic.swab_antigen,
-          pcr_price: clinic.pcr_price,
-          antigen_price: clinic.antigen_price,
-        });
-      }
+      let days = clinic.operational_day_open.split(",");
+      res.status(201).json({
+        message: "Clinic successfully registered",
+        id: clinic.id,
+        email: clinic.email,
+        name: clinic.name,
+        phone_number: clinic.phone_number,
+        address: clinic.address,
+        imageURL: clinic.imageURL,
+        operational_time_open: clinic.operational_time_open,
+        operational_time_close: clinic.operational_time_close,
+        operational_day_open: days,
+        swab_pcr: clinic.swab_pcr,
+        swab_antigen: clinic.swab_antigen,
+        pcr_price: clinic.pcr_price,
+        antigen_price: clinic.antigen_price,
+      });
     } catch (error) {
       next(error);
     }
   }
 
   static async list(req, res, next) {
-    try {
-      let list = await Clinic.findAll({});
-      for (let obj of list) {
-        obj.operational_day_open = obj.operational_day_open.split(",");
-      }
-      res.status(200).json({
-        message: "Succeded in getting all list",
-        list,
-      });
-    } catch (err) {
-      next(err);
+    let list = await Clinic.findAll({});
+    for (let obj of list) {
+      obj.operational_day_open = obj.operational_day_open.split(",");
     }
+    res.status(200).json({
+      message: "Succeded in getting all list",
+      list,
+    });
   }
 
   static async listById(req, res, next) {
@@ -122,6 +117,7 @@ class ClinicController {
       const swab_antigen = req.body.swab_antigen;
       const pcr_price = req.body.pcr_price;
       const antigen_price = req.body.antigen_price;
+      const password = req.body.password;
       const data = await Clinic.findByPk(id);
       if (data) {
         const result = await Clinic.update(
@@ -138,6 +134,7 @@ class ClinicController {
             pcr_price,
             antigen_price,
             imageURL,
+            password,
           },
           {
             where: { id: data.id },
@@ -145,6 +142,8 @@ class ClinicController {
           }
         );
         res.status(200).json(result[1][0]);
+      } else {
+        throw { name: "Not Found" };
       }
     } catch (err) {
       next(err);
@@ -155,7 +154,7 @@ class ClinicController {
     try {
       const clinic = await Clinic.findByPk(req.params.id);
       if (!clinic) {
-        throw new Error("Not Found");
+        throw { name: "Not Found" };
       }
       await Clinic.destroy({
         where: { id: req.params.id },
