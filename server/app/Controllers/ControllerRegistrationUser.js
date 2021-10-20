@@ -85,24 +85,10 @@ class ControllerRegistrationUser {
   }
 
   static async editRegistration(req, res, next) {
-    //user bisa edit punya dia sendiri, dari sisi klinik juga bisa edit
-    // yang ga bisa edit klinik yang ga punya user ini
-    let is_paid;
-    let is_tested;
     const { id } = req.params;
-    const { service_name, total_price, date, time, ClinicId, test_result } =
+    const { service_name, total_price, date, time, ClinicId } =
       req.body;
     const UserId = req.user.id;
-    if (req.body.is_paid == "true") {
-      is_paid = true;
-    } else {
-      is_paid = false;
-    }
-    if (req.body.is_tested == "true") {
-      is_tested = true;
-    } else {
-      is_tested = false;
-    }
     const data = {
       service_name,
       total_price,
@@ -110,9 +96,6 @@ class ControllerRegistrationUser {
       time,
       ClinicId,
       UserId,
-      is_paid,
-      is_tested,
-      test_result,
     };
     try {
       const result = await Registration.update(data, {
@@ -125,6 +108,5 @@ class ControllerRegistrationUser {
     }
   }
 }
-
 
 module.exports = ControllerRegistrationUser;

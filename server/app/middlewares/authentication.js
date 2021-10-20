@@ -38,7 +38,7 @@ async function authenticationClinic(req, res, next) {
     if (access_token) {
       const verified = verifyToken(access_token)
       const clinic = await Clinic.findByPk(verified.id)
-      req.clinic = {
+      req.user = {
         id: clinic.id,
         name: clinic.name,
       }

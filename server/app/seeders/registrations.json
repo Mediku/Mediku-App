@@ -2,10 +2,21 @@
   {
     "service_name": "antigen",
     "total_price": 75000,
-    "date": "2021-10-22T00:00:00.000Z",
+    "date": "2021-10-22",
     "time": "16:00:00",
-    "is_paid": false,
+    "is_paid": true,
     "ClinicId": 1,
+    "UserId": 1,
+    "is_tested": false,
+    "test_result": null
+  },
+  {
+    "service_name": "pcr",
+    "total_price": 75000,
+    "date": "2021-10-22",
+    "time": "16:00:00",
+    "is_paid": true,
+    "ClinicId": 2,
     "UserId": 1,
     "is_tested": false,
     "test_result": null

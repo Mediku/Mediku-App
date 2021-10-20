@@ -1,11 +1,13 @@
 const router = require('express').Router()
-const ControllerRegistration = require('../Controllers/ControllerRegistrationClinic')
+const ControllerRegistrationClinic = require('../Controllers/ControllerRegistrationClinic')
 const { authenticationClinic } = require('../middlewares/authentication')
+const { authorizationClinic } = require('../middlewares/authorization')
 
 router.use(authenticationClinic)
-router.get('/', ControllerRegistration.findAll)
-router.get('/:id', ControllerRegistration.findOneRegistration)
-router.put('/:id', authenticationClinic, ControllerRegistration.editRegistration)
-router.delete('/:id', authenticationClinic, ControllerRegistration.deleteRegistration)
+router.get('/', ControllerRegistrationClinic.findAll)
+router.get('/today', ControllerRegistrationClinic.findAllTodayRegistration)
+router.get('/:id', authorizationClinic, ControllerRegistrationClinic.findOneRegistration)
+router.put('/:id', authorizationClinic, ControllerRegistrationClinic.editRegistration)
+router.delete('/:id', authorizationClinic, ControllerRegistrationClinic.deleteRegistration)
 
 module.exports = router;

@@ -2,10 +2,25 @@ const { Registration, Clinic, User } = require("../models");
 const sendNodemailer = require("../helpers/nodemailer");
 
 class ControllerRegistrationClinic {
+  static async findAllTodayRegistration(req, res, next) {
+    try {
+      const result = await Registration.findAll({
+        where: {
+          id: req.user.id,
+          createdAt: new Date()
+        }
+      })
+      console.log(result);
+    } catch (err) {
+      console.log(err);
+      next(err)
+    }
+  }  // belum kelar (is_paid = true)
+
   static async findAll(req, res, next) {
     try {
       const result = await Registration.findAll({
-        where: { ClinicId: req.clinic.id },
+        where: { is_paid: true, ClinicId: req.user.id },
         include: [
           {
             model: User,

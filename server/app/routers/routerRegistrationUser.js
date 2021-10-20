@@ -5,7 +5,7 @@ const { authorizationUser } = require('../middlewares/authorization')
 
 router.use(authenticationUser)
 router.post('/', ControllerRegistrationUser.createRegistration)
-router.get('/:id', ControllerRegistrationUser.findOneRegistration)
+router.get('/:id', authorizationUser, ControllerRegistrationUser.findOneRegistration)
 router.put('/:id', authorizationUser, ControllerRegistrationUser.editRegistration)
 
 module.exports = router;
