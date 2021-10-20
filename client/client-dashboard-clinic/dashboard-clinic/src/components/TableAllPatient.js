@@ -1,16 +1,18 @@
 import React, {useEffect} from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAllPatientsAsync } from "../store/actions/index.js";
+import { fetchAllPatientsAsync,fetchPatientAsync } from "../store/actions/index.js";
 export default function TableAllPatient() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchAllPatientsAsync())
   }, [dispatch]);
   function processPatient(id){
-    console.log(id, '<<<<<<<');
+    dispatch(fetchPatientAsync(id))
+
   }
   const allPatients = useSelector((state) => state.allPatients);
+  // console.log(allPatients, '<<<');
   return (
     <div class="flex flex-col mx-5 bg-white rounded-lg shadow-md">
       <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -132,7 +134,7 @@ export default function TableAllPatient() {
                           patient.is_tested === false ? 
                           <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                           <Link to='/process?name=John'
-                            class="text-indigo-600 hover:text-indigo-900" onChange={processPatient(patient.User.id)}
+                            class="text-indigo-600 hover:text-indigo-900" onChange={() => processPatient(patient.id)}
                           >
                             <i class="fas fa-exchange-alt"></i>  Process
                           </Link>

@@ -6,6 +6,7 @@ import {
   SET_USER_LOGIN,
   SET_PATIENT_DAY,
   FETCH_ALL_PATIENTS,
+  FETCH_PATIENT,
 } from "./../keys";
 
 const baseUrl = "http://localhost:9000";
@@ -34,6 +35,10 @@ export const fetchAllPatients = (payload) => ({
   type: FETCH_ALL_PATIENTS,
   payload,
 });
+export const fetchPatient = (payload) => ({
+  type: FETCH_PATIENT,
+  payload,
+});
 
 export const getPatientByDay = () => {
   return (dispatch) => {
@@ -58,8 +63,23 @@ export const fetchAllPatientsAsync = () => {
         },
       })
       .then(({ data }) => {
-        console.log(data, "dari action");
+        // console.log(data, "dari action");
         dispatch(fetchAllPatients(data));
+      })
+      .catch((err) => console.log(err));
+  };
+};
+export const fetchPatientAsync = (id) => {
+  return (dispatch) => {
+    return axios
+      .get(`${baseUrl}/registrations/clinic/${id}`, {
+        headers: {
+          access_token: localStorage.access_token,
+        },
+      })
+      .then(({ data }) => {
+        console.log(data, "dari action");
+        // dispatch(fetchPatient(data));
       })
       .catch((err) => console.log(err));
   };

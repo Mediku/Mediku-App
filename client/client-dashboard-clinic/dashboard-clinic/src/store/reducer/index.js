@@ -31,6 +31,7 @@ function reducer(state = initialState, action) {
 
     case FETCH_ALL_PATIENTS:
       return { ...state, allPatients: payload };
+
     case FETCH_PATIENT:
       return { ...state, dataPatient: payload };
 
