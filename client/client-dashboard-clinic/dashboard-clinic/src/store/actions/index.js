@@ -68,3 +68,11 @@ export const fetchAllPatientsAsync = () => {
       .catch((err) => console.log(err));
   };
 };
+
+
+export const updateTestResult = (id) => {
+  return (dispatch) => {
+    return axios
+      .patch(`${baseUrl}//test/result/${id}`)
+  }
+}
