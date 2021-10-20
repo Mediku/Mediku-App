@@ -16,7 +16,6 @@ export default function FormProcess({name}) {
 					</div>
 					<Form />
 				</div>
-
 			</div>
 		</div>
 	)

@@ -15,7 +15,6 @@ export default function AllPatient() {
 					</div>
 					<Table />
 				</div>
-
 			</div>
 		</div>
 	)
