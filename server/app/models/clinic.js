@@ -110,10 +110,10 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           notEmpty: {
-            msg: "PLEASE INSERT CLOSE TIME",
+            msg: "PLEASE INSERT OPERATIONAL DAY OPEN",
           },
           notNull: {
-            msg: "PLEASE INSERT CLOSE TIME",
+            msg: "PLEASE INSERT OPERATIONAL DAY OPEN",
           },
         },
       },
@@ -145,11 +145,9 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
         validate: {
-          notEmpty: {
-            msg: "PLEASE INSERT ANTIGEN PRICE",
-          },
-          notNull: {
-            msg: "PLEASE INSERT ANTIGEN PRICE",
+          min: {
+            args: [0],
+            msg: "MINIMAL ANTIGEN PRICE IS 0",
           },
         },
       },
@@ -157,11 +155,9 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
         validate: {
-          notEmpty: {
-            msg: "PLEASE INSERT PCR PRICE",
-          },
-          notNull: {
-            msg: "PLEASE INSERT PCR PRICE",
+          min: {
+            args: [0],
+            msg: "MINIMAL PCR PRICE IS 0",
           },
         },
       },

@@ -13,11 +13,12 @@ class ClinicController {
       operational_day_open: req.body.operational_day_open,
       swab_pcr: req.body.swab_pcr,
       swab_antigen: req.body.swab_antigen,
-      pcr_price: req.body.pcr_price,
-      antigen_price: req.body.antigen_price,
+      pcr_price: Number(req.body.pcr_price),
+      antigen_price: Number(req.body.antigen_price),
     };
     try {
       const clinic = await Clinic.create(data);
+      console.log(clinic);
       if (clinic) {
         let days = clinic.operational_day_open.split(",");
         res.status(201).json({
@@ -83,8 +84,8 @@ class ClinicController {
       const operational_day_open = req.body.operational_day_open;
       const swab_pcr = req.body.swab_pcr;
       const swab_antigen = req.body.swab_antigen;
-      const pcr_price = req.body.price_pcr;
-      const antigen_price = req.body.price_antigen;
+      const pcr_price = req.body.pcr_price;
+      const antigen_price = req.body.antigen_price;
       const data = await Clinic.findByPk(id);
       if (data) {
         const result = await Clinic.update(
@@ -124,7 +125,7 @@ class ClinicController {
         returning: true,
       });
       res.status(200).json({
-        message: `Clinic with name '${clinic.name}' success to delete`,
+        message: `Clinic with name '${clinic.name}' successfully deleted`,
       });
     } catch (error) {
       next(error);
