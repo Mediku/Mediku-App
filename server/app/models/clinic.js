@@ -80,6 +80,18 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
+      imageURL: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: "PLEASE INSERT IMAGE URL",
+          },
+          notNull: {
+            msg: "PLEASE INSERT IMAGE URL",
+          },
+        },
+      },
       operational_time_open: {
         type: DataTypes.STRING,
         allowNull: false,

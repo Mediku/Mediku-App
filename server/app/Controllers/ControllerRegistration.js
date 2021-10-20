@@ -5,13 +5,19 @@ class ControllerRegistration {
   static async findAll(req, res, next) {
     try {
       const result = await Registration.findAll({
-        where: { UserId: req.user.id },
+        where: { ClinicId: req.user.id },
         include: [
           {
-            model: User
+            model: User,
+            attributes: {
+              exclude: ['password']
+            }
           },
           {
-            model: Clinic
+            model: Clinic,
+            attributes: {
+              exclude: ['password']
+            }
           }
         ]
       })
@@ -27,10 +33,16 @@ class ControllerRegistration {
       const result = await Registration.findByPk(id, {
         include: [
           {
-            model: User
+            model: User,
+            attributes: {
+              exclude: ['password']
+            }
           },
           {
-            model: Clinic
+            model: Clinic,
+            attributes: {
+              exclude: ['password']
+            }
           }
         ]
       })

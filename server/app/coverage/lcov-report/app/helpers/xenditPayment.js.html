@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for app/routers/routerRegistration.js</title>
+    <title>Code coverage report for app/helpers/xenditPayment.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,13 +19,13 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">app/routers</a> routerRegistration.js</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">app/helpers</a> xenditPayment.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>11/11</span>
+                <span class='fraction'>8/8</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>11/11</span>
+                <span class='fraction'>8/8</span>
             </div>
         
             
@@ -67,33 +67,27 @@
 <a name='L8'></a><a href='#L8'>8</a>
 <a name='L9'></a><a href='#L9'>9</a>
 <a name='L10'></a><a href='#L10'>10</a>
-<a name='L11'></a><a href='#L11'>11</a>
-<a name='L12'></a><a href='#L12'>12</a>
-<a name='L13'></a><a href='#L13'>13</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">2x</span>
+<a name='L11'></a><a href='#L11'>11</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span></td><td class="text"><pre class="prettyprint lang-js">const router = require('express').Router()
-const ControllerRegistration = require('../Controllers/ControllerRegistration')
-const { authenticationClinic, authenticationUser } = require('../middlewares/authentication')
-const { authorizationRegistration } = require('../middlewares/authorization')
+<span class="cline-any cline-yes">2x</span></td><td class="text"><pre class="prettyprint lang-js">const Xendit = require("xendit-node");
+const x = new Xendit({
+  secretKey: 'xnd_development_BmAbQP5LRkUeT3dGaxpyzXlAdhnlGS8i65pqw3oKFP1Y93KKF65Nycpu5R8KfN',
+});
+const { Invoice, Disbursement } = x;
+const invoiceSpecificOptions = {};
+const disbursementSpecificOptions = {};
+const XenditInvoice = new Invoice(invoiceSpecificOptions);
+const XenditDisbursement = new Disbursement(disbursementSpecificOptions);
 &nbsp;
-router.post('/', authenticationUser, ControllerRegistration.createRegistration)
-router.use(authenticationClinic)
-router.get('/', ControllerRegistration.findAll)
-router.get('/:id', ControllerRegistration.findOneRegistration)
-router.put('/:id', authorizationRegistration, ControllerRegistration.editRegistration)
-router.delete('/:id', authorizationRegistration, ControllerRegistration.deleteRegistration)
-&nbsp;
-module.exports = router</pre></td></tr></table></pre>
+module.exports = { XenditInvoice, XenditDisbursement };</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
