@@ -3,43 +3,37 @@ const { checkPassword } = require("../helpers/bcryptjs");
 const { signToken } = require("../helpers/jwt");
 
 class ClinicController {
-
   static async login(req, res, next) {
-    try{
-
-      console.log(req.body)
-      const {email, password} = req.body
+    try {
+      console.log(req.body);
+      const { email, password } = req.body;
       const clinic = await Clinic.findOne({
         where: {
-          email
-        }
-      })
+          email,
+        },
+      });
 
       if (clinic) {
-        const checkPass = checkPassword(password, clinic.password)
+        const checkPass = checkPassword(password, clinic.password);
         if (checkPass) {
           const access_token = signToken({
             id: clinic.id,
             email: clinic.email,
-          })
-          
+          });
+
           res.status(200).json({
             id: clinic.id,
             email: clinic.email,
-            access_token
-          })
+            access_token,
+          });
         }
+      } else {
+        throw { name: "Unauthorized" };
       }
-
-      else{
-          throw {name: "Unauthorized"}
-        }
-
-    }catch(err){
-      next(err)
+    } catch (err) {
+      next(err);
     }
   }
-
 
   static async create(req, res, next) {
     const data = {
@@ -109,7 +103,7 @@ class ClinicController {
       data.operational_day_open = data.operational_day_open.split(",");
       res.status(200).json(data);
     } catch (err) {
-      console.log(err)
+      console.log(err);
       next(err);
     }
   }
@@ -144,7 +138,7 @@ class ClinicController {
             swab_antigen,
             pcr_price,
             antigen_price,
-            imageURL
+            imageURL,
           },
           {
             where: { id: data.id },

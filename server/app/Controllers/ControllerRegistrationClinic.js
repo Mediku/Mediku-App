@@ -1,7 +1,7 @@
 const { Registration, Clinic, User } = require("../models");
 const sendNodemailer = require("../helpers/nodemailer");
-const Sequelize = require('sequelize')
-const Op = Sequelize.Op
+const Sequelize = require("sequelize");
+const Op = Sequelize.Op;
 
 class ControllerRegistrationClinic {
     static async findAllTodayRegistration(req, res, next) {
@@ -23,15 +23,16 @@ class ControllerRegistrationClinic {
         ]
       })
       res.status(200).json(result)
+
     } catch (err) {
-      next(err)
+      next(err);
     }
   }
 
   static async findAll(req, res, next) {
     try {
       const result = await Registration.findAll({
-        where: { is_paid: true, ClinicId: req.user.id },
+        where: { is_paid: false, ClinicId: req.user.id },
         include: [
           {
             model: User,
@@ -48,7 +49,7 @@ class ControllerRegistrationClinic {
       next(err);
     }
   }
-
+  // dashboard
   static async findOneRegistration(req, res, next) {
     const { id } = req.params;
     try {
@@ -92,25 +93,28 @@ class ControllerRegistrationClinic {
   }
 
   static async editIsTestedRegistration(req, res, next) {
-    const { id } = req.params
+    const { id } = req.params;
     try {
       const data = {
-        is_tested: true
-      }
+        is_tested: true,
+      };
       const foundRegistration = await Registration.findByPk(id, {
         include: [
           {
             model: User,
-            attributes: { exclude: ["password"] }
-          }
-        ]
-      })
-      await Registration.update(data, { where: { id: foundRegistration.id }, returning: true })
+            attributes: { exclude: ["password"] },
+          },
+        ],
+      });
+      await Registration.update(data, {
+        where: { id: foundRegistration.id },
+        returning: true,
+      });
       res.status(200).json({
-        message: `user ${foundRegistration.User.full_name}'s already tested`
-      })
+        message: `user ${foundRegistration.User.full_name}'s already tested`,
+      });
     } catch (err) {
-      next(err)
+      next(err);
     }
   }
 
@@ -147,12 +151,13 @@ class ControllerRegistrationClinic {
         });
       }
     } catch (err) {
-      next(err)
+      next(err);
     }
   }
 
   static async editRegistration(req, res, next) {
     let is_paid;
+
     let is_tested;
     const { id } = req.params;
     const { service_name, total_price, date, time, ClinicId, test_result } =
@@ -190,6 +195,5 @@ class ControllerRegistrationClinic {
     }
   }
 }
-
 
 module.exports = ControllerRegistrationClinic;

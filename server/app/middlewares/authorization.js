@@ -1,57 +1,60 @@
-const { Registration, User } = require('../models')
-
+const { Registration, User } = require("../models");
 const authorizationUser = async (req, res, next) => {
-  const id = +req.params.id
+  const id = +req.params.id;
   try {
-    const foundRegistration = await Registration.findByPk(id)
+    const foundRegistration = await Registration.findByPk(id);
     if (foundRegistration) {
       if (req.user.id == foundRegistration.UserId) {
-        next()
+        next();
       } else {
-        throw ({ name: 'You are not authorized' })
+        throw { name: "You are not authorized" };
       }
     } else {
-      throw ({ name: 'Data Not Found' })
+      throw { name: "Data Not Found" };
     }
   } catch (err) {
-    next(err)
+    next(err);
   }
-}
+};
 
 const authorizationUserProfile = async (req, res, next) => {
-  const { id } = req.params
+  const { id } = req.params;
   try {
-    const foundUser = await User.findByPk(id)
+    const foundUser = await User.findByPk(id);
     if (foundUser) {
       if (req.user.id == foundUser.id) {
-        next()
+        next();
       } else {
-        throw ({ name: 'You are not authorized' })
+        throw { name: "You are not authorized" };
       }
     } else {
-      throw ({ name: 'Data Not Found' })
+      throw { name: "Data Not Found" };
     }
   } catch (err) {
-    next(err)
+    next(err);
   }
-}
+};
 
 const authorizationClinic = async (req, res, next) => {
-  const id = +req.params.id
+  const id = +req.params.id;
   try {
-    const foundRegistration = await Registration.findByPk(id)
+    const foundRegistration = await Registration.findByPk(id);
     if (foundRegistration) {
       if (req.user.id == foundRegistration.ClinicId) {
-        next()
+        next();
       } else {
-        throw ({ name: 'You are not authorized' })
+        throw { name: "You are not authorized" };
       }
     } else {
-      throw ({ name: 'Data Not Found' })
+      throw { name: "Data Not Found" };
     }
   } catch (err) {
-    next(err)
+    next(err);
   }
-}
+};
 
-module.exports = { authorizationUser, authorizationClinic, authorizationUserProfile }
+module.exports = {
+  authorizationUser,
+  authorizationClinic,
+  authorizationUserProfile,
+};

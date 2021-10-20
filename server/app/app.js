@@ -1,14 +1,14 @@
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config()
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
 }
-const express = require('express')
-const cors = require('cors')
-const routers = require('./routers')
-const app = express()
+const express = require("express");
+const cors = require("cors");
+const routers = require("./routers");
+const app = express();
 
-app.use(cors())
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
-app.use(routers)
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(routers);
 
-module.exports = app
+module.exports = app;

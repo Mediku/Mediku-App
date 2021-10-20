@@ -4,15 +4,15 @@ import { getPatientByDay } from "./../store/actions/";
 import TableBodyHome from './TableBodyHome'
 
 export default function Tablepatient() {
-	const dispatch = useDispatch()
-	const getName = localStorage.username;
+  const dispatch = useDispatch();
+  const getName = localStorage.username;
 
-	useEffect(() => {
-		dispatch(getPatientByDay());
-	}, [dispatch]);
+  useEffect(() => {
+    dispatch(getPatientByDay());
+  }, [dispatch]);
 
 	const patients = useSelector((state) => state.patientToday);
-	console.log(patients)
+	console.log(patients, '<<<<<<<,')
 
 	return (
 		<div class="flex flex-col mx-5 bg-white rounded-lg shadow-md">
