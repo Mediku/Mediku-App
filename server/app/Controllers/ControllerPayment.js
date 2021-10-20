@@ -16,7 +16,7 @@ class ControllerXendit {
         amount: foundRegistration.total_price,
         shouldSendEmail: true,
       });
-      res.status(200).json({
+      res.status(201).json({
         invoice_id: invoice.id, // client tolong kasi ini key buat si user input saat dia konfirmasi kalau dia sudah bayar
         external_id: invoice.external_id,
         status: invoice.status,

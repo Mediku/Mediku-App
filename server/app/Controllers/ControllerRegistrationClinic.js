@@ -9,11 +9,11 @@ class ControllerRegistrationClinic {
       const result = await Registration.findAll({
         where: {
           ClinicId: req.user.id,
-          // is_paid: true,
-          // createdAt: {
-          //   [Op.lt]: new Date(),
-          //   [Op.gt]: new Date(new Date() - 24 * 60 * 60 * 1000)
-          // }
+          is_paid: true,
+          createdAt: {
+            [Op.lt]: new Date(),
+            [Op.gt]: new Date(new Date() - 24 * 60 * 60 * 1000)
+          }
         },
         include: [
           {
