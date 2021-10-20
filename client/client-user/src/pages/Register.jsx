@@ -126,7 +126,7 @@ function Register() {
     const districtsList = useSelector(state => state.districts) 
     const subDistrictsList = useSelector(state => state.subDistricts) 
     return (
-        <div className="register">
+        <div className="register register-container">
             <div className="flex justify-center items-center w-full my-10">
                 <div className="w-1/2 bg-white rounded shadow-2xl p-8 m-4">
                     <h2 className="block w-full text-center text-gray-800 text-2xl font-bold mb-6">Form pendaftaran</h2>

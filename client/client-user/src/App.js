@@ -3,9 +3,9 @@ import Home from "./pages/Home";
 import Register from "./pages/Register";
 import Navbar from "./components/Navbar";
 import Locations from "./pages/Locations";
-import AboutUs from "./pages/AboutUs";
 import ContactUs from "./pages/ContactUs";
 import Login from "./pages/Login";
+import History from "./pages/History";
 import RegisterTest from "./pages/RegisterTest";
 import "./App.scss";
 import "./index.css";
@@ -23,10 +23,6 @@ function App() {
         <Navbar></Navbar>
         <Locations></Locations>
       </Route>
-      <Route path="/about-us">
-        <Navbar></Navbar>
-        <AboutUs></AboutUs>
-      </Route>
       <Route path="/contact-us">
         <Navbar></Navbar>
         <ContactUs></ContactUs>
@@ -34,6 +30,10 @@ function App() {
       <Route path="/login">
         <Navbar></Navbar>
         <Login></Login>
+      </Route>
+      <Route path="/history">
+        <Navbar></Navbar>
+        <History></History>
       </Route>
       <Route path="/register-test">
         <Navbar></Navbar>

@@ -345,7 +345,7 @@ function RegisterTest() {
                     <div className="flex flex-col mb-4">
                         <input className="border py-2 px-3 text-grey-800"  type="password"name="password" id="password" placeholder="Password" value={password} onChange={setAddPassword}></input>
                     </div>          
-                    <button className="block bg-blue-600 hover:bg-blue-900 text-white uppercase text-lg mx-auto p-4 rounded" type="submit">Submit form</button>
+                    <button className="block bg-blue-600 hover:bg-blue-900 text-white uppercase text-lg mx-auto p-4 rounded " id="submit-register"type="submit">Submit form</button>
                     </form>
                 </div>
             </div>

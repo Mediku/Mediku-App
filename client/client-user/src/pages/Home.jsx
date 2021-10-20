@@ -8,9 +8,9 @@ function Home() {
             <div className="landing-container">
             <div class="container">
                 <div className="text-landing-page">
-                    <h2 class="heading">We provide PCR and SWAB Test for you</h2>
+                    <h2 class="heading">We provide PCR and Antigen Test for you</h2>
                     <h2 class="text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Non tempora magnam illo incidunt, voluptas debitis aliquid accusantium delectus pariatur asperiores.</h2> <br />
-                    <Link class ="router button" to='/register'>Book a test</Link>
+                    <Link class ="router button button-grow button-landing" to='/register'>Book a test</Link>
                 </div>
                 <div className="photo-landing-page">
                     <img src={image} style={{zIndex: -1}} alt="" />

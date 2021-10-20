@@ -1,6 +1,22 @@
 @import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
 $root-width: 1rem 5rem;
 $primary-color: #205ceb;
+$defaultDuration: 0.3s;
+$primaryColour: #ececec;
+$secondaryColour: #666;
+$shadowColour: rgba(0, 0, 0, 0.6);
+@mixin hideTapHighlightColor() {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+@mixin hardwareAccel() {
+  transform: translateZ(0);
+}
+
+@mixin improveAntiAlias() {
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+}
+
 .logo {
   h1 {
     font-family: "Pacifico", cursive;
@@ -18,12 +34,32 @@ ul {
     color: #333;
     text-decoration: none;
   }
+  .grow {
+    display: inline-block;
+    transition-duration: $defaultDuration;
+    transition-property: transform;
+
+    @include hideTapHighlightColor();
+    @include hardwareAccel();
+    @include improveAntiAlias();
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
 }
+
 nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: $root-width;
+  .list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
   ul {
     display: flex;
     li {

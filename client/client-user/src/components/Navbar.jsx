@@ -11,12 +11,11 @@ function Navbar() {
             </div>
             <div>
                 <ul>
-                    <li><Link class="router" to="/">Home</Link></li>
-                    <li><Link class="router" to="/locations">Locations</Link></li>
-                    <li><Link class="router" to="/about-us">About Us</Link></li>
-                    <li><Link class="router" to="/contact-us">Contact Us</Link></li>
-                    <li><Link class="router button" to="/register">Register Test</Link></li>
-
+                    <li className="list"><Link class="router" to="/">Home</Link></li>
+                    <li className="list"><Link class="router list" to="/locations">Locations</Link></li>
+                    <li className="list"><Link class="router list" to="/contact-us">Contact Us</Link></li>
+                    <li className="list"><Link class="router list" to="/history">History</Link></li>
+                    <li className="list"><Link class="router button grow" to="/register">Register Test</Link></li>
                 </ul>
             </div>
             
