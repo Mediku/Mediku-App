@@ -17,11 +17,7 @@ class ControllerRegistrationUser {
           },
         ],
       });
-      if (!result) {
-        throw { name: "Data Not Found" };
-      } else {
-        res.status(200).json(result);
-      }
+      res.status(200).json(result);
     } catch (err) {
       next(err);
     }
@@ -31,17 +27,17 @@ class ControllerRegistrationUser {
     let is_paid;
     let is_tested;
     const { service_name, total_price, date, time, ClinicId } = req.body;
-    if (req.body.is_paid == "true") {
+    if (req.body.is_paid == true) {
       is_paid = true;
     } else {
       is_paid = false;
     }
-    if (req.body.is_tested == "true") {
+    if (req.body.is_tested == true) {
       is_tested = true;
     } else {
       is_tested = false;
     }
-    const UserId = req.user.id; 
+    const UserId = req.user.id;
     try {
       const result = await Registration.create({
         service_name,
@@ -79,14 +75,14 @@ class ControllerRegistrationUser {
       );
       res.status(201).json(result);
     } catch (err) {
+      console.log(err);
       next(err);
     }
   }
 
   static async editRegistration(req, res, next) {
     const { id } = req.params;
-    const { service_name, total_price, date, time, ClinicId } =
-      req.body;
+    const { service_name, total_price, date, time, ClinicId } = req.body;
     const UserId = req.user.id;
     const data = {
       service_name,

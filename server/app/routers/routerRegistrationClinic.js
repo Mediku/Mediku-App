@@ -4,7 +4,6 @@ const { authenticationClinic } = require("../middlewares/authentication");
 const { authorizationClinic } = require("../middlewares/authorization");
 
 router.use(authenticationClinic);
-// client find all patients
 router.get("/", ControllerRegistrationClinic.findAll);
 router.get("/today", ControllerRegistrationClinic.findAllTodayRegistration);
 router.get(

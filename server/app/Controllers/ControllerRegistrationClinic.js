@@ -4,26 +4,25 @@ const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
 
 class ControllerRegistrationClinic {
-    static async findAllTodayRegistration(req, res, next) {
+  static async findAllTodayRegistration(req, res, next) {
     try {
       const result = await Registration.findAll({
         where: {
           ClinicId: req.user.id,
-          is_paid: true,
+          is_paid: false,
           createdAt: {
             [Op.lt]: new Date(),
-            [Op.gt]: new Date(new Date() - 24 * 60 * 60 * 1000)
-          }
+            [Op.gt]: new Date(new Date() - 24 * 60 * 60 * 1000),
+          },
         },
         include: [
           {
             model: User,
             attributes: { exclude: ["password"] },
-          }
-        ]
-      })
-      res.status(200).json(result)
-
+          },
+        ],
+      });
+      res.status(200).json(result);
     } catch (err) {
       next(err);
     }
@@ -65,12 +64,7 @@ class ControllerRegistrationClinic {
           },
         ],
       });
-      if (!result) {
-        throw { name: "Data Not Found" };
-      } else {
-        console.log(result, "<<");
-        res.status(200).json(result);
-      }
+      res.status(200).json(result);
     } catch (err) {
       console.log(err);
       next(err);
@@ -81,14 +75,10 @@ class ControllerRegistrationClinic {
     const { id } = req.params;
     try {
       const foundRegistration = await Registration.findByPk(id);
-      if (!foundRegistration) {
-        throw { name: "Data Not Found" };
-      } else {
-        await Registration.destroy({ where: { id } });
-        res.status(200).json({
-          message: `Registration with ID : ${foundRegistration.id} has been deleted`,
-        });
-      }
+      await Registration.destroy({ where: { id } });
+      res.status(200).json({
+        message: `Registration with ID : ${foundRegistration.id} has been deleted`,
+      });
     } catch (err) {
       next(err);
     }
@@ -136,22 +126,18 @@ class ControllerRegistrationClinic {
         ],
       });
 
-      if (!foundRegistration) {
-        throw { name: "Data Not Found" };
-      } else {
-        await Registration.update(
-          { test_result: req.body.test_result },
-          { where: { id }, returning: true }
-        );
-        sendNodemailer(
-          foundRegistration.User.email,
-          `Your test result from clinic ${foundRegistration.Clinic.name}`,
-          `We have done the test with ${foundRegistration.service_name} and concluded that your test result is ${req.body.test_result}`
-        );
-        res.status(200).json({
-          message: `Registration with ID : ${foundRegistration.id} has been updated`,
-        });
-      }
+      await Registration.update(
+        { test_result: req.body.test_result },
+        { where: { id }, returning: true }
+      );
+      sendNodemailer(
+        foundRegistration.User.email,
+        `Your test result from clinic ${foundRegistration.Clinic.name}`,
+        `We have done the test with ${foundRegistration.service_name} and concluded that your test result is ${req.body.test_result}`
+      );
+      res.status(200).json({
+        message: `Registration with ID : ${foundRegistration.id} has been updated`,
+      });
     } catch (err) {
       next(err);
     }
