@@ -71,15 +71,14 @@ export const fetchAllPatientsAsync = () => {
 };
 export const fetchPatientAsync = (id) => {
   return (dispatch) => {
-    return axios
+    axios
       .get(`${baseUrl}/registrations/clinic/${id}`, {
         headers: {
           access_token: localStorage.access_token,
         },
       })
       .then(({ data }) => {
-        console.log(data, "dari action");
-        // dispatch(fetchPatient(data));
+        dispatch(fetchPatient(data));
       })
       .catch((err) => console.log(err));
   };

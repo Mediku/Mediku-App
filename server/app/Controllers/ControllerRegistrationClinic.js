@@ -61,9 +61,11 @@ class ControllerRegistrationClinic {
       if (!result) {
         throw { name: "Data Not Found" };
       } else {
+        console.log(result, "<<");
         res.status(200).json(result);
       }
     } catch (err) {
+      console.log(err);
       next(err);
     }
   }

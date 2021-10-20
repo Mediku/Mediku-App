@@ -7,12 +7,7 @@ export default function TableAllPatient() {
   useEffect(() => {
     dispatch(fetchAllPatientsAsync())
   }, [dispatch]);
-  function processPatient(id){
-    dispatch(fetchPatientAsync(id))
-
-  }
   const allPatients = useSelector((state) => state.allPatients);
-  // console.log(allPatients, '<<<');
   return (
     <div class="flex flex-col mx-5 bg-white rounded-lg shadow-md">
       <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -133,8 +128,8 @@ export default function TableAllPatient() {
                         {
                           patient.is_tested === false ? 
                           <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                          <Link to='/process?name=John'
-                            class="text-indigo-600 hover:text-indigo-900" onChange={() => processPatient(patient.id)}
+                          <Link to={`/process/${patient.id}`}
+                            class="text-indigo-600 hover:text-indigo-900"
                           >
                             <i class="fas fa-exchange-alt"></i>  Process
                           </Link>
