@@ -1,12 +1,14 @@
 import {
 	GET_REGISTRATIONS,
 	SET_REGISTRATIONS,
-	SET_USER_LOGIN
+	SET_USER_LOGIN,
+	SET_PATIENT_DAY
 } from './../keys'
 
 let initialState = {
 	registrations : [],
-	login: false
+	login: false,
+	patientToday: []
 }
 function reducer(state=initialState, action){
 	
@@ -23,6 +25,10 @@ function reducer(state=initialState, action){
 
 		case SET_USER_LOGIN:
 		return {...state, login: true}
+		break
+
+		case SET_PATIENT_DAY:
+		return {...state, patientToday: payload}
 		break
 
 		default:

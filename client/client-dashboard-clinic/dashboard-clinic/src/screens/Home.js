@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {setState, setDispatch} from 'react'
 import Sidebar from './../components/Sidebar'
 import Header from './../components/Header'
 import Table from './../components/Tablepatient'
