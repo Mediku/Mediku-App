@@ -1,7 +1,18 @@
-import React from "react";
+import React, {useState, useEffect} from 'react'
 import { Link } from 'react-router-dom'
+import { useSelector, useDispatch } from "react-redux";
+import { getPatientByDay } from "./../store/actions/";
 
-export default function tablepatient() {
+export default function Tablepatient() {
+	const dispatch = useDispatch()
+	const getName = localStorage.username;
+
+	useEffect(() => {
+		dispatch(getPatientByDay());
+	}, [dispatch]);
+
+	const patients = useSelector((state) => state.patientToday);
+	console.log(patients)
 	return (
 		<div class="flex flex-col mx-5 bg-white rounded-lg shadow-md">
 			<p class="mx-5 my-3 text-md font-medium text-gray-900">Register Today</p>

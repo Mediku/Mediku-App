@@ -6,6 +6,8 @@ class ClinicController {
 
   static async login(req, res, next) {
     try{
+
+      console.log(req.body)
       const {email, password} = req.body
       const clinic = await Clinic.findOne({
         where: {
@@ -20,7 +22,7 @@ class ClinicController {
             id: clinic.id,
             email: clinic.email,
           })
-
+          
           res.status(200).json({
             id: clinic.id,
             email: clinic.email,
@@ -28,12 +30,12 @@ class ClinicController {
           })
         }
       }
+
       else{
           throw {name: "Unauthorized"}
         }
 
     }catch(err){
-      console.log(err)
       next(err)
     }
   }

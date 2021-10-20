@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import './../index.css'
 
-export default function sidebar() {
+export default function Sidebar() {
 
 	return (
 		<div class="flex flex-col min-h-screen w-52 p-4 shadow-lg">

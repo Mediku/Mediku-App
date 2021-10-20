@@ -22,9 +22,9 @@ function App() {
         <Login />
       </Route>
 
-      <Route path="/">
+      <PrivateRoute path="/">
         <Home />
-      </Route>
+      </PrivateRoute>
 
     </Switch> 
   );
