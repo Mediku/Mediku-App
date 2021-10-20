@@ -74,7 +74,7 @@ export function addUserAsync(data) {
 }
 export function addPatientAsync(data) {
   return function (dispatch) {
-    return fetch(`${baseUrl}/registrations`, {
+    return fetch(`${baseUrl}/registrations/user`, {
       method: "POST",
       body: JSON.stringify(data),
       headers: {
