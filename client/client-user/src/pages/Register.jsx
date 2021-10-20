@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom'
 import './Pages.scss'
 import {useDispatch,useSelector} from 'react-redux'
 import {addUserAsync} from '../store/action/index'
-import {fetchProvincesAsync,fetchRegenciesAsync,fetchDistrictsAsync,fetchSubDistrictsAsync} from '../store/action/index'
+import {fetchProvincesAsync,fetchRegenciesAsync,fetchDistrictsAsync,fetchSubDistrictsAsync, addUser} from '../store/action/index'
 import {useHistory} from 'react-router-dom'
 function Register() {
     const history = useHistory()
@@ -107,7 +107,18 @@ function Register() {
 
         }
         dispatch(addUserAsync(payload))
-        history.push('/login')
+        .then((res) => {
+            console.log(res);
+            return res.json();
+          })
+          .then((data) => {
+            dispatch(addUser(data));
+            history.push('/login')
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+       
         
     }
     const provincesList = useSelector(state => state.provinces)
@@ -119,7 +130,9 @@ function Register() {
             <div className="flex justify-center items-center w-full my-10">
                 <div className="w-1/2 bg-white rounded shadow-2xl p-8 m-4">
                     <h2 className="block w-full text-center text-gray-800 text-2xl font-bold mb-6">Form pendaftaran</h2>
-                    <p className="block w-full text-center text-gray-800 text-2xs font-bold mb-6">Daftar baru atau <Link to="/login">Login</Link></p>
+                    <p className="block w-full text-center text-gray-800 text-2xs font-bold mb-6">Daftar baru atau{
+                        !localStorage.access_token ? <Link to="/login"> Login</Link> : <Link to="/register-test"> Register test</Link>
+                    }</p>
                     <form onSubmit={addNewUser}>
                     <div className="flex flex-col mb-4">
                         <input className="border py-2 px-3 text-grey-800" type="text" name="full_name" id="full_name" placeholder="Full Name" value={full_name} onChange={setAddFullName}></input>

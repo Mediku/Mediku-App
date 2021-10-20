@@ -1,15 +1,25 @@
 // actions
 import {
   ADD_USER,
+  ADD_PATIENT,
   FETCH_PROVINCES,
   FETCH_REGENCIES,
   FETCH_DISTRICTS,
   FETCH_SUBDISTRICTS,
   DATA_LOGIN,
+  CLINIC,
 } from "../keys";
+
 export function addUser(payload) {
   return {
     type: ADD_USER,
+    payload,
+  };
+}
+
+export function addPatient(payload) {
+  return {
+    type: ADD_PATIENT,
     payload,
   };
 }
@@ -43,30 +53,35 @@ export function loginUser(payload) {
     payload,
   };
 }
+export function dataClinic(payload) {
+  return {
+    type: CLINIC,
+    payload,
+  };
+}
+
 const baseUrl = `http://localhost:9000`;
 export function addUserAsync(data) {
-  return async function (dispatch) {
-    console.log(data.full_name, data.phone_number, "+++");
-    try {
-      fetch(`${baseUrl}/register`, {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((res) => {
-          return res.json();
-        })
-        .then((data) => {
-          dispatch(addUser(data));
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    } catch (error) {
-      console.log(error);
-    }
+  return function (dispatch) {
+    return fetch(`${baseUrl}/users/register`, {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  };
+}
+export function addPatientAsync(data) {
+  return function (dispatch) {
+    return fetch(`${baseUrl}/registrations`, {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+        access_token: localStorage.getItem("access_token"),
+      },
+    });
   };
 }
 
@@ -127,26 +142,29 @@ export function fetchSubDistrictsAsync(id) {
       });
   };
 }
+export function dataClinicAsync() {
+  return function (dispatch) {
+    return fetch(`${baseUrl}/clinic/list`)
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        dispatch(dataClinic(data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+}
 
 export function loginUserAsync(data) {
   return function (dispatch) {
-    return fetch(`${baseUrl}/login`, {
+    return fetch(`${baseUrl}/users/login`, {
       method: "POST",
       body: JSON.stringify(data),
       headers: {
         "Content-Type": "application/json",
       },
-    })
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        localStorage.setItem("access_token", data.access_token);
-        dispatch(loginUser(data));
-        console.log(data, "dari action");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    });
   };
 }

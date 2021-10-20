@@ -5,6 +5,7 @@ import Home from './screens/Home'
 import Process from './screens/formProcess'
 import AllPatient from './screens/allPatient'
 import Login from './screens/login'
+import PrivateRoute from './components/privateRoute'
 
 function App() {
   return (
@@ -18,9 +19,11 @@ function App() {
       <Route path="/login">
         <Login />
       </Route>
-      <Route path="/">
+      
+      <PrivateRoute path='/'>
         <Home />
-      </Route>
+      </PrivateRoute>
+
     </Switch> 
   );
 }

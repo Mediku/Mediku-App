@@ -5,8 +5,8 @@ const routerRegistration = require("./routerRegistration");
 const routerDomicile = require("./routerDomicile");
 const ErrorHandler = require("../middlewares/ErrorHandler.js");
 router.use("/", routerDomicile);
-router.use("/", routerUser);
 router.use("/clinic", routerClinic);
+router.use("/users", routerUser);
 router.use("/registrations", routerRegistration);
 
 router.use(ErrorHandler);

@@ -1,10 +1,10 @@
 import React,{useState} from 'react'
-import {useHistory} from 'react-router-dom'
 import {useDispatch} from 'react-redux'
-import {loginUserAsync} from '../store/action/index'
+import {loginUserAsync,loginUser} from '../store/action/index'
+import { useHistory } from "react-router-dom";
 
 function Login() {
-    const history = useHistory()
+    const history = useHistory();
     const dispatch = useDispatch()
     const [email,setEmail] = useState('')
     const [password,setPassword] = useState('')
@@ -21,7 +21,16 @@ function Login() {
             password
         }
         dispatch(loginUserAsync(payload))
+        .then((res) => res.json())
+        .then((data) => {
+        localStorage.setItem("access_token", data.access_token);
+        dispatch(loginUser(data));
         history.push('/register-test')
+        })
+        .catch((err) => {
+        console.log(err);
+        });
+        
         
     }
     return (

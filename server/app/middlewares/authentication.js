@@ -12,11 +12,16 @@ async function authentication(req, res, next) {
         full_name: user.full_name,
         email: user.email,
         gender: user.gender,
-        domisili_address: user.domisili_address,
         date_of_birth: user.date_of_birth,
         identity_card_address: user.identity_card_address,
         identity_card_number: user.identity_card_number,
         phone_number: user.phone_number,
+        regency: user.regency,
+        province: user.province,
+        district: user.district,
+        sub_district: user.sub_district,
+        RT: user.RT,
+        RW: user.RW,
       }
       next()
     } else {
