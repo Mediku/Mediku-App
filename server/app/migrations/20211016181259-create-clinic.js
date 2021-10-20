@@ -29,6 +29,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
+      imageURL: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
       operational_time_open: {
         allowNull: false,
         type: Sequelize.STRING,

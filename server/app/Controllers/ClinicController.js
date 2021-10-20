@@ -1,6 +1,40 @@
 const { Clinic } = require("../models");
+const { checkPassword } = require("../helpers/bcryptjs");
+const { signToken } = require("../helpers/jwt");
 
 class ClinicController {
+  static async login(req, res, next) {
+    try {
+      const { email, password } = req.body;
+      const clinic = await Clinic.findOne({
+        where: {
+          email,
+        },
+      });
+      if (clinic) {
+        console.log(clinic);
+        console.log("CEK KLINIK");
+        const checkPass = checkPassword(password, clinic.password);
+        if (checkPass) {
+          const access_token = signToken({
+            id: clinic.id,
+            email: clinic.email,
+          });
+
+          res.status(200).json({
+            id: clinic.id,
+            email: clinic.email,
+            access_token,
+          });
+        }
+      } else {
+        throw { name: "Unauthorized" };
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+
   static async create(req, res, next) {
     const data = {
       name: req.body.name,
@@ -8,6 +42,7 @@ class ClinicController {
       password: req.body.password,
       phone_number: req.body.phone_number,
       address: req.body.address,
+      imageURL: req.body.imageURL,
       operational_time_open: req.body.operational_time_open,
       operational_time_close: req.body.operational_time_close,
       operational_day_open: req.body.operational_day_open,
@@ -18,7 +53,6 @@ class ClinicController {
     };
     try {
       const clinic = await Clinic.create(data);
-      console.log(clinic);
       if (clinic) {
         let days = clinic.operational_day_open.split(",");
         res.status(201).json({
@@ -27,6 +61,7 @@ class ClinicController {
           name: clinic.name,
           phone_number: clinic.phone_number,
           address: clinic.address,
+          imageURL: clinic.imageURL,
           operational_time_open: clinic.operational_time_open,
           operational_time_close: clinic.operational_time_close,
           operational_day_open: days,
@@ -79,6 +114,7 @@ class ClinicController {
       const email = req.body.email;
       const phone_number = req.body.phone_number;
       const address = req.body.address;
+      const imageURL = req.body.imageURL;
       const operational_time_open = req.body.operational_time_open;
       const operational_time_close = req.body.operational_time_close;
       const operational_day_open = req.body.operational_day_open;
@@ -101,6 +137,7 @@ class ClinicController {
             swab_antigen,
             pcr_price,
             antigen_price,
+            imageURL,
           },
           {
             where: { id: data.id },

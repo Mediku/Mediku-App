@@ -1,8 +1,8 @@
 import React from 'react'
-import Sidebar from './../components/sidebar'
-import Header from './../components/header'
-import Table from './../components/tablepatient'
-import Card from './../components/homecardinfo'
+import Sidebar from './../components/Sidebar'
+import Header from './../components/Header'
+import Table from './../components/Tablepatient'
+import Card from './../components/Homecardinfo'
 
 export default function Home() {
 	return (

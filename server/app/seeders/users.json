@@ -1,7 +1,7 @@
 [
   {
     "full_name": "test 1 name",
-    "email": "test1@mail.com",
+    "email": "usernih1@gmail.com",
     "password": "rahasia123",
     "phone_number": "081208120812",
     "identity_card_number": "01010101010",
@@ -17,7 +17,7 @@
   },
   {
     "full_name": "test 2 name",
-    "email": "test2@mail.com",
+    "email": "test3@mail.com",
     "password": "rahasia123",
     "phone_number": "081208120812",
     "identity_card_number": "01010101010",

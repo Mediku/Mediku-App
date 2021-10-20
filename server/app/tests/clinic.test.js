@@ -11,6 +11,7 @@ beforeAll(() => {
       password: `passworduser${i}`,
       phone_number: `45621685412${i}`,
       address: `jalan klinik gang ${i}`,
+      imageURL: `awikwok${i}`,
       operational_time_open: "09:00",
       operational_time_close: "17:00",
       operational_day_open: "Senin,Selasa,Rabu,Kamis,Jumat",
@@ -22,6 +23,23 @@ beforeAll(() => {
     clinics.push(add);
   }
   Clinic.bulkCreate(clinics);
+
+  let add = {
+    name: `user clinic login`,
+    email: `useremailclinic@mail.com`,
+    password: `passwordclinic`,
+    phone_number: `45621685412`,
+    address: `jalan klinik gang clinic`,
+    imageURL: `awikwokklinik`,
+    operational_time_open: "09:00",
+    operational_time_close: "17:00",
+    operational_day_open: "Senin,Selasa,Rabu,Kamis,Jumat",
+    swab_antigen: true,
+    swab_pcr: false,
+    antigen_price: 400000,
+    pcr_price: 200000,
+  };
+  Clinic.create(add);
 });
 
 describe("view clinic(s)", () => {
@@ -82,6 +100,7 @@ describe("create a clinic", () => {
       email: "klinikngakak@mail.com",
       phone_number: "125445123689",
       address: "jalan ngakak",
+      imageURL: `ngakakimg`,
       operational_time_open: "09:00",
       operational_time_close: "17:00",
       swab_pcr: true,
@@ -98,7 +117,7 @@ describe("create a clinic", () => {
         expect(res.body).toHaveProperty("message");
         expect(res.body.message).toContain("Clinic successfully registered");
         expect(res.body).toHaveProperty("id");
-        expect(res.body.id).toBe(21);
+        expect(res.body.id).toBe(22);
         expect(res.body).toHaveProperty("name");
         expect(res.body.name).toContain("klinik ngakak");
         expect(res.body).toHaveProperty("phone_number");
@@ -136,6 +155,7 @@ describe("create a clinic", () => {
       email: "klinikngakak@mail.com",
       phone_number: "125445123689",
       address: "jalan ngakak",
+      imageURL: `ngakakimg`,
       operational_time_open: "09:00",
       operational_time_close: "17:00",
       swab_pcr: true,
@@ -164,6 +184,7 @@ describe("create a clinic", () => {
       email: "klinikngakak@mail.com",
       phone_number: "125445123689",
       address: "jalan ngakak",
+      imageURL: `ngakakimg`,
       operational_time_open: "09:00",
       operational_time_close: "17.00",
       swab_pcr: true,
@@ -186,12 +207,71 @@ describe("create a clinic", () => {
         done(err);
       });
   });
+  test("return error if imageURL is empty", (done) => {
+    let add = {
+      name: "klinik ngakak",
+      email: "klinikngakak@mail.com",
+      phone_number: "125445123689",
+      address: "jalan ngakak",
+      imageURL: ``,
+      operational_time_open: "09:00",
+      operational_time_close: "17:00",
+      swab_pcr: true,
+      swab_antigen: false,
+      antigen_price: 300000,
+      pcr_price: 200000,
+      operational_day_open: "senin,selasa,rabu,kamis,jumat",
+      password: "ngakak",
+    };
+    request(app)
+      .post("/clinic/add")
+      .send(add)
+      .then((res) => {
+        expect(res.body).toHaveProperty("message");
+        expect(res.body.message).toContain("PLEASE INSERT IMAGE URL");
+        expect(res.status).toBe(400);
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+  test("return error if imageURL is null", (done) => {
+    let add = {
+      name: "klinik ngakak",
+      email: "klinikngakak@mail.com",
+      phone_number: "125445123689",
+      address: "jalan ngakak",
+      imageURL: null,
+      operational_time_open: "09:00",
+      operational_time_close: "17.00",
+      swab_pcr: true,
+      swab_antigen: false,
+      antigen_price: 300000,
+      pcr_price: 200000,
+      operational_day_open: "senin,selasa,rabu,kamis,jumat",
+      password: "ngakak",
+    };
+    request(app)
+      .post("/clinic/add")
+      .send(add)
+      .then((res) => {
+        expect(res.body).toHaveProperty("message");
+        expect(res.body.message).toContain("PLEASE INSERT IMAGE URL");
+        expect(res.status).toBe(400);
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
   test("return error if email is null", (done) => {
     let add = {
       name: "klinik ngakak",
       email: null,
       phone_number: "125445123689",
       address: "jalan ngakak",
+      imageURL: `ngakakimg`,
       operational_time_open: "09:00",
       operational_time_close: "17.00",
       swab_pcr: true,
@@ -220,6 +300,7 @@ describe("create a clinic", () => {
       email: "",
       phone_number: "125445123689",
       address: "jalan ngakak",
+      imageURL: `ngakakimg`,
       operational_time_open: "09:00",
       operational_time_close: "17.00",
       swab_pcr: true,
@@ -249,6 +330,7 @@ describe("create a clinic", () => {
       email: "ngakak",
       phone_number: "125445123689",
       address: "jalan ngakak",
+      imageURL: `ngakakimg`,
       operational_time_open: "09:00",
       operational_time_close: "17.00",
       swab_pcr: true,
@@ -277,6 +359,7 @@ describe("create a clinic", () => {
       email: "klinikngakak@mail.com",
       phone_number: null,
       address: "jalan ngakak",
+      imageURL: `ngakakimg`,
       operational_time_open: "09:00",
       operational_time_close: "17.00",
       swab_pcr: true,
@@ -305,6 +388,7 @@ describe("create a clinic", () => {
       email: "klinikngakak@mail.com",
       phone_number: "",
       address: "jalan ngakak",
+      imageURL: `ngakakimg`,
       operational_time_open: "09:00",
       operational_time_close: "17.00",
       swab_pcr: true,
@@ -389,6 +473,7 @@ describe("create a clinic", () => {
       email: "klinikngakak@mail.com",
       phone_number: "125445123689",
       address: "jalan ngakak",
+      imageURL: `ngakakimg`,
       operational_time_open: null,
       operational_time_close: "17.00",
       swab_pcr: true,
@@ -417,6 +502,7 @@ describe("create a clinic", () => {
       email: "klinikngakak@mail.com",
       phone_number: "125445123689",
       address: "jalan ngakak",
+      imageURL: `ngakakimg`,
       operational_time_open: "",
       operational_time_close: "17.00",
       swab_pcr: true,
@@ -445,6 +531,7 @@ describe("create a clinic", () => {
       email: "klinikngakak@mail.com",
       phone_number: "125445123689",
       address: "jalan ngakak",
+      imageURL: `ngakakimg`,
       operational_time_open: "09:00",
       operational_time_close: null,
       swab_pcr: true,
@@ -473,6 +560,7 @@ describe("create a clinic", () => {
       email: "klinikngakak@mail.com",
       phone_number: "125445123689",
       address: "jalan ngakak",
+      imageURL: `ngakakimg`,
       operational_time_open: "09:00",
       operational_time_close: "",
       swab_pcr: true,
@@ -501,6 +589,7 @@ describe("create a clinic", () => {
       email: "klinikngakak@mail.com",
       phone_number: "125445123689",
       address: "jalan ngakak",
+      imageURL: `ngakakimg`,
       operational_time_open: "09:00",
       operational_time_close: null,
       swab_pcr: true,
@@ -530,6 +619,7 @@ describe("create a clinic", () => {
       email: "klinikngakak@mail.com",
       phone_number: "125445123689",
       address: "jalan ngakak",
+      imageURL: `ngakakimg`,
       operational_time_open: "09:00",
       operational_time_close: "17:00",
       swab_pcr: null,
@@ -558,6 +648,7 @@ describe("create a clinic", () => {
       email: "klinikngakak@mail.com",
       phone_number: "125445123689",
       address: "jalan ngakak",
+      imageURL: `ngakakimg`,
       operational_time_open: "09:00",
       operational_time_close: "17:00",
       swab_pcr: "",
@@ -586,6 +677,7 @@ describe("create a clinic", () => {
       email: "klinikngakak@mail.com",
       phone_number: "125445123689",
       address: "jalan ngakak",
+      imageURL: `ngakakimg`,
       operational_time_open: "09:00",
       operational_time_close: "17:00",
       swab_pcr: true,
@@ -616,6 +708,7 @@ describe("create a clinic", () => {
       email: "klinikngakak@mail.com",
       phone_number: "125445123689",
       address: "jalan ngakak",
+      imageURL: `ngakakimg`,
       operational_time_open: "09:00",
       operational_time_close: "17:00",
       swab_pcr: true,
@@ -646,6 +739,7 @@ describe("create a clinic", () => {
       email: "klinikngakak@mail.com",
       phone_number: "125445123689",
       address: "jalan ngakak",
+      imageURL: `ngakakimg`,
       operational_time_open: "09:00",
       operational_time_close: "17:00",
       swab_pcr: true,
@@ -674,6 +768,7 @@ describe("create a clinic", () => {
       email: "klinikngakak@mail.com",
       phone_number: "125445123689",
       address: "jalan ngakak",
+      imageURL: `ngakakimg`,
       operational_time_open: "09:00",
       operational_time_close: "17:00",
       swab_pcr: true,
@@ -702,6 +797,7 @@ describe("create a clinic", () => {
       email: "klinikngakak@mail.com",
       phone_number: "125445123689",
       address: "jalan ngakak",
+      imageURL: `ngakakimg`,
       operational_time_open: "09:00",
       operational_time_close: "17:00",
       swab_pcr: true,
@@ -732,6 +828,7 @@ describe("create a clinic", () => {
       email: "klinikngakak@mail.com",
       phone_number: "125445123689",
       address: "jalan ngakak",
+      imageURL: `ngakakimg`,
       operational_time_open: "09:00",
       operational_time_close: "17:00",
       swab_pcr: true,
@@ -762,6 +859,7 @@ describe("create a clinic", () => {
       email: "klinikngakak@mail.com",
       phone_number: "125445123689",
       address: "jalan ngakak",
+      imageURL: `ngakakimg`,
       operational_time_open: "09:00",
       operational_time_close: "17:00",
       swab_pcr: true,
@@ -790,6 +888,7 @@ describe("create a clinic", () => {
       email: "klinikngakak@mail.com",
       phone_number: "125445123689",
       address: "jalan ngakak",
+      imageURL: `ngakakimg`,
       operational_time_open: "09:00",
       operational_time_close: "17:00",
       swab_pcr: true,
@@ -806,6 +905,29 @@ describe("create a clinic", () => {
         expect(res.body).toHaveProperty("message");
         expect(res.body.message).toContain("PLEASE INSERT PASSWORD");
         expect(res.status).toBe(400);
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+});
+
+describe("login as clinic admin", () => {
+  test("login clinic", (done) => {
+    request(app)
+      .post("/clinic/login")
+      .send({
+        email: "useremailclinic@mail.com",
+        password: "passwordclinic",
+      })
+      .then((res) => {
+        expect(res.body).toHaveProperty("id");
+        expect(res.body.id).toBe(21);
+        expect(res.body).toHaveProperty("email");
+        expect(res.body.email).toContain("useremailclinic@mail.com");
+        expect(res.body).toHaveProperty(`access_token`);
+        expect(res.status).toBe(200);
         done();
       })
       .catch((err) => {
@@ -833,7 +955,6 @@ describe("update a clinic", () => {
       .patch("/clinic/edit/2")
       .send(add)
       .then((res) => {
-        console.log(res.body);
         expect(res.body).toHaveProperty("id");
         expect(res.body.id).toBe(2);
         expect(res.body).toHaveProperty("name");
@@ -872,6 +993,7 @@ describe("update a clinic", () => {
       email: "klinikngakak@mail.com",
       phone_number: "125445123689",
       address: "jalan ngakak",
+      imageURL: `ngakakimg`,
       operational_time_open: "09:00",
       operational_time_close: "17:00",
       swab_pcr: true,
@@ -900,6 +1022,7 @@ describe("update a clinic", () => {
       email: "klinikngakak@mail.com",
       phone_number: "125445123689",
       address: "jalan ngakak",
+      imageURL: `ngakakimg`,
       operational_time_open: "09:00",
       operational_time_close: "17.00",
       swab_pcr: true,
@@ -928,6 +1051,7 @@ describe("update a clinic", () => {
       email: null,
       phone_number: "125445123689",
       address: "jalan ngakak",
+      imageURL: `ngakakimg`,
       operational_time_open: "09:00",
       operational_time_close: "17.00",
       swab_pcr: true,
@@ -956,6 +1080,7 @@ describe("update a clinic", () => {
       email: "",
       phone_number: "125445123689",
       address: "jalan ngakak",
+      imageURL: `ngakakimg`,
       operational_time_open: "09:00",
       operational_time_close: "17.00",
       swab_pcr: true,
@@ -985,6 +1110,7 @@ describe("update a clinic", () => {
       email: "ngakak",
       phone_number: "125445123689",
       address: "jalan ngakak",
+      imageURL: `ngakakimg`,
       operational_time_open: "09:00",
       operational_time_close: "17.00",
       swab_pcr: true,
@@ -1013,6 +1139,7 @@ describe("update a clinic", () => {
       email: "klinikngakak@mail.com",
       phone_number: null,
       address: "jalan ngakak",
+      imageURL: `ngakakimg`,
       operational_time_open: "09:00",
       operational_time_close: "17.00",
       swab_pcr: true,
@@ -1041,6 +1168,7 @@ describe("update a clinic", () => {
       email: "klinikngakak@mail.com",
       phone_number: "",
       address: "jalan ngakak",
+      imageURL: `ngakakimg`,
       operational_time_open: "09:00",
       operational_time_close: "17.00",
       swab_pcr: true,
@@ -1125,6 +1253,7 @@ describe("update a clinic", () => {
       email: "klinikngakak@mail.com",
       phone_number: "125445123689",
       address: "jalan ngakak",
+      imageURL: `ngakakimg`,
       operational_time_open: null,
       operational_time_close: "17.00",
       swab_pcr: true,
@@ -1153,6 +1282,7 @@ describe("update a clinic", () => {
       email: "klinikngakak@mail.com",
       phone_number: "125445123689",
       address: "jalan ngakak",
+      imageURL: `ngakakimg`,
       operational_time_open: "",
       operational_time_close: "17.00",
       swab_pcr: true,
@@ -1181,6 +1311,7 @@ describe("update a clinic", () => {
       email: "klinikngakak@mail.com",
       phone_number: "125445123689",
       address: "jalan ngakak",
+      imageURL: `ngakakimg`,
       operational_time_open: "09:00",
       operational_time_close: null,
       swab_pcr: true,
@@ -1209,6 +1340,7 @@ describe("update a clinic", () => {
       email: "klinikngakak@mail.com",
       phone_number: "125445123689",
       address: "jalan ngakak",
+      imageURL: `ngakakimg`,
       operational_time_open: "09:00",
       operational_time_close: "",
       swab_pcr: true,
@@ -1237,6 +1369,7 @@ describe("update a clinic", () => {
       email: "klinikngakak@mail.com",
       phone_number: "125445123689",
       address: "jalan ngakak",
+      imageURL: `ngakakimg`,
       operational_time_open: "09:00",
       operational_time_close: null,
       swab_pcr: true,
@@ -1266,6 +1399,7 @@ describe("update a clinic", () => {
       email: "klinikngakak@mail.com",
       phone_number: "125445123689",
       address: "jalan ngakak",
+      imageURL: `ngakakimg`,
       operational_time_open: "09:00",
       operational_time_close: "17:00",
       swab_pcr: null,
@@ -1294,6 +1428,7 @@ describe("update a clinic", () => {
       email: "klinikngakak@mail.com",
       phone_number: "125445123689",
       address: "jalan ngakak",
+      imageURL: `ngakakimg`,
       operational_time_open: "09:00",
       operational_time_close: "17:00",
       swab_pcr: "",
@@ -1322,6 +1457,7 @@ describe("update a clinic", () => {
       email: "klinikngakak@mail.com",
       phone_number: "125445123689",
       address: "jalan ngakak",
+      imageURL: `ngakakimg`,
       operational_time_open: "09:00",
       operational_time_close: "17:00",
       swab_pcr: true,
@@ -1352,6 +1488,7 @@ describe("update a clinic", () => {
       email: "klinikngakak@mail.com",
       phone_number: "125445123689",
       address: "jalan ngakak",
+      imageURL: `ngakakimg`,
       operational_time_open: "09:00",
       operational_time_close: "17:00",
       swab_pcr: true,
@@ -1382,6 +1519,7 @@ describe("update a clinic", () => {
       email: "klinikngakak@mail.com",
       phone_number: "125445123689",
       address: "jalan ngakak",
+      imageURL: `ngakakimg`,
       operational_time_open: "09:00",
       operational_time_close: "17:00",
       swab_pcr: true,
@@ -1410,6 +1548,7 @@ describe("update a clinic", () => {
       email: "klinikngakak@mail.com",
       phone_number: "125445123689",
       address: "jalan ngakak",
+      imageURL: `ngakakimg`,
       operational_time_open: "09:00",
       operational_time_close: "17:00",
       swab_pcr: true,
@@ -1438,6 +1577,7 @@ describe("update a clinic", () => {
       email: "klinikngakak@mail.com",
       phone_number: "125445123689",
       address: "jalan ngakak",
+      imageURL: `ngakakimg`,
       operational_time_open: "09:00",
       operational_time_close: "17:00",
       swab_pcr: true,
@@ -1468,6 +1608,7 @@ describe("update a clinic", () => {
       email: "klinikngakak@mail.com",
       phone_number: "125445123689",
       address: "jalan ngakak",
+      imageURL: `ngakakimg`,
       operational_time_open: "09:00",
       operational_time_close: "17:00",
       swab_pcr: true,
@@ -1498,6 +1639,7 @@ describe("update a clinic", () => {
       email: "klinikngakak@mail.com",
       phone_number: "125445123689",
       address: "jalan ngakak",
+      imageURL: `ngakakimg`,
       operational_time_open: "09:00",
       operational_time_close: "17:00",
       swab_pcr: true,
@@ -1526,6 +1668,7 @@ describe("update a clinic", () => {
       email: "klinikngakak@mail.com",
       phone_number: "125445123689",
       address: "jalan ngakak",
+      imageURL: `ngakakimg`,
       operational_time_open: "09:00",
       operational_time_close: "17:00",
       swab_pcr: true,
@@ -1553,7 +1696,7 @@ describe("update a clinic", () => {
 describe("delete a clinic", () => {
   test("delete a clinic", (done) => {
     request(app)
-      .delete("/clinic/21")
+      .delete("/clinic/22")
       .then((res) => {
         expect(res.body).toHaveProperty("message");
         expect(res.body.message).toContain(

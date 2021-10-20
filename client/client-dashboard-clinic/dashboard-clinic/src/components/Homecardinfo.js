@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function homecardinfo() {
+export default function Homecardinfo() {
 	return (
 		<div class="flex space-x-5 mx-5">
 			<div class="flex flex-col space-y-2 justify-center home-card w-60 h-36 bg-gradient-to-r from-blue-300 to-blue-500 rounded-lg p-2 shadow-lg">

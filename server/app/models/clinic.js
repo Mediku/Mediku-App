@@ -81,6 +81,18 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
+      imageURL: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: "PLEASE INSERT IMAGE URL",
+          },
+          notNull: {
+            msg: "PLEASE INSERT IMAGE URL",
+          },
+        },
+      },
       operational_time_open: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -166,9 +178,17 @@ module.exports = (sequelize, DataTypes) => {
       hooks: {
         beforeCreate: (data, options) => {
           data.operational_day_open = data.operational_day_open.toLowerCase();
+          const hashedPwd = hashPassword(data.password);
+          console.log(hashedPwd);
+          console.log("HASHING PASSWORD CREATE");
+          data.password = hashedPwd;
         },
         beforeUpdate: (data, options) => {
           data.operational_day_open = data.operational_day_open.toLowerCase();
+          const hashedPwd = hashPassword(data.password);
+          console.log(hashedPwd);
+          console.log("HASHING PASSWORD UPDATE");
+          data.password = hashedPwd;
         },
       },
       sequelize,

@@ -2,6 +2,7 @@ const router = require("express").Router();
 const ControllerClinic = require("../Controllers/ClinicController");
 
 router.post("/add", ControllerClinic.create);
+router.post("/login", ControllerClinic.login);
 router.get("/list", ControllerClinic.list);
 router.get("/list/:id", ControllerClinic.listById);
 router.patch("/edit/:id", ControllerClinic.Update);

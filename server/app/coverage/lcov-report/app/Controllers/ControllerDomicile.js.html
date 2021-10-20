@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">10% </span>
+                <span class="strong">10.34% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>3/30</span>
+                <span class='fraction'>3/29</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">10% </span>
+                <span class="strong">10.34% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>3/30</span>
+                <span class='fraction'>3/29</span>
             </div>
         
             
@@ -116,8 +116,13 @@
 <a name='L57'></a><a href='#L57'>57</a>
 <a name='L58'></a><a href='#L58'>58</a>
 <a name='L59'></a><a href='#L59'>59</a>
-<a name='L60'></a><a href='#L60'>60</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -134,20 +139,8 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -162,6 +155,24 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -169,79 +180,83 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span></td><td class="text"><pre class="prettyprint lang-js">const axios = require('axios')
-const PROVINCE_URL = `https://dev.farizdotid.com/api/daerahindonesia/provinsi`
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const axios = require("axios");
+const PROVINCE_URL = `https://dev.farizdotid.com/api/daerahindonesia/provinsi`;
 &nbsp;
 class CoontrollerDomicile {
 <span class="fstat-no" title="function not covered" >  st</span>atic async findAllProvinces(req, res, next) {
 <span class="cstat-no" title="statement not covered" >    try {</span>
-      const url = <span class="cstat-no" title="statement not covered" >PROVINCE_URL</span>
-      const result = <span class="cstat-no" title="statement not covered" >await axios.get(url)</span>
-<span class="cstat-no" title="statement not covered" >      return res.status(200).json(result.data.provinsi)</span>
+      const url = <span class="cstat-no" title="statement not covered" >PROVINCE_URL;</span>
+      const result = <span class="cstat-no" title="statement not covered" >await axios.get(url);</span>
+<span class="cstat-no" title="statement not covered" >      return res.status(200).json(result.data.provinsi);</span>
     } catch (err) {
-<span class="cstat-no" title="statement not covered" >      next(err)</span>
+<span class="cstat-no" title="statement not covered" >      next(err);</span>
     }
   }
 &nbsp;
 <span class="fstat-no" title="function not covered" >  st</span>atic async findAllRegenciesOfProvince(req, res, next) {
-    const { id } = <span class="cstat-no" title="statement not covered" >req.params</span>
+    const { id } = <span class="cstat-no" title="statement not covered" >req.params;</span>
 <span class="cstat-no" title="statement not covered" >    try {</span>
-      const result = <span class="cstat-no" title="statement not covered" >await axios.get(`https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi=${id}`)</span>
+      const result = <span class="cstat-no" title="statement not covered" >await axios.get(</span>
+        `https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi=${id}`
+      );
 <span class="cstat-no" title="statement not covered" >      if (!result) {</span>
-<span class="cstat-no" title="statement not covered" >        throw ({ name: 'Data Not Found' })</span>
+<span class="cstat-no" title="statement not covered" >        throw { name: "Data Not Found" };</span>
       } else {
-<span class="cstat-no" title="statement not covered" >        res.status(200).json(result.data.kota_kabupaten)</span>
+<span class="cstat-no" title="statement not covered" >        res.status(200).json(result.data.kota_kabupaten);</span>
       }
     } catch (err) {
-<span class="cstat-no" title="statement not covered" >      next(err)</span>
+<span class="cstat-no" title="statement not covered" >      next(err);</span>
     }
   }
 &nbsp;
 <span class="fstat-no" title="function not covered" >  st</span>atic async findDistrictsOfRegency(req, res, next) {
-    const { id } = <span class="cstat-no" title="statement not covered" >req.params</span>
+    const { id } = <span class="cstat-no" title="statement not covered" >req.params;</span>
 <span class="cstat-no" title="statement not covered" >    try {</span>
-      const result = <span class="cstat-no" title="statement not covered" >await axios.get(`https://dev.farizdotid.com/api/daerahindonesia/kecamatan?id_kota=${id}`)</span>
+      const result = <span class="cstat-no" title="statement not covered" >await axios.get(</span>
+        `https://dev.farizdotid.com/api/daerahindonesia/kecamatan?id_kota=${id}`
+      );
 <span class="cstat-no" title="statement not covered" >      if (!result) {</span>
-<span class="cstat-no" title="statement not covered" >        throw ({ name: 'Data Not Found' })</span>
+<span class="cstat-no" title="statement not covered" >        throw { name: "Data Not Found" };</span>
       } else {
-<span class="cstat-no" title="statement not covered" >        res.status(200).json(result.data.kecamatan)</span>
+<span class="cstat-no" title="statement not covered" >        res.status(200).json(result.data.kecamatan);</span>
       }
     } catch (err) {
-<span class="cstat-no" title="statement not covered" >      next(err)</span>
+<span class="cstat-no" title="statement not covered" >      next(err);</span>
     }
   }
 &nbsp;
 <span class="fstat-no" title="function not covered" >  st</span>atic async findSubDistrictsOfDistrict(req, res, next) {
-    const { id } = <span class="cstat-no" title="statement not covered" >req.params</span>
+    const { id } = <span class="cstat-no" title="statement not covered" >req.params;</span>
 <span class="cstat-no" title="statement not covered" >    try {</span>
-      const result = <span class="cstat-no" title="statement not covered" >await axios.get(`https://dev.farizdotid.com/api/daerahindonesia/kelurahan?id_kecamatan=${id}`)</span>
+      const result = <span class="cstat-no" title="statement not covered" >await axios.get(</span>
+        `https://dev.farizdotid.com/api/daerahindonesia/kelurahan?id_kecamatan=${id}`
+      );
 <span class="cstat-no" title="statement not covered" >      if (!result) {</span>
-<span class="cstat-no" title="statement not covered" >        throw ({ name: 'Data Not Found' })</span>
+<span class="cstat-no" title="statement not covered" >        throw { name: "Data Not Found" };</span>
       } else {
-<span class="cstat-no" title="statement not covered" >        res.status(200).json(result.data.kelurahan)</span>
+<span class="cstat-no" title="statement not covered" >        res.status(200).json(result.data.kelurahan);</span>
       }
     } catch (err) {
-<span class="cstat-no" title="statement not covered" >      console.log(err);</span>
-<span class="cstat-no" title="statement not covered" >      next(err)</span>
+<span class="cstat-no" title="statement not covered" >      next(err);</span>
     }
   }
-&nbsp;
 }
 &nbsp;
-module.exports = CoontrollerDomicile</pre></td></tr></table></pre>
+module.exports = CoontrollerDomicile;
+&nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Wed Oct 20 2021 12:30:13 GMT+0700 (Western Indonesia Time)
+                at Wed Oct 20 2021 17:38:46 GMT+0700 (Western Indonesia Time)
             </div>
         </div>
         <script src="../../prettify.js"></script>

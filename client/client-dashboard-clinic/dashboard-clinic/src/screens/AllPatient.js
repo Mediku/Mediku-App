@@ -1,9 +1,9 @@
 import React from 'react'
-import Table from './../components/tableAllPatient'
-import Header from './../components/header'
-import Sidebar from './../components/sidebar'
+import Table from './../components/TableAllPatient'
+import Header from './../components/Header'
+import Sidebar from './../components/Sidebar'
 
-export default function allPatient() {
+export default function AllPatient() {
 	return (
 		<div class="flex min-h-screen flex">
 			<Sidebar />
