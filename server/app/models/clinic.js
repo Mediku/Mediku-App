@@ -31,6 +31,7 @@ module.exports = (sequelize, DataTypes) => {
       email: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true,
         validate: {
           notEmpty: {
             msg: "PLEASE INSERT EMAIL",
@@ -77,6 +78,18 @@ module.exports = (sequelize, DataTypes) => {
           },
           notNull: {
             msg: "PLEASE INSERT ADDRESS",
+          },
+        },
+      },
+      imageURL: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: "PLEASE INSERT IMAGE URL",
+          },
+          notNull: {
+            msg: "PLEASE INSERT IMAGE URL",
           },
         },
       },

@@ -1,14 +1,16 @@
 import {
 	GET_REGISTRATIONS,
-	SET_REGISTRATIONS
+	SET_REGISTRATIONS,
+	SET_USER_LOGIN
 } from './../keys'
 
 let initialState = {
 	registrations : [],
+	login: false
 }
-export default function reducer(state=initialState, action){
+function reducer(state=initialState, action){
+	
 	const {type, payload} = action
-
 	switch(type){
 
 		case GET_REGISTRATIONS:
@@ -19,8 +21,13 @@ export default function reducer(state=initialState, action){
 		return {...state, registrations: payload}
 		break
 
+		case SET_USER_LOGIN:
+		return {...state, login: true}
+		break
+
 		default:
 		return state
 	}
-
 }
+
+export default reducer
