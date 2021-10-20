@@ -1,11 +1,31 @@
 const { Registration, Clinic, User } = require("../models");
 const sendNodemailer = require("../helpers/nodemailer");
+const Sequelize = require("sequelize");
+const Op = Sequelize.Op;
 
-class ControllerRegistration {
+class ControllerRegistrationClinic {
+  static async findAllTodayRegistration(req, res, next) {
+    try {
+      const result = await Registration.findAll({
+        where: {
+          id: req.user.id,
+          is_paid: true,
+          createdAt: {
+            [Op.lt]: new Date(),
+            [Op.gt]: new Date(new Date() - 24 * 60 * 60 * 1000),
+          },
+        },
+      });
+      res.status(200).json(result);
+    } catch (err) {
+      next(err);
+    }
+  }
+
   static async findAll(req, res, next) {
     try {
       const result = await Registration.findAll({
-        where: { UserId: req.user.id },
+        where: { is_paid: false, ClinicId: req.user.id },
         include: [
           {
             model: User,
@@ -47,62 +67,6 @@ class ControllerRegistration {
       next(err);
     }
   }
-  // client-user untuk create patient
-  static async createRegistration(req, res, next) {
-    let is_paid;
-    let is_tested;
-    const { service_name, total_price, date, time, ClinicId } = req.body;
-    if (req.body.is_paid == "true") {
-      is_paid = true;
-    } else {
-      is_paid = false;
-    }
-    if (req.body.is_tested == "true") {
-      is_tested = true;
-    } else {
-      is_tested = false;
-    }
-    const UserId = req.user.id;
-    try {
-      const result = await Registration.create({
-        service_name,
-        total_price,
-        date,
-        time,
-        is_paid,
-        ClinicId,
-        UserId,
-        is_tested,
-      });
-      res.status(201).json(result);
-      const clinic = await Clinic.findByPk(result.ClinicId);
-      sendNodemailer(
-        req.user.email,
-        "Registration Succeess",
-        `Hello, ${req.user.full_name}. Thank you for registering on Mediku. Here are your registration informations:
-
-        Your name: ${req.user.full_name}
-        Clinic name: ${clinic.name}
-        Service name: ${result.service_name}
-        Price: ${result.total_price}
-        Date: ${result.date}
-        
-        Please go to the clinic you have registered`
-      );
-      sendNodemailer(
-        clinic.email,
-        `User Registration`,
-        `A user have registered on your clinic.
-        
-        Name: ${req.user.full_name}
-        Service nameL ${result.service_name}
-        Date: ${result.date}`
-      );
-      res.status(201).json(result);
-    } catch (err) {
-      next(err);
-    }
-  }
 
   static async deleteRegistration(req, res, next) {
     const { id } = req.params;
@@ -116,6 +80,32 @@ class ControllerRegistration {
           message: `Registration with ID : ${foundRegistration.id} has been deleted`,
         });
       }
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async editIsTestedRegistration(req, res, next) {
+    const { id } = req.params;
+    try {
+      const data = {
+        is_tested: true,
+      };
+      const foundRegistration = await Registration.findByPk(id, {
+        include: [
+          {
+            model: User,
+            attributes: { exclude: ["password"] },
+          },
+        ],
+      });
+      await Registration.update(data, {
+        where: { id: foundRegistration.id },
+        returning: true,
+      });
+      res.status(200).json({
+        message: `user ${foundRegistration.User.full_name}'s already tested`,
+      });
     } catch (err) {
       next(err);
     }
@@ -136,7 +126,7 @@ class ControllerRegistration {
           },
         ],
       });
-      console.log(foundRegistration);
+
       if (!foundRegistration) {
         throw { name: "Data Not Found" };
       } else {
@@ -154,7 +144,7 @@ class ControllerRegistration {
         });
       }
     } catch (err) {
-      console.log(err);
+      next(err);
     }
   }
 
@@ -199,4 +189,4 @@ class ControllerRegistration {
   }
 }
 
-module.exports = ControllerRegistration;
+module.exports = ControllerRegistrationClinic;

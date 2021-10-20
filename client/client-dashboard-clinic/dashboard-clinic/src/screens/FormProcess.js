@@ -1,9 +1,9 @@
 import React from "react";
-import Sidebar from "./../components/sidebar";
-import Header from "./../components/header";
-import Form from "./../components/formProcess";
+import Sidebar from "./../components/Sidebar";
+import Header from "./../components/Header";
+import Form from "./../components/FormProcess";
 
-export default function formProcess({ name }) {
+export default function FormProcess({ name }) {
   return (
     <div class="flex min-h-screen flex">
       <h1>{name}</h1>

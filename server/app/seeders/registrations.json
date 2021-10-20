@@ -1,12 +1,23 @@
 [
   {
-    "service_name": "swab",
+    "service_name": "antigen",
     "total_price": 200000,
-    "date": "2021-10-22T00:00:00.000Z",
+    "date": "2021-10-20",
     "time": "16:00:00",
     "is_paid": false,
-    "ClinicId": 3,
+    "ClinicId": 1,
     "UserId": 1,
+    "is_tested": false,
+    "test_result": null
+  },
+  {
+    "service_name": "pcr",
+    "total_price": 200000,
+    "date": "2021-10-20",
+    "time": "16:00:00",
+    "is_paid": false,
+    "ClinicId": 2,
+    "UserId": 2,
     "is_tested": false,
     "test_result": null
   }
