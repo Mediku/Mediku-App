@@ -35,7 +35,7 @@ export default function FormProcess() {
                           name="company-website"
                           id="company-website"
                           class="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-md sm:text-sm border-gray-300"
-                          value={dataPatient.User.full_name}
+                          value={dataPatient?.User?.full_name}
                         />
                       </div>
                     </div>
@@ -55,7 +55,7 @@ export default function FormProcess() {
                           name="company-website"
                           id="company-website"
                           class="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-md sm:text-sm border-gray-300"
-                          value={dataPatient.User.phone_number}
+                          value={dataPatient?.User?.phone_number}
                         />
                       </div>
                     </div>
@@ -75,7 +75,7 @@ export default function FormProcess() {
                           name="company-website"
                           id="company-website"
                           class="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-md sm:text-sm border-gray-300"
-                          value={dataPatient.User.identity_card_number}
+                          value={dataPatient?.User?.identity_card_number}
                         />
                       </div>
                     </div>
@@ -95,7 +95,7 @@ export default function FormProcess() {
                           name="company-website"
                           id="company-website"
                           class="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-md sm:text-sm border-gray-300"
-                          value={dataPatient.User.date_of_birth}
+                          value={dataPatient?.User?.date_of_birth}
                         />
                       </div>
                     </div>
@@ -114,7 +114,7 @@ export default function FormProcess() {
                         name="about"
                         rows="3"
                         class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
-                        value={dataPatient.User.identity_card_address}
+                        value={dataPatient?.User?.identity_card_address}
                       ></textarea>
                     </div>
                     <p class="mt-2 text-sm text-gray-500">
@@ -135,7 +135,7 @@ export default function FormProcess() {
                         name="about"
                         rows="3"
                         class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
-                        value={`RT ${dataPatient.User.RT}, RW ${dataPatient.User.RW}, ${dataPatient.User.sub_district},${dataPatient.User.sub_district},${dataPatient.User.regency},${dataPatient.User.province}`}
+                        value={`RT ${dataPatient?.User?.RT}, RW ${dataPatient?.User?.RW}, ${dataPatient?.User?.sub_district},${dataPatient?.User?.sub_district},${dataPatient?.User?.regency},${dataPatient?.User?.province}`}
                       ></textarea>
                     </div>
                     <p class="mt-2 text-sm text-gray-500">Domicile</p>

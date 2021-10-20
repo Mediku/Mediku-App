@@ -4,19 +4,26 @@ const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
 
 class ControllerRegistrationClinic {
-  static async findAllTodayRegistration(req, res, next) {
+    static async findAllTodayRegistration(req, res, next) {
     try {
       const result = await Registration.findAll({
         where: {
-          id: req.user.id,
+          ClinicId: req.user.id,
           is_paid: true,
           createdAt: {
             [Op.lt]: new Date(),
-            [Op.gt]: new Date(new Date() - 24 * 60 * 60 * 1000),
-          },
+            [Op.gt]: new Date(new Date() - 24 * 60 * 60 * 1000)
+          }
         },
-      });
-      res.status(200).json(result);
+        include: [
+          {
+            model: User,
+            attributes: { exclude: ["password"] },
+          }
+        ]
+      })
+      res.status(200).json(result)
+
     } catch (err) {
       next(err);
     }

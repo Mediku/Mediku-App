@@ -1,13 +1,48 @@
-import React, {useEffect} from "react";
+import React, {useState, useEffect} from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllPatientsAsync,fetchPatientAsync } from "../store/actions/index.js";
 export default function TableAllPatient() {
+
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(fetchAllPatientsAsync())
   }, [dispatch]);
+
+
   const allPatients = useSelector((state) => state.allPatients);
+
+  const [testResult, setTestResult] = useState('')
+  let selected = ''
+
+  const getValueSelect = (e, id) => {
+      console.log(e.target.value)
+      console.log(id)
+  }
+
+  const SelectOption = (id) => {
+      
+      return(
+        <select onChange={(e) => getValueSelect(e)} class="border-0 focus:ring-white">
+          <option value='positif' class="ring-white">Positif</option>
+          <option value='negatif'>Negatif</option>
+        </select>
+      )       
+  }
+
+  const TestResult = (result) => {
+    if(result === 'positif'){
+      return(
+        <button disabled class="bg-red-200">Positif</button>
+      )
+    }else{
+      return(
+        <button disabled class="bg-green-200">Negatif</button>
+      )
+    }
+  }
+
   return (
     <div class="flex flex-col mx-5 bg-white rounded-lg shadow-md">
       <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -107,7 +142,7 @@ export default function TableAllPatient() {
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                           {  
-                              patient.test_result === null ? 'Waiting' : `${patient.test_result}`
+                              patient.test_result === null ? <SelectOption id={patient.id}/> : <TestResult result={patient.test_result} />
                           }
                         </td>
 

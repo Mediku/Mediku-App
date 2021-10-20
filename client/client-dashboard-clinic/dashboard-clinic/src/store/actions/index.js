@@ -5,6 +5,7 @@ import {
   SET_REGISTRATIONS,
   SET_USER_LOGIN,
   SET_PATIENT_DAY,
+  SET_COMPLETED_TEST,
   FETCH_ALL_PATIENTS,
   FETCH_PATIENT,
 } from "./../keys";
@@ -44,16 +45,18 @@ export const getPatientByDay = () => {
   return (dispatch) => {
     return axios
       .get(`${baseUrl}/registrations/clinic/today`, {
-        header: {
+        headers: {
           access_token: localStorage.access_token,
         },
       })
       .then(({ data }) => {
+        console.log(data);
         dispatch(setPatientThisDay(data));
       })
       .catch((err) => console.log(err));
   };
 };
+
 export const fetchAllPatientsAsync = () => {
   return (dispatch) => {
     return axios
@@ -81,5 +84,11 @@ export const fetchPatientAsync = (id) => {
         dispatch(fetchPatient(data));
       })
       .catch((err) => console.log(err));
+  };
+};
+
+export const updateTestResult = (id) => {
+  return (dispatch) => {
+    return axios.patch(`${baseUrl}//test/result/${id}`);
   };
 };
