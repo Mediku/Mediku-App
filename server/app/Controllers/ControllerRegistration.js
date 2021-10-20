@@ -63,6 +63,7 @@ class ControllerRegistration {
     } else {
       is_tested = false;
     }
+
     const UserId = req.user.id; 
     try {
       const result = await Registration.create({
@@ -137,6 +138,7 @@ class ControllerRegistration {
           },
         ],
       });
+
       if (!foundRegistration) {
         throw { name: "Data Not Found" };
       } else {
@@ -160,9 +162,8 @@ class ControllerRegistration {
   }
 
   static async editRegistration(req, res, next) {
-    
     //user bisa edit punya dia sendiri, dari sisi klinik juga bisa edit
-
+    // yang ga bisa edit klinik yang ga punya user ini
     let is_paid;
     let is_tested;
     const { id } = req.params;
