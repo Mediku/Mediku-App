@@ -1,88 +1,78 @@
-const { XenditInvoice, XenditDisbursement } = require('../helpers/xenditPayment')
+const { XenditInvoice } = require('../helpers/xenditPayment')
+const { Registration, Clinic } = require('../models')
+const sendNodemailer = require("../helpers/nodemailer");
 
 class ControllerXendit {
-  static async createInvoice(req, res, next) {
-    // const { id, email } = req.user
+  static async createInvoice(req, res, next) { // kalau udah bayar
+    const { id } = req.params
     const { email } = req.user;
-    const { amount } = req.body;
     const randomID = Math.random().toString(36).slice(2);
     try {
+      const foundRegistration = await Registration.findByPk(id)
       const invoice = await XenditInvoice.createInvoice({
-        externalID: `invoice-lender-${randomID}`,
+        externalID: `${randomID}`,
         payerEmail: email,
-        description: `Invoice for loan ${randomID}`,
-        amount,
+        description: `Invoice for Service Antigen Test`,
+        amount: foundRegistration.total_price,
         shouldSendEmail: true,
       });
-      // invoice.invoiceURL (link)
       res.status(200).json({
-        externalID: invoice.external_id,
+        invoice_id: invoice.id, // client tolong kasi ini key buat si user input saat dia konfirmasi kalau dia sudah bayar
+        external_id: invoice.external_id,
+        status: invoice.status,
+        amount: invoice.amount,
+        merchant_name: invoice.merchant_name,
+        payer_email: invoice.payer_email,
+        expiry_date: invoice.expiry_date,
         invoiceURL: invoice.invoice_url,
+        description: invoice.description
       });
-    } catch (error) {
-      res.status(500).json(error);
+    } catch (err) {
+      res.status(500).json(err);
     }
   }
 
-  static async createWithdrawal(req, res, next) {
-    //disburse ke lender
-    // const { lenderID } = req.body;
+  static async checkStatusInvoice(req, res, next) {
+    const { id } = req.params
+    const { invoiceID } = req.body;
     try {
-      const loan = {
-        // id: "123",
-        initialLoan: 250000,
-        lender: {
-          bankCode: "OVO",
-          accountHolderName: "Test",
-          accountNumber: "1234567890",
-        },
-      };
-
-      const disbursement = await XenditDisbursement.create({
-        externalID: `invoice-lender-omjja9ma5u`,
-        bankCode: loan.lender.bankCode,
-        accountHolderName: loan.lender.accountHolderName,
-        accountNumber: loan.lender.accountNumber,
-        description: `withdrawal for invoice-lender-omjja9ma5u`,
-        amount: loan.initialLoan,
+      const foundRegistration = await Registration.findByPk(id, {
+        include: [
+          {
+            model: Clinic,
+            attributes: { exclude: ["password"] }
+          }
+        ]
+      })
+      const invoiceStatus = await XenditInvoice.getInvoice({
+        invoiceID,
       });
-      res.status(200).json(disbursement)
-    } catch (error) {
-      res.status(500).json(error);
-    }
-  }
-
-  static async paymentAccepted(req, res, next) {
-    //disburse ke lender
-    // const { lenderID } = req.body;
-    try {
-      const loan = {
-        id: "123",
-        initialLoan: 100000,
-        lender: {
-          bankCode: "BCA",
-          accountHolderName: "Test",
-          accountNumber: "1234567890",
-        },
-      };
-      const disbursement = await XenditDisbursement.create({
-        externalID: `disburse-${loan.id}`,
-        bankCode: loan.lender.bankCode,
-        accountHolderName: loan.lender.accountHolderName,
-        accountNumber: loan.lender.accountNumber,
-        description: `withdrawal for ${loan.id}`,
-        amount: loan.initialLoan,
-      });
-      res.status(200).json({
-        status: 'SUCCESS',
-        user_id: disbursement.user_id,
-        external_id: disbursement.external_id,
-        amount: disbursement.amount,
-        bank_code: disbursement.bank_code,
-        account_holder_name: disbursement.account_holder_name,
-        disbursement_description: disbursement.disbursement_description,
-        id: disbursement.id
-      });
+      if (invoiceStatus.status == 'PENDING') {
+        res.status(200).json({ message: `sorry your payment still on process or maybe you haven't paid it, please click this site for payment processing --> ${invoiceStatus.invoice_url} or you can see your email inbox to check it` })
+      } else if (invoiceStatus.status == 'PAID') {
+        sendNodemailer(
+          'hansenpanggabean8@gmail.com',
+          "Registration Payment Succeess",
+          `Hello, ${req.user.full_name}. Thank you for registering on Mediku. Here are your registration informations:
+  
+          Your name: ${req.user.full_name}
+          Clinic name: ${foundRegistration.Clinic.name}
+          Service name: ${foundRegistration.service_name}
+          Price: ${foundRegistration.total_price}
+          Date: ${foundRegistration.date}
+          
+          Please go to the clinic you have registered`
+        );
+        const data = {
+          is_paid: true
+        }
+        let paid;
+        const changeIsPaid = await Registration.update(data, { where: { id: foundRegistration.id }, returning: true })
+        if (changeIsPaid[1][0].is_paid == true) {
+          paid = `Hoooraayy! your payment has confirmed by Xendit please wait the schedule of ${foundRegistration.service_name} that you paid from clinic ${foundRegistration.Clinic.name}, there'll be on touch in your email inbox`
+        }
+        res.status(200).json({ message: paid })
+      }
     } catch (error) {
       res.status(500).json(error);
     }

@@ -128,27 +128,7 @@
 <a name='L69'></a><a href='#L69'>69</a>
 <a name='L70'></a><a href='#L70'>70</a>
 <a name='L71'></a><a href='#L71'>71</a>
-<a name='L72'></a><a href='#L72'>72</a>
-<a name='L73'></a><a href='#L73'>73</a>
-<a name='L74'></a><a href='#L74'>74</a>
-<a name='L75'></a><a href='#L75'>75</a>
-<a name='L76'></a><a href='#L76'>76</a>
-<a name='L77'></a><a href='#L77'>77</a>
-<a name='L78'></a><a href='#L78'>78</a>
-<a name='L79'></a><a href='#L79'>79</a>
-<a name='L80'></a><a href='#L80'>80</a>
-<a name='L81'></a><a href='#L81'>81</a>
-<a name='L82'></a><a href='#L82'>82</a>
-<a name='L83'></a><a href='#L83'>83</a>
-<a name='L84'></a><a href='#L84'>84</a>
-<a name='L85'></a><a href='#L85'>85</a>
-<a name='L86'></a><a href='#L86'>86</a>
-<a name='L87'></a><a href='#L87'>87</a>
-<a name='L88'></a><a href='#L88'>88</a>
-<a name='L89'></a><a href='#L89'>89</a>
-<a name='L90'></a><a href='#L90'>90</a>
-<a name='L91'></a><a href='#L91'>91</a>
-<a name='L92'></a><a href='#L92'>92</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">2x</span>
+<a name='L72'></a><a href='#L72'>72</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -203,8 +183,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -213,45 +191,27 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span></td><td class="text"><pre class="prettyprint lang-js">const { XenditInvoice, XenditDisbursement } = require('../helpers/xenditPayment')
+<span class="cline-any cline-yes">2x</span></td><td class="text"><pre class="prettyprint lang-js">const { XenditInvoice, XenditDisbursement, XenditPayout } = require('../helpers/xenditPayment')
 &nbsp;
 class ControllerXendit {
-<span class="fstat-no" title="function not covered" >  st</span>atic async createInvoice(req, res, next) {
+<span class="fstat-no" title="function not covered" >  st</span>atic async createInvoice(req, res, next) { // kalau udah bayar
     // const { id, email } = req.user
     const { email } = <span class="cstat-no" title="statement not covered" >req.user;</span>
     const { amount } = <span class="cstat-no" title="statement not covered" >req.body;</span>
     const randomID = <span class="cstat-no" title="statement not covered" >Math.random().toString(36).slice(2);</span>
 <span class="cstat-no" title="statement not covered" >    try {</span>
       const invoice = <span class="cstat-no" title="statement not covered" >await XenditInvoice.createInvoice({</span>
-        externalID: `invoice-lender-${randomID}`,
+        externalID: `coba-${randomID}`,
         payerEmail: email,
-        description: `Invoice for loan ${randomID}`,
+        description: `Your transaction at Mediku App for Swab ${randomID}`,
         amount,
         shouldSendEmail: true,
       });
@@ -293,39 +253,19 @@ class ControllerXendit {
     }
   }
 &nbsp;
-<span class="fstat-no" title="function not covered" >  st</span>atic async paymentAccepted(req, res, next) {
-    //disburse ke lender
-    // const { lenderID } = req.body;
+<span class="fstat-no" title="function not covered" >  st</span>atic async getStatusPayout(req, res, next) {
 <span class="cstat-no" title="statement not covered" >    try {</span>
-      const loan = <span class="cstat-no" title="statement not covered" >{</span>
-        id: "123",
-        initialLoan: 100000,
-        lender: {
-          bankCode: "BCA",
-          accountHolderName: "Test",
-          accountNumber: "1234567890",
-        },
-      };
-      const disbursement = <span class="cstat-no" title="statement not covered" >await XenditDisbursement.create({</span>
-        externalID: `disburse-${loan.id}`,
-        bankCode: loan.lender.bankCode,
-        accountHolderName: loan.lender.accountHolderName,
-        accountNumber: loan.lender.accountNumber,
-        description: `withdrawal for ${loan.id}`,
-        amount: loan.initialLoan,
+      const resp = <span class="cstat-no" title="statement not covered" >await XenditPayout.createPayout({</span>
+        externalID: 'coba-aaz25bonind',
+        amount: 1000,
+        email: req.user.id
       });
-<span class="cstat-no" title="statement not covered" >      res.status(200).json({</span>
-        status: 'SUCCESS',
-        user_id: disbursement.user_id,
-        external_id: disbursement.external_id,
-        amount: disbursement.amount,
-        bank_code: disbursement.bank_code,
-        account_holder_name: disbursement.account_holder_name,
-        disbursement_description: disbursement.disbursement_description,
-        id: disbursement.id
-      });
-    } catch (error) {
-<span class="cstat-no" title="statement not covered" >      res.status(500).json(error);</span>
+      // const resp = await XenditPayout.getPayout({ data: { id: 'coba-aaz25bonind' } });
+      // res.send(resp)
+<span class="cstat-no" title="statement not covered" >      res.status(200).json(resp)</span>
+    } catch (err) {
+<span class="cstat-no" title="statement not covered" >      console.log(err);</span>
+<span class="cstat-no" title="statement not covered" >      next(err)</span>
     }
   }
 }
@@ -337,7 +277,7 @@ module.exports = ControllerXendit</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Wed Oct 20 2021 08:12:45 GMT+0700 (Indochina Time)
+                at Wed Oct 20 2021 15:55:19 GMT+0700 (Indochina Time)
             </div>
         </div>
         <script src="../../prettify.js"></script>
