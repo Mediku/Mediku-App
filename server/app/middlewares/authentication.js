@@ -1,5 +1,5 @@
 const { verifyToken } = require('../helpers/jwt')
-const { User } = require('../models')
+const { User, Clinic } = require('../models')
 
 async function authenticationUser(req, res, next) {
   try {
@@ -38,19 +38,9 @@ async function authenticationClinic(req, res, next) {
     if (access_token) {
       const verified = verifyToken(access_token)
       const clinic = await Clinic.findByPk(verified.id)
-      req.user = {
+      req.clinic = {
         id: clinic.id,
         name: clinic.name,
-        email: clinic.email,
-        phone_number: clinic.phone_number,
-        address: clinic.address,
-        imageURL: clinic.imageURL,
-        operational_time_open: clinic.operational_time_open,
-        operational_time_close: clinic.operational_time_close,
-        swab_antigen: clinic.swab_antigen,
-        swab_pcr: clinic.swab_pcr,
-        antigen_price: clinic.antigen_price,
-        pcr_price: clinic.pcr_price
       }
       next()
     } else {
@@ -60,5 +50,4 @@ async function authenticationClinic(req, res, next) {
     next(err)
   }
 }
-
 module.exports = { authenticationUser, authenticationClinic }

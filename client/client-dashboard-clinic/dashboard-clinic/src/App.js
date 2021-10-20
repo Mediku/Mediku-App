@@ -1,11 +1,11 @@
 import logo from './logo.svg';
 import './App.css';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import Home from './screens/Home'
-import Process from './screens/formProcess'
-import AllPatient from './screens/allPatient'
-import Login from './screens/login'
-import PrivateRoute from './components/privateRoute'
+import Process from './screens/FormProcess'
+import AllPatient from './screens/AllPatient'
+import Login from './screens/Login'
+import PrivateRoute from './components/PrivateRoute'
+import { Switch, Route } from 'react-router-dom'
 
 function App() {
   return (
@@ -13,16 +13,18 @@ function App() {
       <Route path="/process">
         <Process />
       </Route>      
+      
       <Route path="/patients">
         <AllPatient />
       </Route>
+
       <Route path="/login">
         <Login />
       </Route>
-      
-      <PrivateRoute path='/'>
+
+      <Route path="/">
         <Home />
-      </PrivateRoute>
+      </Route>
 
     </Switch> 
   );

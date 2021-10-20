@@ -1,6 +1,44 @@
 const { Clinic } = require("../models");
+const { checkPassword } = require("../helpers/bcryptjs");
+const { signToken } = require("../helpers/jwt");
 
 class ClinicController {
+
+  static async login(req, res, next) {
+    try{
+      const {email, password} = req.body
+      const clinic = await Clinic.findOne({
+        where: {
+          email
+        }
+      })
+
+      if (clinic) {
+        const checkPass = checkPassword(password, clinic.password)
+        if (checkPass) {
+          const access_token = signToken({
+            id: clinic.id,
+            email: clinic.email,
+          })
+
+          res.status(200).json({
+            id: clinic.id,
+            email: clinic.email,
+            access_token
+          })
+        }
+      }
+      else{
+          throw {name: "Unauthorized"}
+        }
+
+    }catch(err){
+      console.log(err)
+      next(err)
+    }
+  }
+
+
   static async create(req, res, next) {
     const data = {
       name: req.body.name,
@@ -69,6 +107,7 @@ class ClinicController {
       data.operational_day_open = data.operational_day_open.split(",");
       res.status(200).json(data);
     } catch (err) {
+      console.log(err)
       next(err);
     }
   }
