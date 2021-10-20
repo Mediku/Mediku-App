@@ -1,13 +1,14 @@
-import {clinicApi} from './../apis'
-import axios from 'axios'
-import{
-	GET_REGISTRATIONS,
-	SET_REGISTRATIONS,
-	SET_USER_LOGIN,
-	SET_PATIENT_DAY,
-	SET_COMPLETED_TEST,
+import { clinicApi } from "./../apis";
+import axios from "axios";
+import {
+  GET_REGISTRATIONS,
+  SET_REGISTRATIONS,
+  SET_USER_LOGIN,
+  SET_PATIENT_DAY,
+  SET_COMPLETED_TEST,
   FETCH_ALL_PATIENTS,
-} from './../keys'
+  FETCH_PATIENT,
+} from "./../keys";
 
 const baseUrl = "http://localhost:9000";
 
@@ -35,7 +36,10 @@ export const fetchAllPatients = (payload) => ({
   type: FETCH_ALL_PATIENTS,
   payload,
 });
-
+export const fetchPatient = (payload) => ({
+  type: FETCH_PATIENT,
+  payload,
+});
 
 export const getPatientByDay = () => {
   return (dispatch) => {
@@ -46,7 +50,7 @@ export const getPatientByDay = () => {
         },
       })
       .then(({ data }) => {
-        console.log(data)
+        console.log(data);
         dispatch(setPatientThisDay(data));
       })
       .catch((err) => console.log(err));
@@ -62,17 +66,29 @@ export const fetchAllPatientsAsync = () => {
         },
       })
       .then(({ data }) => {
-        console.log(data, "dari action");
+        // console.log(data, "dari action");
         dispatch(fetchAllPatients(data));
       })
       .catch((err) => console.log(err));
   };
 };
-
+export const fetchPatientAsync = (id) => {
+  return (dispatch) => {
+    axios
+      .get(`${baseUrl}/registrations/clinic/${id}`, {
+        headers: {
+          access_token: localStorage.access_token,
+        },
+      })
+      .then(({ data }) => {
+        dispatch(fetchPatient(data));
+      })
+      .catch((err) => console.log(err));
+  };
+};
 
 export const updateTestResult = (id) => {
   return (dispatch) => {
-    return axios
-      .patch(`${baseUrl}//test/result/${id}`)
-  }
-}
+    return axios.patch(`${baseUrl}//test/result/${id}`);
+  };
+};

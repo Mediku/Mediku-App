@@ -56,7 +56,7 @@ class CoontrollerDomicile {
         res.status(200).json(result.data.kelurahan);
       }
     } catch (err) {
-      next(err)
+      next(err);
     }
   }
 }

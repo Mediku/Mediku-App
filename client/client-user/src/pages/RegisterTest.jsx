@@ -141,6 +141,7 @@ function RegisterTest() {
             time,
             ClinicId
         }
+        console.log(payload);
         dispatch(addPatientAsync(payload))
         .then((res)=> {
             return res.json()
