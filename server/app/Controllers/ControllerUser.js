@@ -6,6 +6,7 @@ const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 class ControllerUser {
   static async register(req, res, next) {
+    console.log(req.body);
     const {
       full_name,
       email,
@@ -39,24 +40,22 @@ class ControllerUser {
         RW,
         regency,
       });
-      res
-        .status(201)
-        .json({
-          id: result.id,
-          email: result.email,
-          full_name: result.full_name,
-          phone_number: result.phone_number,
-          identity_card_number: result.identity_card_number,
-          identity_card_address: result.identity_card_address,
-          gender: result.gender,
-          date_of_birth: result.date_of_birth,
-          province: result.province,
-          regency: result.regency,
-          district: result.district,
-          sub_district: result.sub_district,
-          RT: result.RT,
-          RW: result.RW,
-        });
+      res.status(201).json({
+        id: result.id,
+        email: result.email,
+        full_name: result.full_name,
+        phone_number: result.phone_number,
+        identity_card_number: result.identity_card_number,
+        identity_card_address: result.identity_card_address,
+        gender: result.gender,
+        date_of_birth: result.date_of_birth,
+        province: result.province,
+        regency: result.regency,
+        district: result.district,
+        sub_district: result.sub_district,
+        RT: result.RT,
+        RW: result.RW,
+      });
     } catch (err) {
       next(err);
     }
@@ -96,7 +95,6 @@ class ControllerUser {
         throw { name: "Unauthorized" };
       }
     } catch (err) {
-      console.log(err);
       next(err);
     }
   }
@@ -165,24 +163,22 @@ class ControllerUser {
     const { id } = req.user;
     try {
       const user = await User.findByPk(id);
-      res
-        .status(200)
-        .json({
-          id: user.id,
-          phone_number: user.phone_number,
-          full_name: user.full_name,
-          identity_card_number: user.identity_card_address,
-          identity_card_address: user.identity_card_address,
-          gender: user.gender,
-          date_of_birth: user.date_of_birth,
-          email: user.email,
-          regency: user.regency,
-          province: user.province,
-          district: user.district,
-          sub_district: user.sub_district,
-          RT: user.RT,
-          RW: user.RW,
-        });
+      res.status(200).json({
+        id: user.id,
+        phone_number: user.phone_number,
+        full_name: user.full_name,
+        identity_card_number: user.identity_card_address,
+        identity_card_address: user.identity_card_address,
+        gender: user.gender,
+        date_of_birth: user.date_of_birth,
+        email: user.email,
+        regency: user.regency,
+        province: user.province,
+        district: user.district,
+        sub_district: user.sub_district,
+        RT: user.RT,
+        RW: user.RW,
+      });
     } catch (err) {
       next(err);
     }

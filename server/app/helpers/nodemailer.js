@@ -10,7 +10,7 @@ const oauth2Client = new OAuth2(
 
 oauth2Client.setCredentials({
   refresh_token:
-    "1//04o3i_HSmbZaoCgYIARAAGAQSNwF-L9IrgErG5ebw6uciFFhsTz1VN85C-8QtrFPmNiI_CKG-EXJO6MkyQIXVVFpJ4QRFynaf68I",
+    "1//046RWt7KXWTG8CgYIARAAGAQSNwF-L9Irr_chrL1wTnCQ-ifzf1UeWN49DcRvO72-a5Z_oUlTQJkHFWqtEEmQ7AK0xmd8ATajMiw",
 });
 const accessToken = oauth2Client.getAccessToken();
 
@@ -19,12 +19,12 @@ function sendNodemailer(emailTo, subject, text) {
     service: "gmail",
     auth: {
       type: "OAuth2",
-      user: "jonathansentosa80@gmail.com",
+      user: "medikumail@gmail.com",
       clientId:
         "759003206057-o0vldljc99vunh1di9iernh76jeigok9.apps.googleusercontent.com",
       clientSecret: "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",
       refreshToken:
-        "1//04pczHblCAM2sCgYIARAAGAQSNwF-L9IrltYFLZnDpx16wBykAUEyppHsAQ0ZXrBg-lPNrKGTxlwLvfU2SjUnFp5H2q2wzvjCSZ4",
+        "1//046RWt7KXWTG8CgYIARAAGAQSNwF-L9Irr_chrL1wTnCQ-ifzf1UeWN49DcRvO72-a5Z_oUlTQJkHFWqtEEmQ7AK0xmd8ATajMiw",
       accessToken: accessToken,
     },
   });
@@ -33,7 +33,7 @@ function sendNodemailer(emailTo, subject, text) {
     from: "Mediku",
     to: `${emailTo}`,
     subject: `${subject}`,
-    html: `${text}`,
+    text: `${text}`,
   };
 
   transporter.sendMail(mailData, function (err, info) {

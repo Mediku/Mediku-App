@@ -7,6 +7,7 @@ class ControllerRegistration {
     try {
       const result = await Registration.findAll({
         where: { ClinicId: req.clinic.id },
+
         include: [
           {
             model: User,
@@ -63,6 +64,7 @@ class ControllerRegistration {
     } else {
       is_tested = false;
     }
+
     const UserId = req.user.id; 
     try {
       const result = await Registration.create({
@@ -137,6 +139,7 @@ class ControllerRegistration {
           },
         ],
       });
+
       if (!foundRegistration) {
         throw { name: "Data Not Found" };
       } else {

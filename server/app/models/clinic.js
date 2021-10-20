@@ -9,9 +9,9 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // Clinic.hasMany(models.Registration, {
-      //   foreignKey: "clinicId",
-      // });
+      Clinic.hasMany(models.Registration, {
+        foreignKey: "ClinicId",
+      });
     }
   }
   Clinic.init(
@@ -31,6 +31,7 @@ module.exports = (sequelize, DataTypes) => {
       email: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true,
         validate: {
           notEmpty: {
             msg: "PLEASE INSERT EMAIL",
