@@ -8,13 +8,19 @@ class ControllerRegistrationClinic {
     try {
       const result = await Registration.findAll({
         where: {
-          id: req.user.id,
+          ClinicId: req.user.id,
           is_paid: true,
           createdAt: {
             [Op.lt]: new Date(),
             [Op.gt]: new Date(new Date() - 24 * 60 * 60 * 1000)
           }
-        }
+        },
+        include: [
+          {
+            model: User,
+            attributes: { exclude: ["password"] },
+          }
+        ]
       })
       res.status(200).json(result)
     } catch (err) {

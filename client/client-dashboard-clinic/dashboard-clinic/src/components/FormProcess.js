@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-export default function formProcess() {
+export default function FormProcess() {
 	return (
 		<div>
 			<div class="mx-5">

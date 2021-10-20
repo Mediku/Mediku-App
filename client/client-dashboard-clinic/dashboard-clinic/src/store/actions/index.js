@@ -3,7 +3,8 @@ import axios from 'axios'
 import{
 	GET_REGISTRATIONS,
 	SET_REGISTRATIONS,
-	SET_USER_LOGIN
+	SET_USER_LOGIN,
+	SET_PATIENT_DAY
 } from './../keys'
 
 const baseUrl = 'http://localhost:9000'
@@ -21,5 +22,24 @@ export const setUserLogin = (payload) => ({
 export const userLogin = (payload) => {
 	return (dispatch) => {
 		return axios.post(`${baseUrl}/clinic/login`, payload)
+	}
+}
+
+export const setPatientThisDay = (payload) => ({
+	type: SET_PATIENT_DAY,
+	payload
+})
+
+export const getPatientByDay = () => {
+	return (dispatch) => {
+		return axios.get(`${baseUrl}/registrations/clinic/today`, {
+			header: {
+				access_token: localStorage.access_token
+			}
+		})
+			.then(({data}) => {
+				dispatch(setPatientThisDay(data))
+			})
+			.catch(err => console.log(err))
 	}
 }
