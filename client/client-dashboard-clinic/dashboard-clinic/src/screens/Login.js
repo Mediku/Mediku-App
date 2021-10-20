@@ -24,8 +24,15 @@ export default function Login() {
 		setLoading(true)
 		e.preventDefault()
 		dispatch(userLogin(userInput))
-			.then(({data}) => console.log(data))
-			.catch(err => console.log(err.response.data.message))
+			.then(({data}) => {
+				dispatch(setUserLogin(data))
+				localStorage.setItem('access_token', data.access_token)
+				history.push('/')
+			})
+			.catch(err => {
+				setLoading(false)
+				console.log(err)
+			})
 			.finally((_) => setLoading(false))
 	}
 

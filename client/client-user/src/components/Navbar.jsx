@@ -4,23 +4,24 @@ import '../App.scss'
 import {Link} from 'react-router-dom'
 function Navbar() {
     return (
-        <nav>
+        <div className="container-navbar">
+            <nav>
             <div className="logo">
                 <Link class="router" to="/"><h1>Mediku</h1></Link>
             </div>
             <div>
                 <ul>
-                    <li><Link class="router" to="/">Home</Link></li>
-                    <li><Link class="router" to="/">Locations</Link></li>
-                    <li><Link class="router" to="/">Services</Link></li>
-                    <li><Link class="router" to="/">About Us</Link></li>
-                    <li><Link class="router" to="/">Contact Us</Link></li>
-                    <li><Link class="router" to="/register">Register Test</Link></li>
-
+                    <li className="list"><Link class="router" to="/">Home</Link></li>
+                    <li className="list"><Link class="router list" to="/locations">Locations</Link></li>
+                    <li className="list"><Link class="router list" to="/contact-us">Contact Us</Link></li>
+                    <li className="list"><Link class="router list" to="/history">History</Link></li>
+                    <li className="list"><Link class="router button grow" to="/register">Register Test</Link></li>
                 </ul>
             </div>
             
         </nav>
+        </div>
+
     )
 }
 

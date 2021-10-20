@@ -1,7 +1,19 @@
-import React from "react";
-import { Link } from 'react-router-dom'
+import React, {useState, useEffect} from 'react'
+import { useSelector, useDispatch } from "react-redux";
+import { getPatientByDay } from "./../store/actions/";
+import TableBodyHome from './TableBodyHome'
 
-export default function tablepatient() {
+export default function Tablepatient() {
+  const dispatch = useDispatch();
+  const getName = localStorage.username;
+
+  useEffect(() => {
+    dispatch(getPatientByDay());
+  }, [dispatch]);
+
+	const patients = useSelector((state) => state.patientToday);
+	console.log(patients, '<<<<<<<,')
+
 	return (
 		<div class="flex flex-col mx-5 bg-white rounded-lg shadow-md">
 			<p class="mx-5 my-3 text-md font-medium text-gray-900">Register Today</p>
@@ -41,141 +53,17 @@ export default function tablepatient() {
 									>
 										Result
 									</th>
-									<th scope="col" class="relative px-6 py-3">
-										<span class="sr-only">Edit</span>
-									</th>
 								</tr>
 							</thead>
 							<tbody class="bg-white divide-y divide-gray-200">
-								<tr>
-									<td class="px-6 py-4 whitespace-nowrap">
-										<div class="text-sm text-gray-900">
-											1
-										</div>
-									</td>	
-									<td class="px-6 py-4 whitespace-nowrap">
-										<div class="flex items-center">
-											<div>
-												<div class="text-sm font-medium text-gray-900">
-													Jane Cooper
-												</div>
-												<div class="text-sm text-gray-500">
-													jane.cooper@example.com
-												</div>
-											</div>
-										</div>
-									</td>
-									<td class="px-6 py-4 whitespace-nowrap">
-										<div class="text-sm text-gray-900">
-											SWAB
-										</div>
-										<div class="text-sm text-gray-500">
-											Antigen
-										</div>
-									</td>
-									<td class="px-6 py-4 whitespace-nowrap">
-										<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-											Completed
-										</span>
-									</td>
-									<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-										Negative
-									</td>
-									<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-										<a
-											href="#"
-											class="text-indigo-600 hover:text-indigo-900"
-										>
-										</a>
-									</td>
-								</tr>
-
-								<tr>
-									<td class="px-6 py-4 whitespace-nowrap">
-										<div class="text-sm text-gray-900">
-											2
-										</div>
-									</td>	
-									<td class="px-6 py-4 whitespace-nowrap">
-										<div class="flex items-center">
-											<div>
-												<div class="text-sm font-medium text-gray-900">
-													Jane Cooper
-												</div>
-												<div class="text-sm text-gray-500">
-													jane.cooper@example.com
-												</div>
-											</div>
-										</div>
-									</td>
-									<td class="px-6 py-4 whitespace-nowrap">
-										<div class="text-sm text-gray-900">
-											SWAB
-										</div>
-										<div class="text-sm text-gray-500">
-											Antigen
-										</div>
-									</td>
-									<td class="px-6 py-4 whitespace-nowrap">
-										<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-gray-800">
-											Tested
-										</span>
-									</td>
-									<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-										waiting
-									</td>
-									<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-										<a
-											href="#"
-											class="text-indigo-600 hover:text-indigo-900"
-										>
-											
-										</a>
-									</td>
-								</tr>
-
-								<tr>
-									<td class="px-6 py-4 whitespace-nowrap">
-										<div class="text-sm text-gray-900">
-											3
-										</div>
-									</td>	
-									<td class="px-6 py-4 whitespace-nowrap">
-										<div class="flex items-center">
-											<div>
-												<div class="text-sm font-medium text-gray-900">
-													Jane Cooper
-												</div>
-												<div class="text-sm text-gray-500">
-													jane.cooper@example.com
-												</div>
-											</div>
-										</div>
-									</td>
-									<td class="px-6 py-4 whitespace-nowrap">
-										<div class="text-sm text-gray-900">
-											SWAB
-										</div>
-										<div class="text-sm text-gray-500">
-											Antigen
-										</div>
-									</td>
-									<td class="px-6 py-4 whitespace-nowrap">
-										<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-gray-800">
-											Waiting
-										</span>
-									</td>
-									<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-										waiting
-									</td>
-									<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-										<Link to='/process?name=John'
-											class="text-indigo-600 hover:text-indigo-900"
-										>
-											process
-										</Link>
-									</td>
-								</tr>
+							
+							{
+								patients?.map((patient, index) => {
+									return(
+										<TableBodyHome patient={patient} index={index}/>
+									)
+								})
+							}
 
 							</tbody>
 						</table>

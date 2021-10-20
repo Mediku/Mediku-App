@@ -1,19 +1,18 @@
-import logo from './logo.svg';
-import './App.css';
-import Home from './screens/Home'
-import Process from './screens/FormProcess'
-import AllPatient from './screens/AllPatient'
-import Login from './screens/Login'
-import PrivateRoute from './components/PrivateRoute'
-import { Switch, Route } from 'react-router-dom'
+import "./App.css";
+import Home from "./screens/Home";
+import Process from "./screens/FormProcess";
+import AllPatient from "./screens/AllPatient";
+import Login from "./screens/Login";
+import PrivateRoute from "./components/PrivateRoute";
+import { Switch, Route } from "react-router-dom";
 
 function App() {
   return (
     <Switch>
-      <Route path="/process">
+      <Route path="/process/:id">
         <Process />
-      </Route>      
-      
+      </Route>
+
       <Route path="/patients">
         <AllPatient />
       </Route>
@@ -22,13 +21,11 @@ function App() {
         <Login />
       </Route>
 
-      <Route path="/">
+      <PrivateRoute path="/">
         <Home />
-      </Route>
-
-    </Switch> 
+      </PrivateRoute>
+    </Switch>
   );
 }
 
 export default App;
-  

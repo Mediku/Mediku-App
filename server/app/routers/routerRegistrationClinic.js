@@ -12,19 +12,24 @@ router.get(
   ControllerRegistrationClinic.findOneRegistration
 );
 router.put(
-  "/:id",
+  "/edit/:id",
   authorizationClinic,
   ControllerRegistrationClinic.editRegistration
-);
-router.patch(
-  "/:id",
-  authorizationClinic,
-  ControllerRegistrationClinic.editTestResult
 );
 router.delete(
   "/:id",
   authorizationClinic,
   ControllerRegistrationClinic.deleteRegistration
+);
+router.patch(
+  "/test/result/:id",
+  authorizationClinic,
+  ControllerRegistrationClinic.editTestResult
+);
+router.patch(
+  "/istested/:id",
+  authorizationClinic,
+  ControllerRegistrationClinic.editIsTestedRegistration
 );
 
 module.exports = router;

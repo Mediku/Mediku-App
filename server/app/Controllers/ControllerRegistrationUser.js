@@ -37,7 +37,6 @@ class ControllerRegistrationUser {
     } else {
       is_tested = false;
     }
-
     const UserId = req.user.id;
     try {
       const result = await Registration.create({
@@ -50,7 +49,7 @@ class ControllerRegistrationUser {
         UserId,
         is_tested,
       });
-      res.status(201).json(result);
+
       const clinic = await Clinic.findByPk(result.ClinicId);
       sendNodemailer(
         req.user.email,
