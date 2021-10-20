@@ -1,11 +1,12 @@
-const { Registration, User } = require('../models')
+const { Registration, User, Clinic } = require('../models')
 
 const authorizationRegistration = async (req, res, next) => {
   const id = +req.params.id
   try {
     const foundRegistration = await Registration.findByPk(id)
+    console.log(foundRegistration)
     if (foundRegistration) {
-      if (req.user.id == foundRegistration.UserId) {
+      if (req.clinic.id == foundRegistration.ClinicId) {
         next()
       } else {
         throw ({ name: 'You are not authorized' })
@@ -14,6 +15,7 @@ const authorizationRegistration = async (req, res, next) => {
       throw ({ name: 'Data Not Found' })
     }
   } catch (err) {
+    console.log(err)
     next(err)
   }
 }
@@ -23,7 +25,7 @@ const authorizationUser = async (req, res, next) => {
   try {
     const foundUser = await User.findByPk(id)
     if (foundUser) {
-      if (req.user.id == foundUser.id) {
+      if (req.clinic.id == foundUser.ClinicId) {
         next()
       } else {
         throw ({ name: 'You are not authorized' })
@@ -35,5 +37,8 @@ const authorizationUser = async (req, res, next) => {
     next(err)
   }
 }
+
+// mau edit, => user login atau klinik login
+// harus punya data registrasi yang user id / klinik id nya sama
 
 module.exports = { authorizationRegistration, authorizationUser }

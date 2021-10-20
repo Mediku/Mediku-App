@@ -2,10 +2,11 @@ const { Registration, Clinic, User } = require("../models");
 const sendNodemailer = require("../helpers/nodemailer");
 
 class ControllerRegistration {
+
   static async findAll(req, res, next) {
     try {
       const result = await Registration.findAll({
-        where: { UserId: req.user.id },
+        where: { ClinicId: req.clinic.id },
         include: [
           {
             model: User,
@@ -62,7 +63,7 @@ class ControllerRegistration {
     } else {
       is_tested = false;
     }
-    const UserId = req.user.id;
+    const UserId = req.user.id; 
     try {
       const result = await Registration.create({
         service_name,
@@ -136,7 +137,6 @@ class ControllerRegistration {
           },
         ],
       });
-      console.log(foundRegistration);
       if (!foundRegistration) {
         throw { name: "Data Not Found" };
       } else {
@@ -155,10 +155,14 @@ class ControllerRegistration {
       }
     } catch (err) {
       console.log(err);
+      next(err)
     }
   }
 
   static async editRegistration(req, res, next) {
+    
+    //user bisa edit punya dia sendiri, dari sisi klinik juga bisa edit
+
     let is_paid;
     let is_tested;
     const { id } = req.params;
@@ -197,5 +201,6 @@ class ControllerRegistration {
     }
   }
 }
+
 
 module.exports = ControllerRegistration;

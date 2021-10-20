@@ -1,5 +1,5 @@
 const { verifyToken } = require('../helpers/jwt')
-const { User } = require('../models')
+const { User, Clinic } = require('../models')
 
 async function authentication(req, res, next) {
   try {
@@ -32,4 +32,26 @@ async function authentication(req, res, next) {
   }
 }
 
-module.exports = authentication
+async function authClinic(req, res, next) {
+  try {
+    const { access_token } = req.headers
+    if (access_token) {
+      const verified = verifyToken(access_token)
+      const clinic = await Clinic.findByPk(verified.id)
+      req.clinic = {
+        id: clinic.id,
+        name: clinic.name,
+      }
+      next()
+    } else {
+      throw { name: 'Please Login First' }
+    }
+  } catch (err) {
+    next(err)
+  }
+}
+
+module.exports = {
+  authentication,
+  authClinic
+}
