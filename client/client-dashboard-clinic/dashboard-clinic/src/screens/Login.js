@@ -30,8 +30,8 @@ export default function Login() {
 				history.push('/')
 			})
 			.catch(err => {
-				setError(err.response.data.message)
-				console.log(error)
+				setLoading(false)
+				console.log(err)
 			})
 			.finally((_) => setLoading(false))
 	}

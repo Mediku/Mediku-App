@@ -4,7 +4,8 @@ import{
 	GET_REGISTRATIONS,
 	SET_REGISTRATIONS,
 	SET_USER_LOGIN,
-	SET_PATIENT_DAY
+	SET_PATIENT_DAY,
+	SET_COMPLETED_TEST
 } from './../keys'
 
 const baseUrl = 'http://localhost:9000'
@@ -30,10 +31,11 @@ export const setPatientThisDay = (payload) => ({
 	payload
 })
 
+
 export const getPatientByDay = () => {
 	return (dispatch) => {
 		return axios.get(`${baseUrl}/registrations/clinic/today`, {
-			header: {
+			headers: {
 				access_token: localStorage.access_token
 			}
 		})

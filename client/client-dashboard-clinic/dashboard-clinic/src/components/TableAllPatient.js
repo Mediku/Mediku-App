@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 export default function TableAllPatient() {
+
 	return (
 		<div class="flex flex-col mx-5 bg-white rounded-lg shadow-md">
 			<div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
