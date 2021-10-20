@@ -85,6 +85,29 @@ class ControllerRegistrationClinic {
     }
   }
 
+  static async editIsTestedRegistration(req, res, next) {
+    const { id } = req.params
+    try {
+      const data = {
+        is_tested: true
+      }
+      const foundRegistration = await Registration.findByPk(id, {
+        include: [
+          {
+            model: User,
+            attributes: { exclude: ["password"] }
+          }
+        ]
+      })
+      await Registration.update(data, { where: { id: foundRegistration.id }, returning: true })
+      res.status(200).json({
+        message: `user ${foundRegistration.User.full_name}'s already tested`
+      })
+    } catch (err) {
+      next(err)
+    }
+  }
+
   static async editTestResult(req, res, next) {
     const id = req.params.id;
     try {
