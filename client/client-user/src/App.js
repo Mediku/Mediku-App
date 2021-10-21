@@ -3,7 +3,7 @@ import Home from "./pages/Home";
 import Register from "./pages/Register";
 import Navbar from "./components/Navbar";
 import Locations from "./pages/Locations";
-import ContactUs from "./pages/ContactUs";
+// import ContactUs from "./pages/ContactUs";
 import Login from "./pages/Login";
 import History from "./pages/History";
 import RegisterTest from "./pages/RegisterTest";
@@ -23,10 +23,10 @@ function App() {
         <Navbar></Navbar>
         <Locations></Locations>
       </Route>
-      <Route path="/contact-us">
+      {/* <Route path="/contact-us">
         <Navbar></Navbar>
         <ContactUs></ContactUs>
-      </Route>
+      </Route> */}
       <Route path="/login">
         <Navbar></Navbar>
         <Login></Login>

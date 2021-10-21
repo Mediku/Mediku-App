@@ -16,22 +16,23 @@
     "RW": "02"
   },
   {
-    "full_name": "Jonathan",
-    "email": "joe@mail.com",
+    "full_name": "Jonathan Sentosa",
+    "email": "jo99@gmail.com",
     "password": "rahasia123",
     "phone_number": "081208120812",
     "identity_card_number": "01010101010",
     "identity_card_address": "test identity_card_address",
     "gender": "male",
     "date_of_birth": "2020-04-10",
-    "province": "Jawa Timur",
-    "regency": "Surabaya",
-    "district": "Gubeng",
-    "sub_district": "Gubeng",
+    "province": "Sumatera Utara",
+    "regency": "Kota Medan",
+    "district": "Medan Kota",
+    "sub_district": "Pasar Baru",
     "RT": "01",
     "RW": "02"
   },
   {
+
     "full_name": "Handson Panggabean",
     "email": "handson@mail.com",
     "password": "rahasia123",
