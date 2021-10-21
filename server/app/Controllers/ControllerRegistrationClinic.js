@@ -5,32 +5,26 @@ const Op = Sequelize.Op;
 
 class ControllerRegistrationClinic {
   static async findAllTodayRegistration(req, res, next) {
-    try {
-      const result = await Registration.findAll({
-        where: {
-          ClinicId: req.user.id,
-          is_paid: true,
-          createdAt: {
-            [Op.lt]: new Date(),
-            [Op.gt]: new Date(new Date() - 24 * 60 * 60 * 1000),
-          },
+    const result = await Registration.findAll({
+      where: {
+        ClinicId: req.user.id,
+        is_paid: true,
+        createdAt: {
+          [Op.lt]: new Date(),
+          [Op.gt]: new Date(new Date() - 24 * 60 * 60 * 1000),
         },
-        include: [
-          {
-            model: User,
-            attributes: { exclude: ["password"] },
-          },
-        ],
-      });
-      res.status(200).json(result);
-    } catch (err) {
-      next(err);
-    }
+      },
+      include: [
+        {
+          model: User,
+          attributes: { exclude: ["password"] },
+        },
+      ],
+    });
+    res.status(200).json(result);
   }
 
   static async findAll(req, res, next) {
-    console.log(req.user.id);
-    console.log("LINE 33");
     try {
       const result = await Registration.findAll({
         where: { is_paid: true, ClinicId: req.user.id },
@@ -45,9 +39,6 @@ class ControllerRegistrationClinic {
           },
         ],
       });
-
-      console.log(result);
-      console.log("LINE 48");
       res.status(200).json(result);
     } catch (err) {
       next(err);
@@ -71,7 +62,6 @@ class ControllerRegistrationClinic {
       });
       res.status(200).json(result);
     } catch (err) {
-      console.log(err);
       next(err);
     }
   }
