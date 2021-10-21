@@ -145,22 +145,22 @@ class ControllerRegistrationClinic {
 
   static async editRegistration(req, res, next) {
     let is_paid;
-
     let is_tested;
     const { id } = req.params;
     const { service_name, total_price, date, time, ClinicId, test_result } =
       req.body;
     const UserId = req.user.id;
-    if (req.body.is_paid == "true") {
+    if (req.body.is_paid == true) {
       is_paid = true;
     } else {
       is_paid = false;
     }
-    if (req.body.is_tested == "true") {
+    if (req.body.is_tested == true) {
       is_tested = true;
     } else {
       is_tested = false;
     }
+    console.log("MASUK EDIT");
     const data = {
       service_name,
       total_price,
