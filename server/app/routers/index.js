@@ -6,7 +6,7 @@ const routerRegistrationClinic = require("./routerRegistrationClinic");
 const routerDomicile = require("./routerDomicile");
 const routerPayment = require("./routerPayment");
 const ErrorHandler = require("../middlewares/ErrorHandler.js");
-router.use("/", routerDomicile);
+
 router.use("/clinic", routerClinic);
 router.use("/users", routerUser);
 // registrations/user/id

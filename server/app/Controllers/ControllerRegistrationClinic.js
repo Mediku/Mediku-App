@@ -5,27 +5,23 @@ const Op = Sequelize.Op;
 
 class ControllerRegistrationClinic {
   static async findAllTodayRegistration(req, res, next) {
-    try {
-      const result = await Registration.findAll({
-        where: {
-          ClinicId: req.user.id,
-          is_paid: true,
-          createdAt: {
-            [Op.lt]: new Date(),
-            [Op.gt]: new Date(new Date() - 24 * 60 * 60 * 1000),
-          },
+    const result = await Registration.findAll({
+      where: {
+        ClinicId: req.user.id,
+        is_paid: true,
+        createdAt: {
+          [Op.lt]: new Date(),
+          [Op.gt]: new Date(new Date() - 24 * 60 * 60 * 1000),
         },
-        include: [
-          {
-            model: User,
-            attributes: { exclude: ["password"] },
-          },
-        ],
-      });
-      res.status(200).json(result);
-    } catch (err) {
-      next(err);
-    }
+      },
+      include: [
+        {
+          model: User,
+          attributes: { exclude: ["password"] },
+        },
+      ],
+    });
+    res.status(200).json(result);
   }
 
   static async findAll(req, res, next) {
@@ -98,13 +94,16 @@ class ControllerRegistrationClinic {
           },
         ],
       });
-      const cek = await Registration.update(data, {
-        where: { id },
+      if (!foundRegistration) {
+        throw { name: "Data Not Found" };
+      }
+      await Registration.update(data, {
+        where: { id: foundRegistration.id },
         returning: true,
       });
       console.log(cek, 'server');
       res.status(200).json({
-        message: `user ${foundRegistration.User.full_name}'s already tested`,
+        message: `user ${foundRegistration.User.full_name} is already tested`,
       });
     } catch (err) {
       console.log(err, '<<<<<<< errornya');
@@ -162,7 +161,6 @@ class ControllerRegistrationClinic {
     } else {
       is_tested = false;
     }
-    console.log("MASUK EDIT");
     const data = {
       service_name,
       total_price,
