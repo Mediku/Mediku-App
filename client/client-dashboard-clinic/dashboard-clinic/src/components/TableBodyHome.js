@@ -3,17 +3,20 @@ import { Link } from 'react-router-dom'
 
 
 export default function TableBodyHome({patient, index}) {
-	console.log(patient)
-	console.log(index)
 
 	const Status = () => {
+		
 		if (!patient.is_tested) {
 			return(
-				"Waiting"
+				<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-gray-500">
+					Waiting
+				</span>
 			)
 		}else {
 			return(
-				"completed"
+				<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+					Completed
+				</span>
 			)
 		}
 	}
@@ -22,11 +25,11 @@ export default function TableBodyHome({patient, index}) {
 		{
 			if (!patient.test_result) {
 				return(
-					"Waiting"
+					<p>Waiting</p>
 				)
 			}else {
 				return(
-					"result"
+					<p>{patient.test_result}</p>
 				)
 			}
 		}
@@ -36,14 +39,16 @@ export default function TableBodyHome({patient, index}) {
 		{
 			if (!patient.is_tested) {
 				return(
-					""
+					<p>test</p>
 				)
-			}else{
-				<Link to='/process?name=John'
-					class="text-indigo-600 hover:text-indigo-900"
-				>
-					"process"
-				</Link>
+			}else{	
+				return(
+					<Link to='/process?name=John'
+						class="text-indigo-600 hover:text-indigo-900"
+					>
+						"process"
+					</Link>
+				)
 			}
 		}
 	}
@@ -77,12 +82,10 @@ return (
 			</div>
 		</td>
 		<td class="px-6 py-4 whitespace-nowrap">
-			<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-				<Status status={patient.is_tested}/>
-			</span>
+			<Status />
 		</td>
 		<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-				<TestResult result={patient.test_result}/>
+				<TestResult />
 		</td>
 		<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
 			<a
@@ -91,11 +94,6 @@ return (
 			>
 			</a>
 		</td>
-
-		<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-			<Process />
-		</td>
-
 	</tr>
 	)
 }

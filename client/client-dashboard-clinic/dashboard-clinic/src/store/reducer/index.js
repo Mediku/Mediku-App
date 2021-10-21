@@ -5,6 +5,7 @@ import {
   SET_PATIENT_DAY,
   FETCH_ALL_PATIENTS,
   FETCH_PATIENT,
+  GET_PATIENT_DAY,
 } from "./../keys";
 
 let initialState = {
@@ -34,6 +35,9 @@ function reducer(state = initialState, action) {
 
     case FETCH_PATIENT:
       return { ...state, dataPatient: payload };
+
+    case GET_PATIENT_DAY:
+    return state.patientToday
 
     default:
       return state;

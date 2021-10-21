@@ -18,13 +18,14 @@ export default function TableAllPatient() {
 
   const getValueSelect = (e, id) => {
       console.log(e.target.value)
-      console.log(id)
+      console.log(id.id)
   }
 
   const SelectOption = (id) => {
       
       return(
-        <select onChange={(e) => getValueSelect(e)} class="border-0 focus:ring-white">
+        <select onChange={(e) => getValueSelect(e, id)} class="border-0 focus:ring-white">
+          <option selected value='' disabled class="ring-white">--Update test result--</option>
           <option value='positif' class="ring-white">Positif</option>
           <option value='negatif'>Negatif</option>
         </select>
@@ -32,13 +33,18 @@ export default function TableAllPatient() {
   }
 
   const TestResult = (result) => {
+
     if(result === 'positif'){
       return(
-        <button disabled class="bg-red-200">Positif</button>
+          <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+            Positif
+          </span>
       )
     }else{
       return(
-        <button disabled class="bg-green-200">Negatif</button>
+          <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-gray-800">
+            Negatif
+          </span>
       )
     }
   }
@@ -142,7 +148,7 @@ export default function TableAllPatient() {
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                           {  
-                              patient.test_result === null ? <SelectOption id={patient.id}/> : <TestResult result={patient.test_result} />
+                              patient.is_tested === false ? <SelectOption id={patient.id}/> : <TestResult result={patient.result}/>
                           }
                         </td>
 

@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { useSelector, useDispatch } from "react-redux";
-import { getPatientByDay } from "./../store/actions/";
+import { fetchPatientByDay } from "./../store/actions/";
 import TableBodyHome from './TableBodyHome'
 
 export default function Tablepatient() {
@@ -8,11 +8,10 @@ export default function Tablepatient() {
   const getName = localStorage.username;
 
   useEffect(() => {
-    dispatch(getPatientByDay());
+    dispatch(fetchPatientByDay());
   }, [dispatch]);
 
 	const patients = useSelector((state) => state.patientToday);
-	console.log(patients, '<<<<<<<,')
 
 	return (
 		<div class="flex flex-col mx-5 bg-white rounded-lg shadow-md">
