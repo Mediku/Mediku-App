@@ -50,7 +50,6 @@ export const getPatientByDay = () => {
         },
       })
       .then(({ data }) => {
-        console.log(data);
         dispatch(setPatientThisDay(data));
       })
       .catch((err) => console.log(err));
@@ -66,7 +65,6 @@ export const fetchAllPatientsAsync = () => {
         },
       })
       .then(({ data }) => {
-        // console.log(data, "dari action");
         dispatch(fetchAllPatients(data));
       })
       .catch((err) => console.log(err));
@@ -90,7 +88,7 @@ export const fetchPatientAsync = (id) => {
 export const updateTestResult = (id) => {
   return (dispatch) => {
     return axios
-      .patch(`${baseUrl}/registrations/testresult/${id}`, {
+      .patch(`${baseUrl}/registrations/clinic/test/result/${id}`, {
         headers: {
           access_token: localStorage.access_token,
         },
@@ -101,3 +99,19 @@ export const updateTestResult = (id) => {
       .catch((err) => console.log(err));
   };
 };
+
+export const changeIsTested = (id) => {
+  return (dispatch) => {
+    axios
+      .patch(`${baseUrl}/registrations/clinic/istested/${id}`, {
+        headers: {
+          access_token: localStorage.access_token,
+        }
+      })
+      .then(({ data }) => {
+        console.log(data, 'data dari actions')
+        dispatch(fetchPatient(data))
+      })
+      .catch((err) => console.log(err, 'err dari actions'));
+  }
+}

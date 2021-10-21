@@ -40,8 +40,8 @@ const authorizationClinic = async (req, res, next) => {
   const id = +req.params.id;
   try {
     const foundRegistration = await Registration.findByPk(id);
-    console.log(foundRegistration, '<<<<<<<<<<<<<<<<<< regist nya');
     if (foundRegistration) {
+      console.log((req.user.id == foundRegistration.ClinicId));
       if (req.user.id == foundRegistration.ClinicId) {
         next();
       } else {

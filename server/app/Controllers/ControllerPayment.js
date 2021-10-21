@@ -47,11 +47,12 @@ class ControllerXendit {
       const invoiceStatus = await XenditInvoice.getInvoice({
         invoiceID,
       });
+      console.log(invoiceStatus.status)
       if (invoiceStatus.status == 'PENDING') {
         res.status(200).json({ message: `sorry your payment still on process or maybe you haven't paid it, please click this site for payment processing --> ${invoiceStatus.invoice_url} or you can see your email inbox to check it` })
       } else if (invoiceStatus.status == 'PAID') {
         sendNodemailer(
-          'hansenpanggabean8@gmail.com',
+          'rheina.tamara@outlook.com',
           "Registration Payment Succeess",
           `Hello, ${req.user.full_name}. Thank you for registering on Mediku. Here are your registration informations:
   
