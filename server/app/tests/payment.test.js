@@ -1,14 +1,13 @@
-const app = require('../app')
-const request = require('supertest')
-const { User, Registration, sequelize } = require('../models')
-const { queryInterface } = sequelize
-const { signToken } = require('../helpers/jwt')
-
+const app = require("../app");
+const request = require("supertest");
+const { User, Registration, sequelize } = require("../models");
+const { queryInterface } = sequelize;
+const { signToken } = require("../helpers/jwt");
 
 const user = {
-  full_name: 'testing bosku',
-  email: 'test1@mail.com',
-  password: 'rahasia123',
+  full_name: "testing bosku",
+  email: "test1@mail.com",
+  password: "rahasia123",
   phone_number: "081208120812",
   identity_card_number: "01010101010",
   identity_card_address: "test identity_card_address",
@@ -19,8 +18,8 @@ const user = {
   district: "Medan Kota",
   sub_district: "Pasar Baru",
   RT: "01",
-  RW: "02"
-}
+  RW: "02",
+};
 
 const registration = {
   id: 1,
@@ -31,10 +30,10 @@ const registration = {
   ClinicId: 1,
   is_tested: false,
   is_paid: false,
-  UserId: 1
-}
+  UserId: 1,
+};
 
-let userToken, createdRegistration
+let userToken, createdRegistration, invoiceID;
 let invalidToken =
   "22eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJvbm9AbWFpbC5jb20iLCJpZCI6MSwiaWF0IjoxNjIxMTYzNDYyfQ.WhdvxtOveekRlXU0-KbuFv7vvsZsciDBKSDugxIX19g";
 
@@ -52,7 +51,7 @@ beforeAll((done) => {
 beforeAll((done) => {
   Registration.create(registration)
     .then((data) => {
-      createdRegistration = data
+      createdRegistration = data;
       done();
     })
     .catch((err) => {
@@ -65,48 +64,65 @@ describe("POST /xendits/invoice/:id [CASE SUCCESS]", () => {
     request(app)
       .post(`/xendits/invoice/${createdRegistration.id}`)
       .set("access_token", userToken)
-      .then(response => {
-        expect(response.status).toBe(201)
-        expect(response.body).toHaveProperty("invoice_id", response.body.invoice_id)
-        expect(response.body).toHaveProperty("external_id", response.body.external_id)
-        expect(response.body).toHaveProperty("status", response.body.status)
-        expect(response.body).toHaveProperty("amount", response.body.amount)
-        expect(response.body).toHaveProperty("merchant_name", response.body.merchant_name)
-        expect(response.body).toHaveProperty("payer_email", response.body.payer_email)
-        expect(response.body).toHaveProperty("expiry_date", response.body.expiry_date)
-        expect(response.body).toHaveProperty("invoiceURL", response.body.invoiceURL)
-        expect(response.body).toHaveProperty("description", response.body.description)
-        done()
+      .then((response) => {
+        invoiceID = response.body.invoice_id;
+        expect(response.status).toBe(201);
+        expect(response.body).toHaveProperty(
+          "invoice_id",
+          response.body.invoice_id
+        );
+        expect(response.body).toHaveProperty(
+          "external_id",
+          response.body.external_id
+        );
+        expect(response.body).toHaveProperty("status", response.body.status);
+        expect(response.body).toHaveProperty("amount", response.body.amount);
+        expect(response.body).toHaveProperty(
+          "merchant_name",
+          response.body.merchant_name
+        );
+        expect(response.body).toHaveProperty(
+          "payer_email",
+          response.body.payer_email
+        );
+        expect(response.body).toHaveProperty(
+          "expiry_date",
+          response.body.expiry_date
+        );
+        expect(response.body).toHaveProperty(
+          "invoiceURL",
+          response.body.invoiceURL
+        );
+        expect(response.body).toHaveProperty(
+          "description",
+          response.body.description
+        );
+        done();
       })
-      .catch(err => {
-        done(err)
-      })
-  })
-})
+      .catch((err) => {
+        done(err);
+      });
+  });
+});
 
-// describe("PATCH /xendits/invoice/:id/status [CASE SUCCESS]", () => {
-//   test("Should return Object with message 'Hoooraayy! your payment has confirmed by Xendit please wait the schedule of antigen that you paid from clinic adkfaulgfh, there'll be on touch in your email inbox', with status code 200", (done) => {
-//     request(app)
-//       .patch(`/xendits/invoice/${createdRegistration.id}/status`)
-//       .set("access_token", userToken)
-//       .then(response => {
-//         expect(response.status).toBe(201)
-//         expect(response.body).toHaveProperty("invoice_id", response.body.invoice_id)
-//         expect(response.body).toHaveProperty("external_id", response.body.external_id)
-//         expect(response.body).toHaveProperty("status", response.body.status)
-//         expect(response.body).toHaveProperty("amount", response.body.amount)
-//         expect(response.body).toHaveProperty("merchant_name", response.body.merchant_name)
-//         expect(response.body).toHaveProperty("payer_email", response.body.payer_email)
-//         expect(response.body).toHaveProperty("expiry_date", response.body.expiry_date)
-//         expect(response.body).toHaveProperty("invoiceURL", response.body.invoiceURL)
-//         expect(response.body).toHaveProperty("description", response.body.description)
-//         done()
-//       })
-//       .catch(err => {
-//         done(err)
-//       })
-//   })
-// })
+describe("PATCH /xendits/invoice/:id/status [CASE SUCCESS]", () => {
+  test("Should return Object with message 'Hoooraayy! your payment has confirmed by Xendit please wait the schedule of antigen that you paid from clinic adkfaulgfh, there'll be on touch in your email inbox', with status code 200", (done) => {
+    request(app)
+      .patch(`/xendits/invoice/${createdRegistration.id}/status`)
+      .set("access_token", userToken)
+      .send({
+        invoiceID: invoiceID,
+      })
+      .then((response) => {
+        expect(response.status).toBe(200);
+        expect(response.body).toHaveProperty("message", expect.any(String));
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+});
 
 // afterAll((done) => {
 //   queryInterface

@@ -110,3 +110,19 @@ export const updateTestResult = (result,id) => {
         .catch(err => console.log(err.response.data))
   };
 };
+
+export const changeIsTested = (id) => {
+  return (dispatch) => {
+    axios
+      .patch(`${baseUrl}/registrations/clinic/istested/${id}`, {
+        headers: {
+          access_token: localStorage.access_token,
+        }
+      })
+      .then(({ data }) => {
+        console.log(data, 'data dari actions')
+        dispatch(fetchPatient(data))
+      })
+      .catch((err) => console.log(err, 'err dari actions'));
+  }
+}

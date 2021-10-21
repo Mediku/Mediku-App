@@ -1,4 +1,5 @@
-const { Registration, User } = require("../models");
+const { User, Registration } = require("../models");
+
 const authorizationUser = async (req, res, next) => {
   const id = +req.params.id;
   try {
@@ -6,7 +7,6 @@ const authorizationUser = async (req, res, next) => {
     if (foundRegistration) {
       if (req.user.id == foundRegistration.UserId) {
         next();
-
       } else {
         throw { name: "You are not authorized" };
       }
@@ -17,8 +17,6 @@ const authorizationUser = async (req, res, next) => {
     next(err);
   }
 };
-
-
 
 const authorizationUserProfile = async (req, res, next) => {
   const { id } = req.params;
@@ -43,6 +41,7 @@ const authorizationClinic = async (req, res, next) => {
   try {
     const foundRegistration = await Registration.findByPk(id);
     if (foundRegistration) {
+      console.log((req.user.id == foundRegistration.ClinicId));
       if (req.user.id == foundRegistration.ClinicId) {
         next();
       } else {

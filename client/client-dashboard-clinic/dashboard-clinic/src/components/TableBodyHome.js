@@ -1,7 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-
 export default function TableBodyHome({patient, index}) {
 
 	const Status = () => {
@@ -62,21 +61,22 @@ export default function TableBodyHome({patient, index}) {
 	}
 
 
-return (
-	<tr key={index}>
-		<td class="px-6 py-4 whitespace-nowrap">
-			<div class="text-sm text-gray-900">
-				{index + 1}
-			</div>
-		</td>	
-		<td class="px-6 py-4 whitespace-nowrap">
-			<div class="flex items-center">
-				<div>
-					<div class="text-sm font-medium text-gray-900">
-						{patient.User.full_name}
-					</div>
-					<div class="text-sm text-gray-500">
-						{patient.User.full_name}
+	return (
+		<tr key={index}>
+			<td class="px-6 py-4 whitespace-nowrap">
+				<div class="text-sm text-gray-900">
+					{index + 1}
+				</div>
+			</td>
+			<td class="px-6 py-4 whitespace-nowrap">
+				<div class="flex items-center">
+					<div>
+						<div class="text-sm font-medium text-gray-900">
+							{patient.User.full_name}
+						</div>
+						<div class="text-sm text-gray-500">
+							{patient.User.full_name}
+						</div>
 					</div>
 				</div>
 			</div>
