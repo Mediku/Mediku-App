@@ -14,7 +14,7 @@ oauth2Client.setCredentials({
 });
 const accessToken = oauth2Client.getAccessToken();
 
-function sendNodemailer(emailTo, subject, text) {
+function sendNodemailer(emailTo, subject, text, html) {
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -29,12 +29,23 @@ function sendNodemailer(emailTo, subject, text) {
     },
   });
 
-  const mailData = {
-    from: "Mediku",
-    to: `${emailTo}`,
-    subject: `${subject}`,
-    html: `${text}`,
-  };
+  let mailData = {};
+
+  if (!text) {
+    mailData = {
+      from: "Mediku",
+      to: `${emailTo}`,
+      subject: `${subject}`,
+      html: `${html}`,
+    };
+  } else {
+    mailData = {
+      from: "Mediku",
+      to: `${emailTo}`,
+      subject: `${subject}`,
+      text: `${text}`,
+    };
+  }
 
   transporter.sendMail(mailData);
 }
