@@ -13,6 +13,8 @@ export default function TableAllPatient() {
 
   const allPatients = useSelector((state) => state.allPatients);
 
+  console.log(allPatients, 'all patient');
+
   const [testResult, setTestResult] = useState('')
   let selected = ''
 

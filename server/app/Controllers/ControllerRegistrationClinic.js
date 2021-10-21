@@ -31,7 +31,7 @@ class ControllerRegistrationClinic {
   static async findAll(req, res, next) {
     try {
       const result = await Registration.findAll({
-        where: { is_paid: false, ClinicId: req.user.id },
+        where: { is_paid: true, ClinicId: req.user.id },
         include: [
           {
             model: User,
