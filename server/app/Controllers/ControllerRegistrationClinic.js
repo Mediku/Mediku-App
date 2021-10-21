@@ -29,6 +29,8 @@ class ControllerRegistrationClinic {
   }
 
   static async findAll(req, res, next) {
+    console.log(req.user.id);
+    console.log("LINE 33");
     try {
       const result = await Registration.findAll({
         where: { is_paid: true, ClinicId: req.user.id },
@@ -43,6 +45,9 @@ class ControllerRegistrationClinic {
           },
         ],
       });
+
+      console.log(result);
+      console.log("LINE 48");
       res.status(200).json(result);
     } catch (err) {
       next(err);
