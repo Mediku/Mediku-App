@@ -3,7 +3,6 @@ const request = require("supertest");
 const { User, Registration, Clinic, sequelize } = require("../models");
 const { queryInterface } = sequelize;
 const { signToken } = require("../helpers/jwt");
-const expectExport = require("expect");
 
 let userToken;
 let userToken2;
@@ -308,7 +307,7 @@ describe("Registration for users", () => {
         service_name: "swab",
         total_price: 200000,
         date: "2021-10-22",
-        time: "",
+        time: null,
         ClinicId: 1,
       })
       .then((res) => {
@@ -538,8 +537,6 @@ describe("registration info edit by user", () => {
         ClinicId: 1,
       })
       .then((res) => {
-        console.log(res.body);
-        console.log("LINE 519");
         expect(res.body).toHaveProperty("id");
         expect(res.body.id).toBe(1);
         expect(res.body).toHaveProperty("service_name");
@@ -770,36 +767,28 @@ describe("find one registration by clinic admin", () => {
   });
 });
 
-describe("find all registration with paid status for clinic admin who is logging in", () => {
+describe("find all registration with unpaid status for clinic admin who is logging in", () => {
   test("find all registrations", (done) => {
     request(app)
-      .post("/registrations/user")
+      .get("/registrations/clinic")
       .set("access_token", userToken)
-      .send({
-        service_name: "swab",
-        total_price: 100000,
-        date: "2021-10-22",
-        time: "16:00",
-        ClinicId: 1,
-        is_paid: true,
-      })
       .then((data) => {
         return request(app)
           .get("/registrations/clinic")
           .set({ access_token: clinicToken })
           .then((res) => {
             expect(res.body[0]).toHaveProperty("id");
-            expect(res.body[0].id).toBe(2);
+            expect(res.body[0].id).toBe(1);
             expect(res.body[0]).toHaveProperty("service_name");
             expect(res.body[0].service_name).toContain("swab");
             expect(res.body[0]).toHaveProperty("total_price");
-            expect(res.body[0].total_price).toBe(100000);
+            expect(res.body[0].total_price).toBe(500000);
             expect(res.body[0]).toHaveProperty("date");
             expect(res.body[0].date).toContain("2021-10-22T00:00:00.000Z");
             expect(res.body[0]).toHaveProperty("time");
-            expect(res.body[0].time).toContain("16:00");
+            expect(res.body[0].time).toContain("17:00");
             expect(res.body[0]).toHaveProperty("is_paid");
-            expect(res.body[0].is_paid).toBe(true);
+            expect(res.body[0].is_paid).toBe(false);
             expect(res.body[0]).toHaveProperty("ClinicId");
             expect(res.body[0].ClinicId).toBe(1);
             expect(res.body[0]).toHaveProperty("UserId");
@@ -985,7 +974,7 @@ describe("find all registration that was created today by a user", () => {
 describe("registration info edit by clinic admin", () => {
   test("successfully edited a registration", (done) => {
     request(app)
-      .put("/registrations/clinic/1")
+      .put("/registrations/clinic/edit/1")
       .set({ access_token: clinicToken })
       .send({
         service_name: "swab",
@@ -1044,7 +1033,7 @@ describe("registration info edit by clinic admin", () => {
   });
   test(`return error if clinic admin tries to edit another clinic's registration info`, (done) => {
     request(app)
-      .put("/registrations/user/1")
+      .put("/registrations/clinic/edit/1")
       .set({ access_token: clinicToken2 })
       .send({
         service_name: "swab",
@@ -1065,7 +1054,7 @@ describe("registration info edit by clinic admin", () => {
   });
   test(`return error if registration info not found`, (done) => {
     request(app)
-      .put("/registrations/clinic/5")
+      .put("/registrations/clinic/edit/5")
       .set({ access_token: clinicToken })
       .send({
         service_name: "swab",
@@ -1089,7 +1078,7 @@ describe("registration info edit by clinic admin", () => {
 describe("registration info test result patch by clinic admin", () => {
   test("successfully edited the test result in a registration info", (done) => {
     request(app)
-      .patch("/registrations/clinic/1")
+      .patch("/registrations/clinic/test/result/1")
       .set({ access_token: clinicToken })
       .send({
         test_result: "positive",
@@ -1108,7 +1097,7 @@ describe("registration info test result patch by clinic admin", () => {
   });
   test(`return error if clinic admin haven't logged in yet`, (done) => {
     request(app)
-      .patch("/registrations/clinic/1")
+      .patch("/registrations/clinic/test/result/1")
       .send({
         test_result: "positive",
       })
@@ -1124,7 +1113,7 @@ describe("registration info test result patch by clinic admin", () => {
   });
   test(`return error if clinic admin tries to edit another clinic's registration test result`, (done) => {
     request(app)
-      .patch("/registrations/clinic/1")
+      .patch("/registrations/clinic/test/result/1")
       .set({ access_token: clinicToken2 })
       .send({
         test_result: "positive",
@@ -1141,12 +1130,13 @@ describe("registration info test result patch by clinic admin", () => {
   });
   test(`return error if registration info not found`, (done) => {
     request(app)
-      .patch("/registrations/clinic/5")
+      .patch("/registrations/clinic/test/result/5")
       .set({ access_token: clinicToken })
       .send({
         test_result: "positive",
       })
       .then((res) => {
+        console.log(res.body);
         expect(res.body).toHaveProperty("message");
         expect(res.body.message).toContain("Data Not Found");
         expect(res.status).toBe(404);
@@ -1159,6 +1149,25 @@ describe("registration info test result patch by clinic admin", () => {
 });
 
 describe("registration info delete by clinic admin", () => {
+  beforeAll((done) => {
+    request(app)
+      .post("/registrations/user")
+      .set({ access_token: userToken })
+      .send({
+        service_name: "swab",
+        total_price: 200000,
+        date: "2021-10-22",
+        time: "16:00",
+        ClinicId: 1,
+        UserId: 1,
+      })
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
   test("successfully deleted a registration info", (done) => {
     request(app)
       .delete("/registrations/clinic/2")

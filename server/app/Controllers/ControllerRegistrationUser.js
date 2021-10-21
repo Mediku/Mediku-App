@@ -75,7 +75,6 @@ class ControllerRegistrationUser {
       );
       res.status(201).json(result);
     } catch (err) {
-      console.log(err);
       next(err);
     }
   }
