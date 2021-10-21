@@ -13,6 +13,7 @@ function Home() {
   }, [dispatch]);
   const dataClinic = useSelector((state) => state.dataClinic);
   const clinicList = dataClinic.list;
+  console.log(clinicList)
   return (
     <div className="all-container">
       <div className="landing-container">
@@ -20,9 +21,7 @@ function Home() {
           <div className="text-landing-page">
             <h2 className="heading">We provide PCR and Antigen Test for you</h2>
             <h2 className="text">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Non
-              tempora magnam illo incidunt, voluptas debitis aliquid accusantium
-              delectus pariatur asperiores.
+              Mediku provides nearest clinics around you that provides rapid COVID test services that you can get, just by online registration and choose time by your own schedule, you can receive your test result within few hours via email. We make sure people can have the easiest way to get the COVID test they wanted. 
             </h2>{" "}
             <br />
             <Link

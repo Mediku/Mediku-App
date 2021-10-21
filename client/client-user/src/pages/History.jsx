@@ -10,6 +10,7 @@ function History() {
     dispatch(dataRegistrationAsync());
   }, [dispatch]);
   const dataRegistrations = useSelector((state) => state.dataRegistrations);
+  console.log(dataRegistrations)
   const sitePayment = useSelector((state) => state.sitePayment);
 
   const goToPaymentSite = async (id) => {
@@ -122,7 +123,7 @@ function History() {
                       </button>
                       <button
                         onClick={() => confirmPayment(data.id)}
-                        className="button button-grow unpaid right"
+                        className="button button-grow unpaid right bg-green-200"
                       >
                         Confirm payment
                       </button>

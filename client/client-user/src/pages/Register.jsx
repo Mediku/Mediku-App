@@ -134,9 +134,9 @@ function Register() {
           <p className="block w-full text-center text-gray-800 text-2xs font-bold mb-6">
             Daftar baru atau
             {!localStorage.access_token ? (
-              <Link to="/login"> Login</Link>
+              <Link to="/login"><button className="px-2 border-2 border-blue-300 rounded-md hover:bg-blue-300 hover:text-white">Login</button></Link>
             ) : (
-              <Link to="/register-test"> Register test</Link>
+              <Link to="/register-test"> <button className="px-2 border-2 border-blue-300 rounded-md hover:bg-blue-300 hover:text-white">Register test</button></Link>
             )}
           </p>
           <form onSubmit={addNewUser}>
@@ -244,7 +244,7 @@ function Register() {
               ></input>
             </div>
 
-            <div className="flex flex-row mb-4 justify-between	">
+            <div className="flex flex-row mb-4 justify-between  ">
               <label className="mb-2  text-lg text-gray-900" htmlFor="Select">
                 Province
               </label>
@@ -266,7 +266,7 @@ function Register() {
                 })}
               </select>
             </div>
-            <div className="flex flex-row mb-4 justify-between	">
+            <div className="flex flex-row mb-4 justify-between  ">
               <label className="mb-2 text-lg text-gray-900" htmlFor="Select">
                 Regency
               </label>
@@ -287,7 +287,7 @@ function Register() {
                 })}
               </select>
             </div>
-            <div className="flex flex-row mb-4 justify-between	">
+            <div className="flex flex-row mb-4 justify-between  ">
               <label className="mb-2  text-lg text-gray-900" htmlFor="Select">
                 District
               </label>
@@ -309,7 +309,7 @@ function Register() {
                 })}
               </select>
             </div>
-            <div className="flex flex-row mb-4 justify-between	">
+            <div className="flex flex-row mb-4 justify-between  ">
               <label className="mb-2  text-lg text-gray-900" htmlFor="Select">
                 Sub District
               </label>
@@ -334,7 +334,7 @@ function Register() {
             <div className="flex flex-row mb-4 justify-between">
               <label className="mb-2  text-lg text-gray-900">RT</label>
               <input
-                className="border py-2 px-3 text-grey-800 w-80	"
+                className="border py-2 px-3 text-grey-800 w-80  "
                 type="text"
                 name="RT"
                 id="RT"
@@ -347,7 +347,7 @@ function Register() {
                 RW
               </label>
               <input
-                className="border py-2 px-3 text-grey-800 w-80	"
+                className="border py-2 px-3 text-grey-800 w-80  "
                 type="text"
                 name="RW"
                 id="RW"
