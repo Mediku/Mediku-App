@@ -2,7 +2,9 @@ import React, {useState,useEffect} from 'react'
 import './Pages.scss'
 import {useDispatch,useSelector} from 'react-redux'
 import {fetchProvincesAsync,fetchRegenciesAsync,fetchDistrictsAsync,fetchSubDistrictsAsync,dataClinicAsync,addPatient,addPatientAsync} from '../store/action/index'
+import { useHistory } from 'react-router-dom'
 function RegisterTest() {
+    const history = useHistory()
     const dispatch = useDispatch()
     useEffect(()=> {
         dispatch(fetchProvincesAsync())
@@ -148,7 +150,8 @@ function RegisterTest() {
         })
         .then((data)=> {
             dispatch(addPatient(data))
-            console.log(data);
+            console.log(data, '<<<<<<');
+            history.push('/')
         })
         .catch((err)=> {
             console.log(err);

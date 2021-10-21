@@ -6,7 +6,7 @@ import '../pages/Pages.scss'
 function Map() {
     const locations = [-6.1751577307355126, 106.82719571194093]
     return (
-        <div class="w-full">
+        <div>
             <MapContainer center={[-6.1751577307355126, 106.82719571194093]} zoom={13} scrollWheelZoom={false} id="mapid">
                 <TileLayer
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'

@@ -8,11 +8,18 @@ import {
   FETCH_SUBDISTRICTS,
   DATA_LOGIN,
   CLINIC,
+  DATA_REGISTRATION,
 } from "../keys";
 
 export function addUser(payload) {
   return {
     type: ADD_USER,
+    payload,
+  };
+}
+export function dataRegistration(payload) {
+  return {
+    type: DATA_REGISTRATION,
     payload,
   };
 }
@@ -94,6 +101,26 @@ export function fetchProvincesAsync() {
       .then((data) => {
         dispatch(fetchProvinces(data));
         // console.log(data, "provinces");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+}
+export function dataRegistrationAsync() {
+  return function (dispatch) {
+    fetch(`${baseUrl}/registrations/user/loginned`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        access_token: localStorage.getItem("access_token"),
+      },
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        dispatch(dataRegistration(data));
       })
       .catch((err) => {
         console.log(err);

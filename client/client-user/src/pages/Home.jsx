@@ -127,9 +127,10 @@ function Home() {
                         
                         </div>
                     </div>
-                    <div id="map" class="w-full min-h-screen">
-                        <Map />
+                    <div id="map">
+                        <Map></Map>
                     </div>
+                    
                 </div>
             </div>
             </div>
