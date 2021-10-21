@@ -41,7 +41,7 @@ class ControllerRegistrationUser {
     } else {
       is_tested = false;
     }
-    const UserId = req.user.id; 
+    const UserId = req.user.id;
     try {
       const result = await Registration.create({
         service_name,
@@ -82,11 +82,30 @@ class ControllerRegistrationUser {
       next(err);
     }
   }
+  static async findAllRegistrationForUserLoginned(req, res, next) {
+    try {
+      const result = await Registration.findAll({
+        where: { UserId: req.user.id },
+        include: [
+          {
+            model: User,
+            attributes: { exclude: ["password"] },
+          },
+          {
+            model: Clinic,
+            attributes: { exclude: ["password"] },
+          },
+        ],
+      });
+      res.status(200).json(result);
+    } catch (err) {
+      next(err);
+    }
+  }
 
   static async editRegistration(req, res, next) {
     const { id } = req.params;
-    const { service_name, total_price, date, time, ClinicId } =
-      req.body;
+    const { service_name, total_price, date, time, ClinicId } = req.body;
     const UserId = req.user.id;
     const data = {
       service_name,

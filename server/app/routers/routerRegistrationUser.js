@@ -9,6 +9,10 @@ const {
 router.use(authenticationUser);
 router.post("/", ControllerRegistrationUser.createRegistration);
 router.get(
+  "/loginned",
+  ControllerRegistrationUser.findAllRegistrationForUserLoginned
+);
+router.get(
   "/:id",
   authorizationUser,
   ControllerRegistrationUser.findOneRegistration

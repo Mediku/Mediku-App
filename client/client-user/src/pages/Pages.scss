@@ -311,9 +311,37 @@ span {
   background-color: #fafafa;
 }
 .history-container {
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   background-color: #fafafa;
+  padding: $root-width;
+  // overflow-x: hidden;
+  .grid-template {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 1fr;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  h1 {
+    font-size: 2rem;
+    padding: 2rem 0;
+    font-weight: 500;
+  }
+  .container-history {
+    width: 200rem;
+    // padding: 2rem 4rem;
+    // margin-bottom: 2rem;
+  }
+  button {
+    margin-top: 1rem;
+    font-weight: 500;
+  }
+  button.right {
+    margin-left: 1rem;
+    background-color: #333;
+  }
 }
 
 .locations {
