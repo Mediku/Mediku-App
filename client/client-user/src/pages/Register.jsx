@@ -131,7 +131,7 @@ function Register() {
                 <div className="w-1/2 bg-white rounded shadow-2xl p-8 m-4">
                     <h2 className="block w-full text-center text-gray-800 text-2xl font-bold mb-6">Form pendaftaran</h2>
                     <p className="block w-full text-center text-gray-800 text-2xs font-bold mb-6">Daftar baru atau{
-                        !localStorage.access_token ? <Link to="/login"> Login</Link> : <Link to="/register-test"> Register test</Link>
+                        !localStorage.access_token ? <Link to="/login"> Login</Link> : <Link to="/register-test"> <button className="px-2 border-2 border-blue-300 rounded-md hover:bg-blue-300 hover:text-white">Register test</button></Link>
                     }</p>
                     <form onSubmit={addNewUser}>
                     <div className="flex flex-col mb-4">
