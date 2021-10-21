@@ -1,6 +1,6 @@
 [
   {
-    "name": "adkfaulgfh",
+    "name": "TB Simatupang, Pasar Minggu",
     "email": "testing1@mail.com",
     "password": "testingaja",
     "phone_number": "54685189",
@@ -17,7 +17,7 @@
     "updatedAt": "2021-10-18T14:03:00.901Z"
   },
   {
-    "name": "adkfaulgfh",
+    "name": "Rasuna Said, Kuningan",
     "email": "testing2@mail.com",
     "password": "testingaja",
     "phone_number": "54685189",
@@ -25,10 +25,10 @@
     "imageURL": "https://photos.wikimapia.org/p/00/01/95/84/99_big.jpg",
     "operational_time_open": "09:00",
     "operational_time_close": "17:00",
-    "operational_day_open": "Senin,Selasa,Rabu,Kamis,Jumat",
-    "swab_antigen": true,
+    "operational_day_open": "Senin,Selasa,Rabu",
+    "swab_antigen": false,
     "swab_pcr": true,
-    "antigen_price": 500000,
+    "antigen_price": 0,
     "pcr_price": 450000,
     "createdAt": "2021-10-18T14:05:48.977Z",
     "updatedAt": "2021-10-18T14:05:48.977Z"
