@@ -330,9 +330,14 @@ span {
     font-weight: 500;
   }
   .container-history {
-    width: 200rem;
+    margin-bottom: 5rem;
     // padding: 2rem 4rem;
     // margin-bottom: 2rem;
+    max-width: 35rem;
+    height: 17rem;
+    img {
+      width: 5rem;
+    }
   }
   button {
     margin-top: 1rem;

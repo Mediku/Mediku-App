@@ -18,10 +18,10 @@ function History() {
                 {
                             dataRegistration?.map((data)=> {
                                 return (
-                                    <div class="max-w-2xl bg-white border-2 border-gray-300 p-6 rounded-md tracking-wide shadow-lg container-history">
-                                        <div id="header" class="flex items-center mb-4"> 
-                                            <img alt="avatar" class="w-20  border-2 border-gray-300" src={data.Clinic.imageURL} />
-                                            <div id="header-text" class="leading-6 ml-8 sm">
+                                    <div class=" bg-white border-2 border-gray-300 p-6 rounded-md tracking-wide shadow-lg container-history">
+                                        <div id="header" class="flex items-center mb-2"> 
+                                            <img alt="avatar" class="  border-2 border-gray-300" src={data.Clinic.imageURL} />
+                                            <div id="header-text" class="leading-6 ml-7 sm">
                                                 <h4 id="name" class="text-xl font-semibold">{data.Clinic.name}</h4>
                                                 <h5 id="job" class="font-semibold text-gray-600">{data.Clinic.address}</h5>
                                             </div>
