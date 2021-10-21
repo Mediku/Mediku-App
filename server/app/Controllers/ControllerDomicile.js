@@ -3,13 +3,9 @@ const PROVINCE_URL = `https://dev.farizdotid.com/api/daerahindonesia/provinsi`;
 
 class CoontrollerDomicile {
   static async findAllProvinces(req, res, next) {
-    try {
-      const url = PROVINCE_URL;
-      const result = await axios.get(url);
-      return res.status(200).json(result.data.provinsi);
-    } catch (err) {
-      next(err);
-    }
+    const url = PROVINCE_URL;
+    const result = await axios.get(url);
+    return res.status(200).json(result.data.provinsi);
   }
 
   static async findAllRegenciesOfProvince(req, res, next) {
@@ -18,7 +14,7 @@ class CoontrollerDomicile {
       const result = await axios.get(
         `https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi=${id}`
       );
-      if (!result) {
+      if (!result.data.kota_kabupaten.length) {
         throw { name: "Data Not Found" };
       } else {
         res.status(200).json(result.data.kota_kabupaten);
@@ -34,7 +30,7 @@ class CoontrollerDomicile {
       const result = await axios.get(
         `https://dev.farizdotid.com/api/daerahindonesia/kecamatan?id_kota=${id}`
       );
-      if (!result) {
+      if (!result.data.kecamatan.length) {
         throw { name: "Data Not Found" };
       } else {
         res.status(200).json(result.data.kecamatan);
@@ -50,13 +46,13 @@ class CoontrollerDomicile {
       const result = await axios.get(
         `https://dev.farizdotid.com/api/daerahindonesia/kelurahan?id_kecamatan=${id}`
       );
-      if (!result) {
+      if (!result.data.kelurahan.length) {
         throw { name: "Data Not Found" };
       } else {
         res.status(200).json(result.data.kelurahan);
       }
     } catch (err) {
-      next(err)
+      next(err);
     }
   }
 }

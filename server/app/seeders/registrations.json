@@ -1,10 +1,10 @@
 [
   {
     "service_name": "antigen",
-    "total_price": 200000,
+    "total_price": 500000,
     "date": "2021-10-20",
     "time": "16:00:00",
-    "is_paid": true,
+    "is_paid": false,
     "ClinicId": 1,
     "UserId": 1,
     "is_tested": false,
@@ -15,7 +15,7 @@
     "total_price": 200000,
     "date": "2021-10-20",
     "time": "16:00:00",
-    "is_paid": true,
+    "is_paid": false,
     "ClinicId": 2,
     "UserId": 2,
     "is_tested": true,

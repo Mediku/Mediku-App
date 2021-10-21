@@ -1,10 +1,7 @@
 const router = require("express").Router();
 const ControllerRegistrationUser = require("../Controllers/ControllerRegistrationUser");
 const { authenticationUser } = require("../middlewares/authentication");
-const {
-  authorizationUser,
-  authorizationUserProfile,
-} = require("../middlewares/authorization");
+const { authorizationUser } = require("../middlewares/authorization");
 
 router.use(authenticationUser);
 router.post("/", ControllerRegistrationUser.createRegistration);

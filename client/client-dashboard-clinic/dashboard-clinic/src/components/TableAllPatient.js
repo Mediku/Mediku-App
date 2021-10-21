@@ -1,15 +1,16 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAllPatientsAsync,fetchPatientAsync } from "../store/actions/index.js";
+import {
+  fetchAllPatientsAsync,
+  fetchPatientAsync,
+} from "../store/actions/index.js";
 export default function TableAllPatient() {
-
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchAllPatientsAsync())
+    dispatch(fetchAllPatientsAsync());
   }, [dispatch]);
-
 
   const allPatients = useSelector((state) => state.allPatients);
 
@@ -17,31 +18,42 @@ export default function TableAllPatient() {
   let selected = ''
 
   const getValueSelect = (e, id) => {
-      console.log(e.target.value)
-      console.log(id)
-  }
+    console.log(e.target.value);
+    console.log(id);
+  };
 
   const SelectOption = (id) => {
-      
-      return(
-        <select onChange={(e) => getValueSelect(e)} class="border-0 focus:ring-white">
-          <option value='positif' class="ring-white">Positif</option>
-          <option value='negatif'>Negatif</option>
-        </select>
-      )       
-  }
+    return (
+      <select
+        onChange={(e) => getValueSelect(e)}
+        class="border-0 focus:ring-white"
+      >
+        <option default value="waiting">
+          Waiting
+        </option>
+        <option value="positif" class="ring-white">
+          Positif
+        </option>
+        <option value="negatif">Negatif</option>
+      </select>
+    );
+  };
 
   const TestResult = (result) => {
-    if(result === 'positif'){
-      return(
-        <button disabled class="bg-red-200">Positif</button>
-      )
-    }else{
-      return(
-        <button disabled class="bg-green-200">Negatif</button>
-      )
+    if (result === "positif") {
+      return (
+        <button disabled class="bg-red-200">
+          Positif
+        </button>
+      );
+    } else {
+      return (
+        <button disabled class="bg-green-200">
+          Negatif
+        </button>
+      );
     }
-  }
+  };
 
   return (
     <div class="flex flex-col mx-5 bg-white rounded-lg shadow-md">
@@ -93,88 +105,80 @@ export default function TableAllPatient() {
                 </tr>
               </thead>
               <tbody class="bg-white divide-y divide-gray-200">
-
-                {
-                  allPatients.map((patient,index)=> {
-                    return (
-                      
-                      <tr>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                          <div class="text-sm text-gray-900">
-                            {index+1}
-                          </div>
-                        </td>	
-                        <td class="px-6 py-4 whitespace-nowrap">
-                          <div class="flex items-center">
-                            <div>
-                              <div class="text-sm font-medium text-gray-900">
-                                {patient.User.full_name}
-                              </div>
-                              <div class="text-sm text-gray-500">
-                                {patient.User.email}
-                              </div>
+                {allPatients.map((patient, index) => {
+                  return (
+                    <tr>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-900">{index + 1}</div>
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex items-center">
+                          <div>
+                            <div class="text-sm font-medium text-gray-900">
+                              {patient.User.full_name}
+                            </div>
+                            <div class="text-sm text-gray-500">
+                              {patient.User.email}
                             </div>
                           </div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                          <div class="text-sm text-gray-900">
-                            SWAB
-                          </div>
-                          <div class="text-sm text-gray-500">
-                            {patient.service_name}
-                          </div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                          {
-                           ( patient.is_tested === false && patient.test_result === null) ? 
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-gray-800">
-                              Waiting
-                            </span>
-                            :
-                            (patient.is_tested ===true && patient.test_result !== null) ?
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-gray-800">
+                        </div>
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-900">SWAB</div>
+                        <div class="text-sm text-gray-500">
+                          {patient.service_name}
+                        </div>
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        {patient.is_tested === false &&
+                        patient.test_result === null ? (
+                          <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-gray-800">
+                            Waiting
+                          </span>
+                        ) : patient.is_tested === true &&
+                          patient.test_result !== null ? (
+                          <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-gray-800">
                             Tested
-                            </span> :
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                          </span>
+                        ) : (
+                          <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
                             Completed
-                          </span>    
-                          }
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                          {  
-                              patient.test_result === null ? <SelectOption id={patient.id}/> : <TestResult result={patient.test_result} />
-                          }
-                        </td>
+                          </span>
+                        )}
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {patient.test_result === null ? (
+                          <SelectOption id={patient.id} />
+                        ) : (
+                          <TestResult result={patient.test_result} />
+                        )}
+                      </td>
 
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                          {
-                            patient.date.toLocaleString()
-                            
-                          }
-                        </td>
+                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {patient.date.toLocaleString()}
+                      </td>
 
+                      <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        <a
+                          href="#"
+                          class="text-indigo-600 hover:text-indigo-900"
+                        ></a>
+                      </td>
+                      {patient.is_tested === false ? (
                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                          <a
-                            href="#"
+                          <Link
+                            to={`/process/${patient.id}`}
                             class="text-indigo-600 hover:text-indigo-900"
                           >
-                          </a>
-                        </td>
-                        {
-                          patient.is_tested === false ? 
-                          <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                          <Link to={`/process/${patient.id}`}
-                            class="text-indigo-600 hover:text-indigo-900"
-                          >
-                            <i class="fas fa-exchange-alt"></i>  Process
+                            <i class="fas fa-exchange-alt"></i> Process
                           </Link>
                         </td>
-                          : ""
-                        }
-								      </tr>
-                    )
-                  })
-                }
+                      ) : (
+                        ""
+                      )}
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>

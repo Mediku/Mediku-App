@@ -1,4 +1,5 @@
-const { Registration, User } = require("../models");
+const { User, Registration } = require("../models");
+
 const authorizationUser = async (req, res, next) => {
   const id = +req.params.id;
   try {
@@ -40,6 +41,7 @@ const authorizationClinic = async (req, res, next) => {
   try {
     const foundRegistration = await Registration.findByPk(id);
     if (foundRegistration) {
+      console.log((req.user.id == foundRegistration.ClinicId));
       if (req.user.id == foundRegistration.ClinicId) {
         next();
       } else {

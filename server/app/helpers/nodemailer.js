@@ -1,4 +1,3 @@
-
 const nodemailer = require("nodemailer");
 const { google } = require("googleapis");
 const OAuth2 = google.auth.OAuth2;
@@ -34,13 +33,10 @@ function sendNodemailer(emailTo, subject, text) {
     from: "Mediku",
     to: `${emailTo}`,
     subject: `${subject}`,
-    text: `${text}`,
+    html: `${text}`,
   };
 
-  transporter.sendMail(mailData, function (err, info) {
-    if (err) console.log(err);
-    else console.log(info);
-  });
+  transporter.sendMail(mailData);
 }
 
 module.exports = sendNodemailer;

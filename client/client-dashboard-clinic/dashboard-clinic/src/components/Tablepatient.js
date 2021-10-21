@@ -12,7 +12,6 @@ export default function Tablepatient() {
   }, [dispatch]);
 
 	const patients = useSelector((state) => state.patientToday);
-	console.log(patients, '<<<<<<<,')
 
 	return (
 		<div class="flex flex-col mx-5 bg-white rounded-lg shadow-md">
@@ -60,7 +59,7 @@ export default function Tablepatient() {
 							{
 								patients?.map((patient, index) => {
 									return(
-										<TableBodyHome patient={patient} index={index}/>
+										<TableBodyHome key={patient.id} patient={patient} index={index}/>
 									)
 								})
 							}
