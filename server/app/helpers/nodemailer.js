@@ -33,7 +33,7 @@ function sendNodemailer(emailTo, subject, text) {
     from: "Mediku",
     to: `${emailTo}`,
     subject: `${subject}`,
-    text: `${text}`,
+    html: `${text}`,
   };
 
   transporter.sendMail(mailData);

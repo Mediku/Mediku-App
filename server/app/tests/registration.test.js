@@ -1287,6 +1287,39 @@ describe("registration info delete by clinic admin", () => {
   });
 });
 
+describe("edit isTested status on a registration info by a clinic admin", () => {
+  test("successfully edited the isTested status in a registration info", (done) => {
+    request(app)
+      .patch("/registrations/clinic/istested/1")
+      .set({ access_token: clinicToken })
+      .then((res) => {
+        expect(res.body).toHaveProperty("message");
+        expect(res.body.message).toContain(
+          "user testing bosku is already tested"
+        );
+        expect(res.status).toBe(200);
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+  test("registration info not found", (done) => {
+    request(app)
+      .patch("/registrations/clinic/istested/5")
+      .set({ access_token: clinicToken })
+      .then((res) => {
+        expect(res.body).toHaveProperty("message");
+        expect(res.body.message).toContain("Data Not Found");
+        expect(res.status).toBe(404);
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+});
+
 afterAll(async () => {
   await Clinic.destroy({
     where: {},
