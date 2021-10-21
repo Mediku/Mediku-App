@@ -36,6 +36,19 @@ describe("GET /regencies/:id [CASE SUCCESS]", () => {
         done(err);
       });
   });
+  test("Should return error if no regency is found", (done) => {
+    request(app)
+      .get("/regencies/51342555")
+      .then((response) => {
+        expect(response.status).toBe(404);
+        expect(response.body).toHaveProperty("message");
+        expect(response.body.message).toContain("Data Not Found");
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
 });
 
 describe("GET /districts/:id [CASE SUCCESS]", () => {
@@ -49,6 +62,19 @@ describe("GET /districts/:id [CASE SUCCESS]", () => {
           expect(district).toHaveProperty("id_kota", expect.any(String));
           expect(district).toHaveProperty("nama", expect.any(String));
         });
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+  test("Should return error if no district is found", (done) => {
+    request(app)
+      .get("/districts/5554645464546545")
+      .then((response) => {
+        expect(response.status).toBe(404);
+        expect(response.body).toHaveProperty("message");
+        expect(response.body.message).toContain("Data Not Found");
         done();
       })
       .catch((err) => {
@@ -71,6 +97,19 @@ describe("GET /subdistricts/:id [CASE SUCCESS]", () => {
           );
           expect(subdistrict).toHaveProperty("nama", expect.any(String));
         });
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+  test("Should return error if no subdistrict is found", (done) => {
+    request(app)
+      .get("/subdistricts/555464185631738655464546545")
+      .then((response) => {
+        expect(response.status).toBe(404);
+        expect(response.body).toHaveProperty("message");
+        expect(response.body.message).toContain("Data Not Found");
         done();
       })
       .catch((err) => {
