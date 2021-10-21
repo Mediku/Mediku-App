@@ -1,7 +1,9 @@
 import React from 'react'
 import './Pages.scss'
+import './../components/Map'
 import image from '../assets/images/doctor.png'
 import {Link} from 'react-router-dom'
+import Map from './../components/Map'
 function Home() {
     return (
         <div className="all-container">
@@ -126,15 +128,12 @@ function Home() {
                         </div>
                     </div>
                     <div id="map">
-                        <h2>Map leaflet</h2>
+                        <Map></Map>
                     </div>
+                    
                 </div>
             </div>
             </div>
-
-
-        
-        
     )
 }
 

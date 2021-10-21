@@ -5,6 +5,7 @@ import Table from './../components/Tablepatient'
 import Card from './../components/Homecardinfo'
 
 export default function Home() {
+	
 	return (
 		<div class="flex min-h-screen flex">
 			<Sidebar />
