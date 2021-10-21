@@ -8,6 +8,7 @@ import {
   DATA_LOGIN,
   FETCH_SUBDISTRICTS,
   CLINIC,
+  DATA_REGISTRATION,
 } from "../keys";
 const initialState = {
   users: [],
@@ -18,6 +19,7 @@ const initialState = {
   dataLogin: {},
   regencies: [],
   dataClinic: {},
+  dataRegistration: {},
 };
 function reducer(state = initialState, action) {
   switch (action.type) {
@@ -39,6 +41,8 @@ function reducer(state = initialState, action) {
       return { ...state, dataLogin: action.payload };
     case CLINIC:
       return { ...state, dataClinic: action.payload };
+    case DATA_REGISTRATION:
+      return { ...state, dataRegistration: action.payload };
     default:
       return state;
   }

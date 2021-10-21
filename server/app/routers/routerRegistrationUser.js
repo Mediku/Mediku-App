@@ -3,10 +3,21 @@ const ControllerRegistrationUser = require("../Controllers/ControllerRegistratio
 const { authenticationUser } = require("../middlewares/authentication");
 const { authorizationUser } = require("../middlewares/authorization");
 
-router.use(authenticationUser)
-router.post('/', ControllerRegistrationUser.createRegistration)
-router.get('/loginned', ControllerRegistrationUser.findAllRegistrationForUserLoginned)
-router.get('/:id', authorizationUser, ControllerRegistrationUser.findOneRegistration)
-router.put('/:id', authorizationUser, ControllerRegistrationUser.editRegistration)
+router.use(authenticationUser);
+router.post("/", ControllerRegistrationUser.createRegistration);
+router.get(
+  "/loginned",
+  ControllerRegistrationUser.findAllRegistrationForUserLoginned
+);
+router.get(
+  "/:id",
+  authorizationUser,
+  ControllerRegistrationUser.findOneRegistration
+);
+router.put(
+  "/:id",
+  authorizationUser,
+  ControllerRegistrationUser.editRegistration
+);
 
 module.exports = router;
