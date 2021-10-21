@@ -4,10 +4,10 @@
     "total_price": 500000,
     "date": "2021-10-20",
     "time": "16:00:00",
-    "is_paid": false,
+    "is_paid": true,
     "ClinicId": 1,
-    "UserId": 1,
-    "is_tested": true,
+    "UserId": 3,
+    "is_tested": false,
     "test_result": null
   },
   {
@@ -15,10 +15,10 @@
     "total_price": 200000,
     "date": "2021-10-21",
     "time": "16:00:00",
-    "is_paid": false,
-    "ClinicId": 2,
+    "is_paid": true,
+    "ClinicId": 1,
     "UserId": 1,
-    "is_tested": true,
+    "is_tested": false,
     "test_result": null
   }
 ]

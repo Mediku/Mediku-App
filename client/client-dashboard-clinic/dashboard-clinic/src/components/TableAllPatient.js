@@ -5,7 +5,6 @@ import { fetchAllPatientsAsync,fetchPatientAsync, updateTestResult } from "../st
 import Swal from 'sweetalert2'
 import moment from 'moment'
 
-
 export default function TableAllPatient() {
   const dispatch = useDispatch();
 
@@ -14,7 +13,6 @@ export default function TableAllPatient() {
   }, [dispatch]);
 
   const allPatients = useSelector((state) => state.allPatients);
-  console.log(allPatients)
 
   const [testResult, setTestResult] = useState('')
   let selected = ''
@@ -33,8 +31,8 @@ export default function TableAllPatient() {
         if (result.isConfirmed) {
           dispatch(updateTestResult(e.target.value, id.id))
           Swal.fire(
-            'Deleted!',
-            'Your file has been deleted.',
+            'Success!',
+            'Test result sent',
             'success'
           )
         }
@@ -67,10 +65,11 @@ export default function TableAllPatient() {
       )
     }else{
       return(
-          <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-300 text-white">
+          <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-300 text-gray-500">
             Waiting
           </span>
       )
+    }
   };
 
   return (
@@ -125,6 +124,7 @@ export default function TableAllPatient() {
               <tbody class="bg-white divide-y divide-gray-200">
                 {
                   allPatients.map((patient, index) => {
+
                   return (
                     <tr>
                       <td class="px-6 py-4 whitespace-nowrap">
@@ -140,27 +140,28 @@ export default function TableAllPatient() {
                               {patient.User.email}
                             </div>
                           </div>
-
                         </div>
                       </td>
-                      <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="text-sm text-gray-900">SWAB</div>
-                        <div class="text-sm text-gray-500">
-                          {patient.service_name}
-                        </div>
-                      </td>
-                      <td class="px-6 py-4 whitespace-nowrap">
-                        {patient.is_tested === false &&
-                        patient.test_result === null ? (
-                          <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-gray-800">
-                            Waiting
-                          </span>
-                        ) : patient.is_tested === true &&
-                          patient.test_result !== null ? (
-                          <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-gray-800">
+                        <td class="px-6 py-4 whitespace-nowrap">
+                          <div class="text-sm text-gray-900">
+                            SWAB
+                          </div>
+                          <div class="text-sm text-gray-500">
+                            {patient.service_name}
+                          </div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                          {
+                           ( patient.is_tested === false && patient.test_result === null) ? 
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-gray-800">
+                              Waiting
+                            </span>
+                            :
+                            (patient.is_tested ===true && patient.test_result === null) ?
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-300 text-gray-800">
                             Tested
                           </span>
-                        ) : (
+                         : 
                           <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
                             Completed
                           </span>    
@@ -168,8 +169,6 @@ export default function TableAllPatient() {
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                           {   
-                              (patient.is_tested === false && !patient.test_result) ? 
-                              <SelectOption id={patient.id}/> : 
                               (patient.is_tested === true && patient.test_result === null) ?
                               <SelectOption id={patient.id}/> : 
                               TestResult(patient?.test_result)
@@ -185,7 +184,8 @@ export default function TableAllPatient() {
                           class="text-indigo-600 hover:text-indigo-900"
                         ></a>
                       </td>
-                      {patient.is_tested === false ? (
+                      {
+                        patient.is_tested === false ? (
                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                           <Link
                             to={`/process/${patient.id}`}
@@ -194,9 +194,10 @@ export default function TableAllPatient() {
                             <i class="fas fa-exchange-alt"></i> Process
                           </Link>
                         </td>
-                      ) : (
-                        ""
-                      )}
+                        ) : (
+                          ""
+                        )
+                      }
                     </tr>
                   );
                 })}

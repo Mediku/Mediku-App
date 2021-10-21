@@ -44,9 +44,9 @@ export const fetchPatient = (payload) => ({
   payload,
 });
 
-export const setCompletedPatient = (payload) => {
+export const setCompletedPatient = (payload) => ({
   type: SET_COMPLETED_TEST
-}
+})
 
 export const fetchPatientByDay = () => {
   return (dispatch) => {
@@ -113,16 +113,55 @@ export const updateTestResult = (result,id) => {
 
 export const changeIsTested = (id) => {
   return (dispatch) => {
-    axios
-      .patch(`${baseUrl}/registrations/clinic/istested/${id}`, {
+    return axios
+      .patch(`${baseUrl}/registrations/clinic/istested/${id}`,{
+        is_tested: true
+      }, {
         headers: {
           access_token: localStorage.access_token,
         }
       })
-      .then(({ data }) => {
-        console.log(data, 'data dari actions')
-        dispatch(fetchPatient(data))
+
+  }
+}
+
+export const getCompletedTest = () => ({
+  type: SET_COMPLETED_TEST,
+})
+
+export const setFiltered = (filter) => {
+  return (dispatch) => {
+    axios
+      .get(`${baseUrl}/registrations/clinic`, {
+        headers: {
+          access_token: localStorage.access_token,
+        },
       })
-      .catch((err) => console.log(err, 'err dari actions'));
+      .then(({ data }) => {
+
+        let filtered;
+        switch (filter){
+
+          case "completed":
+          filtered = data.filter( e => e.test_result !== null)
+          break
+
+          case "tested":
+          filtered = data.filter( e => e.is_tested === true && e.test_result === null )
+          break
+
+          case "waiting":
+          filtered = data.filter( e => e.is_tested === false )
+          break
+
+          default:
+          filtered = [...data]
+
+        }
+        // console.log(filtered)
+        dispatch(fetchAllPatients(filtered));
+
+      })
+      .catch((err) => console.log(err));
   }
 }

@@ -6,6 +6,7 @@ import {
   FETCH_ALL_PATIENTS,
   FETCH_PATIENT,
   GET_PATIENT_DAY,
+  SET_COMPLETED_TEST
 } from "./../keys";
 
 let initialState = {
@@ -14,6 +15,7 @@ let initialState = {
   patientToday: [],
   allPatients: [],
   dataPatient: {},
+  completedTest: 0
 };
 function reducer(state = initialState, action) {
   const { type, payload } = action;
@@ -37,7 +39,11 @@ function reducer(state = initialState, action) {
       return { ...state, dataPatient: payload };
 
     case GET_PATIENT_DAY:
-    return state.patientToday
+      return state.patientToday
+
+    case SET_COMPLETED_TEST:
+      let completed = state.allPatients.filter( e => e.test_result !== null)
+      return {...state, completedTest: completed.length}
 
     default:
       return state;
