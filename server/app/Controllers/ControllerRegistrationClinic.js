@@ -101,12 +101,10 @@ class ControllerRegistrationClinic {
         where: { id: foundRegistration.id },
         returning: true,
       });
-      console.log(cek, 'server');
       res.status(200).json({
         message: `user ${foundRegistration.User.full_name} is already tested`,
       });
     } catch (err) {
-      console.log(err, '<<<<<<< errornya');
       next(err);
     }
   }
