@@ -23,6 +23,27 @@ class ControllerRegistrationUser {
     }
   }
 
+  static async findAllRegistrationForUserLoginned(req, res, next) {
+    try {
+      const result = await Registration.findAll({
+        where: { UserId: req.user.id },
+        include: [
+          {
+            model: User,
+            attributes: { exclude: ["password"] },
+          },
+          {
+            model: Clinic,
+            attributes: { exclude: ["password"] },
+          },
+        ],
+      });
+      res.status(200).json(result);
+    } catch (err) {
+      next(err);
+    }
+  }
+
   static async createRegistration(req, res, next) {
     let is_paid;
     let is_tested;
