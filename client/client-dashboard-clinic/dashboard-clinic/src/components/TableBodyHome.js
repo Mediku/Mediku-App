@@ -6,18 +6,26 @@ export default function TableBodyHome({patient, index}) {
 
 	const Status = () => {
 		
-		if (!patient.is_tested) {
+		if (patient.is_tested === false) {
 			return(
-				<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-gray-500">
+				<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-500">
 					Waiting
 				</span>
 			)
 		}else {
-			return(
-				<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-					Completed
-				</span>
-			)
+			if (patient.test_result === null) {
+				return(
+					<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-white-800">
+						Waiting
+					</span>
+				)
+			}else{
+				return(
+					<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+						Completed
+					</span>
+				)
+			}
 		}
 	}
 

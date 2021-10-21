@@ -25,7 +25,7 @@ export default function Homecardinfo() {
 				<div class="flex justify-between align-items-center">
 					<i class="fas fa-clipboard-list text-white text-xl"></i>
 				</div>
-				<p class="text-white">{}</p>
+				<p class="text-white">1</p>
 			</div>
 
 		</div>

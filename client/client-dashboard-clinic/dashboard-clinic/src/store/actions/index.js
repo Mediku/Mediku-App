@@ -44,6 +44,10 @@ export const fetchPatient = (payload) => ({
   payload,
 });
 
+export const setCompletedPatient = (payload) => {
+  type: SET_COMPLETED_TEST
+}
+
 export const fetchPatientByDay = () => {
   return (dispatch) => {
     axios
@@ -53,7 +57,6 @@ export const fetchPatientByDay = () => {
         },
       })
       .then(({ data }) => {
-        console.log(data, '<<<<<<<<<<<<< from action');
         dispatch(setPatientThisDay(data));
       })
       .catch((err) => console.log(err));
@@ -91,8 +94,12 @@ export const fetchPatientAsync = (id) => {
 
 export const updateTestResult = (result,id) => {
   return (dispatch) => {
-    axios.patch(`${baseUrl}/test/result/${id}`, {
+    axios.patch(`${baseUrl}/registrations/clinic/test/result/${id}`,{
       test_result: result
+    },{
+      headers: {
+        access_token: localStorage.access_token
+      }
     })
         .then( (_) => {
             dispatch(fetchAllPatientsAsync())
@@ -100,6 +107,6 @@ export const updateTestResult = (result,id) => {
         .then(_ => {
             console.log('success')
         })
-        .catch(err => console.log(err))
+        .catch(err => console.log(err.response.data))
   };
 };

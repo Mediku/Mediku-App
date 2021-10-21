@@ -1,7 +1,10 @@
 import React, {useState, useEffect} from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAllPatientsAsync,fetchPatientAsync } from "../store/actions/index.js";
+import { fetchAllPatientsAsync,fetchPatientAsync, updateTestResult } from "../store/actions/index.js";
+import Swal from 'sweetalert2'
+import moment from 'moment'
+
 export default function TableAllPatient() {
 
   const dispatch = useDispatch();
@@ -12,13 +15,31 @@ export default function TableAllPatient() {
 
 
   const allPatients = useSelector((state) => state.allPatients);
+  console.log(allPatients)
 
   const [testResult, setTestResult] = useState('')
   let selected = ''
 
   const getValueSelect = (e, id) => {
-      console.log(e.target.value)
-      console.log(id.id)
+      console.log(id)
+      Swal.fire({
+        title: 'Updating Test Result',
+        text: `User with id ${id.id}`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, update and send email'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          dispatch(updateTestResult(e.target.value, id.id))
+          Swal.fire(
+            'Deleted!',
+            'Your file has been deleted.',
+            'success'
+          )
+        }
+      })
   }
 
   const SelectOption = (id) => {
@@ -26,24 +47,29 @@ export default function TableAllPatient() {
       return(
         <select onChange={(e) => getValueSelect(e, id)} class="border-0 focus:ring-white">
           <option selected value='' disabled class="ring-white">--Update test result--</option>
-          <option value='positif' class="ring-white">Positif</option>
-          <option value='negatif'>Negatif</option>
+          <option value='positive'>Positif</option>
+          <option value='negative'>Negatif</option>
         </select>
       )       
   }
 
   const TestResult = (result) => {
-
-    if(result === 'positif'){
+    if(result === 'positive'){
       return(
           <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-            Positif
+            Positive
+          </span>
+      )
+    }else if(result === 'negative'){
+      return(
+          <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-gray-800">
+            Negative
           </span>
       )
     }else{
       return(
-          <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-gray-800">
-            Negatif
+          <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-300 text-white">
+            Waiting
           </span>
       )
     }
@@ -137,8 +163,8 @@ export default function TableAllPatient() {
                               Waiting
                             </span>
                             :
-                            (patient.is_tested ===true && patient.test_result !== null) ?
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-gray-800">
+                            (patient.is_tested ===true && patient.test_result === null) ?
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-300 text-gray-800">
                             Tested
                             </span> :
                             <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
@@ -147,16 +173,17 @@ export default function TableAllPatient() {
                           }
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                          {  
-                              patient.is_tested === false ? <SelectOption id={patient.id}/> : <TestResult result={patient.result}/>
+                          {   
+                              (patient.is_tested === false && !patient.test_result) ? 
+                              <SelectOption id={patient.id}/> : 
+                              (patient.is_tested === true && patient.test_result === null) ?
+                              <SelectOption id={patient.id}/> : 
+                              TestResult(patient?.test_result)
                           }
                         </td>
 
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                          {
-                            patient.date.toLocaleString()
-                            
-                          }
+                          {moment(patient.date).format('ll')}
                         </td>
 
                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
