@@ -8,7 +8,8 @@ import {
   FETCH_SUBDISTRICTS,
   DATA_LOGIN,
   CLINIC,
-  DATA_REGISTRATION,
+  DATA_REGISTRATIONS,
+  SITE_PAYMENT
 } from "../keys";
 
 export function addUser(payload) {
@@ -17,9 +18,16 @@ export function addUser(payload) {
     payload,
   };
 }
-export function dataRegistration(payload) {
+export function dataRegistrations(payload) {
   return {
-    type: DATA_REGISTRATION,
+    type: DATA_REGISTRATIONS,
+    payload,
+  };
+}
+
+export function paymentSite(payload) {
+  return {
+    type: SITE_PAYMENT,
     payload,
   };
 }
@@ -100,7 +108,6 @@ export function fetchProvincesAsync() {
       })
       .then((data) => {
         dispatch(fetchProvinces(data));
-        // console.log(data, "provinces");
       })
       .catch((err) => {
         console.log(err);
@@ -109,7 +116,7 @@ export function fetchProvincesAsync() {
 }
 export function dataRegistrationAsync() {
   return function (dispatch) {
-    fetch(`${baseUrl}/registrations/user/loginned`, {
+    fetch(`${baseUrl}/registrations/user/logined`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -120,7 +127,7 @@ export function dataRegistrationAsync() {
         return res.json();
       })
       .then((data) => {
-        dispatch(dataRegistration(data));
+        dispatch(dataRegistrations(data));
       })
       .catch((err) => {
         console.log(err);
@@ -193,5 +200,26 @@ export function loginUserAsync(data) {
         "Content-Type": "application/json",
       },
     });
+  };
+}
+
+export function getEndpoint(id) {
+  return function (dispatch) {
+    return fetch(`${baseUrl}/xendits/invoice/${id}`, {
+      method: "POST",
+      headers: {
+        access_token: localStorage.access_token
+      },
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        dispatch(paymentSite({
+          invoiceURL: data.invoiceURL,
+          invoiceID: data.invoice_id
+        }));
+      })
+      .catch((err) => console.log(err))
   };
 }
