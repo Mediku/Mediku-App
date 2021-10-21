@@ -34,7 +34,7 @@ const registration = {
   UserId: 1
 }
 
-let userToken, createdRegistration
+let userToken, createdRegistration, invoiceID
 let invalidToken =
   "22eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJvbm9AbWFpbC5jb20iLCJpZCI6MSwiaWF0IjoxNjIxMTYzNDYyfQ.WhdvxtOveekRlXU0-KbuFv7vvsZsciDBKSDugxIX19g";
 
@@ -66,6 +66,7 @@ describe("POST /xendits/invoice/:id [CASE SUCCESS]", () => {
       .post(`/xendits/invoice/${createdRegistration.id}`)
       .set("access_token", userToken)
       .then(response => {
+        invoiceID = response.body.invoice_id
         expect(response.status).toBe(201)
         expect(response.body).toHaveProperty("invoice_id", response.body.invoice_id)
         expect(response.body).toHaveProperty("external_id", response.body.external_id)
@@ -84,29 +85,24 @@ describe("POST /xendits/invoice/:id [CASE SUCCESS]", () => {
   })
 })
 
-// describe("PATCH /xendits/invoice/:id/status [CASE SUCCESS]", () => {
-//   test("Should return Object with message 'Hoooraayy! your payment has confirmed by Xendit please wait the schedule of antigen that you paid from clinic adkfaulgfh, there'll be on touch in your email inbox', with status code 200", (done) => {
-//     request(app)
-//       .patch(`/xendits/invoice/${createdRegistration.id}/status`)
-//       .set("access_token", userToken)
-//       .then(response => {
-//         expect(response.status).toBe(201)
-//         expect(response.body).toHaveProperty("invoice_id", response.body.invoice_id)
-//         expect(response.body).toHaveProperty("external_id", response.body.external_id)
-//         expect(response.body).toHaveProperty("status", response.body.status)
-//         expect(response.body).toHaveProperty("amount", response.body.amount)
-//         expect(response.body).toHaveProperty("merchant_name", response.body.merchant_name)
-//         expect(response.body).toHaveProperty("payer_email", response.body.payer_email)
-//         expect(response.body).toHaveProperty("expiry_date", response.body.expiry_date)
-//         expect(response.body).toHaveProperty("invoiceURL", response.body.invoiceURL)
-//         expect(response.body).toHaveProperty("description", response.body.description)
-//         done()
-//       })
-//       .catch(err => {
-//         done(err)
-//       })
-//   })
-// })
+describe("PATCH /xendits/invoice/:id/status [CASE SUCCESS]", () => {
+  test("Should return Object with message 'Hoooraayy! your payment has confirmed by Xendit please wait the schedule of antigen that you paid from clinic adkfaulgfh, there'll be on touch in your email inbox', with status code 200", (done) => {
+    request(app)
+      .patch(`/xendits/invoice/${createdRegistration.id}/status`)
+      .set("access_token", userToken)
+      .send({
+        invoiceID: invoiceID
+      })
+      .then(response => {
+        expect(response.status).toBe(200)
+        expect(response.body).toHaveProperty("message", expect.any(String))
+        done()
+      })
+      .catch(err => {
+        done(err)
+      })
+  })
+})
 
 // afterAll((done) => {
 //   queryInterface

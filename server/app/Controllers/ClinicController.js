@@ -18,12 +18,13 @@ class ClinicController {
             id: clinic.id,
             email: clinic.email,
           });
-
           res.status(200).json({
             id: clinic.id,
             email: clinic.email,
             access_token,
           });
+        } else {
+          throw { name: "Unauthorized" };
         }
       } else {
         throw { name: "Unauthorized" };
@@ -132,6 +133,7 @@ class ClinicController {
             pcr_price,
             antigen_price,
             imageURL,
+            password
           },
           {
             where: { id: data.id },
