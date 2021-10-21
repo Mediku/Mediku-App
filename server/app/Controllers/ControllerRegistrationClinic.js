@@ -98,12 +98,15 @@ class ControllerRegistrationClinic {
           },
         ],
       });
+      if (!foundRegistration) {
+        throw { name: "Data Not Found" };
+      }
       await Registration.update(data, {
         where: { id: foundRegistration.id },
         returning: true,
       });
       res.status(200).json({
-        message: `user ${foundRegistration.User.full_name}'s already tested`,
+        message: `user ${foundRegistration.User.full_name} is already tested`,
       });
     } catch (err) {
       next(err);
@@ -160,7 +163,6 @@ class ControllerRegistrationClinic {
     } else {
       is_tested = false;
     }
-    console.log("MASUK EDIT");
     const data = {
       service_name,
       total_price,
