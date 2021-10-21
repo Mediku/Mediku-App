@@ -14,7 +14,7 @@ export default function Sidebar() {
 					/>
 				</div>
 				<div class="mt-3">
-					<p class="text-sm text-center font-medium">Clinic ABC</p>
+					<p class="text-sm text-center font-medium">TB Simatupang</p>
 				</div>
 			</div>
 			<div class="flex flex-col mt-5">

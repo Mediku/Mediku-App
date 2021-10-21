@@ -4,6 +4,8 @@ import "./Pages.scss";
 import image from "../assets/images/doctor.png";
 import { Link } from "react-router-dom";
 import { dataClinicAsync } from "../store/action/index";
+import Map from "./../components/Map";
+
 function Home() {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -126,7 +128,7 @@ function Home() {
             })}
           </div>
           <div id="map">
-            <h2>Map leaflet</h2>
+            <Map></Map>
           </div>
         </div>
       </div>
