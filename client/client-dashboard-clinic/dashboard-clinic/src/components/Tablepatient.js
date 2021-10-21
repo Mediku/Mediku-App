@@ -60,7 +60,7 @@ export default function Tablepatient() {
 							{
 								patients?.map((patient, index) => {
 									return(
-										<TableBodyHome patient={patient} index={index}/>
+										<TableBodyHome key={patient.id} patient={patient} index={index}/>
 									)
 								})
 							}

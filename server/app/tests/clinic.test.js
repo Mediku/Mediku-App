@@ -2,45 +2,53 @@ const request = require("supertest");
 const app = require("../app");
 const { Clinic } = require("../models");
 
-beforeAll(() => {
-  let clinics = [];
-  for (let i = 1; i <= 20; i++) {
-    let add = {
-      name: `user ${i}`,
-      email: `useremail${i}@mail.com`,
-      password: `passworduser${i}`,
-      phone_number: `45621685412${i}`,
-      address: `jalan klinik gang ${i}`,
-      imageURL: `awikwok${i}`,
-      operational_time_open: "09:00",
-      operational_time_close: "17:00",
-      operational_day_open: "Senin,Selasa,Rabu,Kamis,Jumat",
-      swab_antigen: i % 3 === 0 ? true : false,
-      swab_pcr: i % 2 === 0 ? true : false,
-      antigen_price: 30000 * i,
-      pcr_price: 20000 * i,
-    };
-    clinics.push(add);
-  }
-  Clinic.bulkCreate(clinics);
-
+let clinics = [];
+for (let i = 1; i <= 20; i++) {
   let add = {
-    name: `user clinic login`,
-    email: `useremailclinic@mail.com`,
-    password: `passwordclinic`,
-    phone_number: `45621685412`,
-    address: `jalan klinik gang clinic`,
-    imageURL: `awikwokklinik`,
+    name: `user ${i}`,
+    email: `useremail${i}@mail.com`,
+    password: `passworduser${i}`,
+    phone_number: `45621685412${i}`,
+    address: `jalan klinik gang ${i}`,
+    imageURL: `awikwok${i}`,
     operational_time_open: "09:00",
     operational_time_close: "17:00",
     operational_day_open: "Senin,Selasa,Rabu,Kamis,Jumat",
-    swab_antigen: true,
-    swab_pcr: false,
-    antigen_price: 400000,
-    pcr_price: 200000,
+    swab_antigen: i % 3 === 0 ? true : false,
+    swab_pcr: i % 2 === 0 ? true : false,
+    antigen_price: 30000 * i,
+    pcr_price: 20000 * i,
   };
-  Clinic.create(add);
-});
+  clinics.push(add);
+}
+let add = {
+  name: `user clinic login`,
+  email: `useremailclinic@mail.com`,
+  password: `passwordclinic`,
+  phone_number: `45621685412`,
+  address: `jalan klinik gang clinic`,
+  imageURL: `awikwokklinik`,
+  operational_time_open: "09:00",
+  operational_time_close: "17:00",
+  operational_day_open: "Senin,Selasa,Rabu,Kamis,Jumat",
+  swab_antigen: true,
+  swab_pcr: false,
+  antigen_price: 400000,
+  pcr_price: 200000,
+};
+
+beforeAll((done) => {
+  Clinic.bulkCreate(clinics)
+    .then((_) => {
+      return Clinic.create(add);
+    })
+    .then((_) => {
+      done()
+    })
+    .catch(err => {
+      done(err)
+    })
+}); // di chaining
 
 describe("view clinic(s)", () => {
   test("get all clinics", (done) => {

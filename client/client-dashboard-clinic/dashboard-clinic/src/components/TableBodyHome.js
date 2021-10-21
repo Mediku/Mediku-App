@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 
 export default function TableBodyHome({patient, index}) {
-	console.log(patient)
+	console.log(patient, 'patient')
 	console.log(index)
 
 	const Status = () => {

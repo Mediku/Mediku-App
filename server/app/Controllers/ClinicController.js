@@ -11,17 +11,21 @@ class ClinicController {
           email,
         },
       });
-      if (clinic && checkPassword(password, clinic.password)) {
-        const access_token = signToken({
-          id: clinic.id,
-          email: clinic.email,
-        });
-
-        res.status(200).json({
-          id: clinic.id,
-          email: clinic.email,
-          access_token,
-        });
+      if (clinic) {
+        const checkPass = checkPassword(password, clinic.password);
+        if (checkPass) {
+          const access_token = signToken({
+            id: clinic.id,
+            email: clinic.email,
+          });
+          res.status(200).json({
+            id: clinic.id,
+            email: clinic.email,
+            access_token,
+          });
+        } else {
+          throw { name: "Unauthorized" };
+        }
       } else {
         throw { name: "Unauthorized" };
       }
@@ -129,7 +133,7 @@ class ClinicController {
             pcr_price,
             antigen_price,
             imageURL,
-            password,
+            password
           },
           {
             where: { id: data.id },

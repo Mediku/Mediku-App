@@ -128,6 +128,8 @@ beforeAll((done) => {
     });
 });
 
+let idbuatdelete;
+
 describe("Registration for users", () => {
   test("successfully register as user", (done) => {
     request(app)
@@ -141,6 +143,7 @@ describe("Registration for users", () => {
         ClinicId: 1,
       })
       .then((res) => {
+        idbuatdelete = res.body.id
         expect(res.body).toHaveProperty("id");
         expect(res.body.id).toBe(1);
         expect(res.body).toHaveProperty("service_name");
@@ -771,6 +774,53 @@ describe("find all registration with unpaid status for clinic admin who is loggi
   test("find all registrations", (done) => {
     request(app)
       .get("/registrations/clinic")
+<<<<<<< HEAD
+      .set({ access_token: clinicToken })
+      .then((res) => {
+        const arr = Array.isArray(res.body)
+        expect(arr).toBe(true)
+        expect(res.body[0]).toHaveProperty("id");
+        expect(res.body[0]).toHaveProperty("service_name");
+        expect(res.body[0]).toHaveProperty("total_price");
+        expect(res.body[0]).toHaveProperty("date");
+        expect(res.body[0]).toHaveProperty("time");
+        expect(res.body[0]).toHaveProperty("is_paid");
+        expect(res.body[0]).toHaveProperty("ClinicId");
+        expect(res.body[0]).toHaveProperty("UserId");
+        expect(res.body[0]).toHaveProperty("is_tested");
+        expect(res.body[0]).toHaveProperty("test_result");
+        expect(res.body[0]).toHaveProperty("User");
+        expect(res.body[0].User).toHaveProperty("id");
+        expect(res.body[0].User).toHaveProperty("id");
+        expect(res.body[0].User).toHaveProperty("full_name");
+        expect(res.body[0].User).toHaveProperty("email");
+        expect(res.body[0].User).not.toHaveProperty("password");
+        expect(res.body[0].User).toHaveProperty("phone_number");
+        expect(res.body[0].User).toHaveProperty("identity_card_number");
+        expect(res.body[0].User).toHaveProperty("identity_card_address");
+        expect(res.body[0].User).toHaveProperty("gender");
+        expect(res.body[0].User).toHaveProperty("date_of_birth");
+        expect(res.body[0].User).toHaveProperty("province");
+        expect(res.body[0].User).toHaveProperty("regency");
+        expect(res.body[0].User).toHaveProperty("district");
+        expect(res.body[0].User).toHaveProperty("sub_district");
+        expect(res.body[0].User).toHaveProperty("RT");
+        expect(res.body[0].User).toHaveProperty("RW");
+        expect(res.body[0].Clinic).toHaveProperty("id");
+        expect(res.body[0].Clinic).toHaveProperty("name");
+        expect(res.body[0].Clinic).toHaveProperty("email");
+        expect(res.body[0].Clinic).toHaveProperty("phone_number");
+        expect(res.body[0].Clinic).toHaveProperty("address");
+        expect(res.body[0].Clinic).toHaveProperty("operational_time_open");
+        expect(res.body[0].Clinic).toHaveProperty("operational_time_close");
+        expect(res.body[0].Clinic).toHaveProperty("operational_day_open");
+        expect(res.body[0].Clinic).toHaveProperty("swab_pcr");
+        expect(res.body[0].Clinic).toHaveProperty("swab_antigen");
+        expect(res.body[0].Clinic).toHaveProperty("pcr_price");
+        expect(res.body[0].Clinic).toHaveProperty("antigen_price");
+        expect(res.body[0].Clinic).toHaveProperty("imageURL");
+        done();
+=======
       .set("access_token", userToken)
       .then((data) => {
         return request(app)
@@ -871,6 +921,7 @@ describe("find all registration with unpaid status for clinic admin who is loggi
           .catch((err) => {
             done(err);
           });
+>>>>>>> fbdea808fdbd60e3f008e4ed9c52c7ae8d7de6a3
       })
       .catch((err) => {
         done(err);
@@ -1149,6 +1200,8 @@ describe("registration info test result patch by clinic admin", () => {
 });
 
 describe("registration info delete by clinic admin", () => {
+<<<<<<< HEAD
+=======
   beforeAll((done) => {
     request(app)
       .post("/registrations/user")
@@ -1184,9 +1237,10 @@ describe("registration info delete by clinic admin", () => {
         done(err);
       });
   });
+>>>>>>> fbdea808fdbd60e3f008e4ed9c52c7ae8d7de6a3
   test(`return error if clinic admin tries to edit another clinic's registration test result`, (done) => {
     request(app)
-      .delete("/registrations/clinic/1")
+      .delete(`/registrations/clinic/${idbuatdelete}`)
       .set({ access_token: clinicToken2 })
       .send({
         test_result: "positive",
@@ -1209,6 +1263,22 @@ describe("registration info delete by clinic admin", () => {
         expect(res.body).toHaveProperty("message");
         expect(res.body.message).toContain("Data Not Found");
         expect(res.status).toBe(404);
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+  test("successfully deleted a registration info", (done) => {
+    request(app)
+      .delete("/registrations/clinic/1")
+      .set({ access_token: clinicToken })
+      .then((res) => {
+        expect(res.body).toHaveProperty("message");
+        expect(res.body.message).toContain(
+          "Registration with ID : 1 has been deleted"
+        );
+        expect(res.status).toBe(200);
         done();
       })
       .catch((err) => {
