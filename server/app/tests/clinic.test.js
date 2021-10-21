@@ -1758,8 +1758,6 @@ describe("update a clinic", () => {
       .put("/clinic/edit/2")
       .send(add)
       .then((res) => {
-        console.log(res.body);
-        console.log("LINE 1751");
         expect(res.body).toHaveProperty("message");
         expect(res.body.message).toContain("PLEASE INSERT PASSWORD");
         expect(res.status).toBe(400);

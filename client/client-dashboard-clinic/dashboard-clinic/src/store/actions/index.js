@@ -89,6 +89,15 @@ export const fetchPatientAsync = (id) => {
 
 export const updateTestResult = (id) => {
   return (dispatch) => {
-    return axios.patch(`${baseUrl}//test/result/${id}`);
+    return axios
+      .patch(`${baseUrl}/registrations/testresult/${id}`, {
+        headers: {
+          access_token: localStorage.access_token,
+        },
+      })
+      .then(({ data }) => {
+        dispatch(fetchPatient(data));
+      })
+      .catch((err) => console.log(err));
   };
 };
