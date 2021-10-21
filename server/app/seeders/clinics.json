@@ -1,8 +1,8 @@
 [
   {
-    "name": "TB Simatupang, Pasar Minggu",
-    "email": "clinicabc@mail.com",
-    "password": "testingaja",
+    "name": "Klinik Mediku",
+    "email": "medikuapp1@gmail.com",
+    "password": "rahasia123",
     "phone_number": "54685189",
     "address": "jalan suka-suka clinic",
     "imageURL": "https://d1ojs48v3n42tp.cloudfront.net/provider_location_banner/678537_25-9-2020_12-0-26.jpeg",
@@ -17,9 +17,26 @@
     "updatedAt": "2021-10-18T14:03:00.901Z"
   },
   {
+    "name": "TB Simatupang, Pasar Minggu",
+    "email": "clinicabc@mail.com",
+    "password": "rahasia123",
+    "phone_number": "54685189",
+    "address": "jalan suka-suka clinic",
+    "imageURL": "https://static.konsula.com/images/practice/0001001000/0001000182/rumah-sakit-siloam-tb-simatupang.800x600.jpg",
+    "operational_time_open": "09:00",
+    "operational_time_close": "17:00",
+    "operational_day_open": "Senin,Selasa,Rabu,Kamis,Jumat",
+    "swab_antigen": true,
+    "swab_pcr": true,
+    "antigen_price": 500000,
+    "pcr_price": 450000,
+    "createdAt": "2021-10-18T14:03:00.901Z",
+    "updatedAt": "2021-10-18T14:03:00.901Z"
+  },
+  {
     "name": "Rasuna Said",
     "email": "testing2@mail.com",
-    "password": "testingaja",
+    "password": "rahasia123",
     "phone_number": "54685189",
     "address": "jalan suka-suka clinic",
     "imageURL": "https://photos.wikimapia.org/p/00/01/95/84/99_big.jpg",

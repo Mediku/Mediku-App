@@ -16,24 +16,41 @@
     "RW": "02"
   },
   {
+<<<<<<< HEAD
+    "full_name": "Handson Panggabean",
+    "email": "hansenpanggabean8@gmail.com",
+=======
     "full_name": "Jonathan",
     "email": "joe@mail.com",
+>>>>>>> d8b4fe75827841a28426371ab0b88caad02a0796
     "password": "rahasia123",
     "phone_number": "081208120812",
     "identity_card_number": "01010101010",
     "identity_card_address": "test identity_card_address",
     "gender": "male",
     "date_of_birth": "2020-04-10",
+<<<<<<< HEAD
+    "province": "Sumatera Utara",
+    "regency": "Kota Medan",
+    "district": "Medan Kota",
+    "sub_district": "Pasar Baru",
+=======
     "province": "Jawa Timur",
     "regency": "Surabaya",
     "district": "Gubeng",
     "sub_district": "Gubeng",
+>>>>>>> d8b4fe75827841a28426371ab0b88caad02a0796
     "RT": "01",
     "RW": "02"
   },
   {
+<<<<<<< HEAD
+    "full_name": "test 2 name",
+    "email": "testing2@mail.com",
+=======
     "full_name": "Handson Panggabean",
     "email": "handson@mail.com",
+>>>>>>> d8b4fe75827841a28426371ab0b88caad02a0796
     "password": "rahasia123",
     "phone_number": "081208120812",
     "identity_card_number": "01010101010",
