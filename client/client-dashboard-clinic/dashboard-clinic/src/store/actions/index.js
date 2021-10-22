@@ -8,7 +8,7 @@ import {
   FETCH_PATIENT,
 } from "./../keys";
 
-const baseUrl = "http://localhost:9000";
+const baseUrl = "https://mediku-server.herokuapp.com";
 
 export const setRegistration = (payload) => ({
   type: SET_REGISTRATIONS,
