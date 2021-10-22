@@ -2,7 +2,8 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useParams, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchPatientAsync, changeIsTested } from "../store/actions";
+import { fetchPatientAsync, changeIsTested, fetchAllPatientsAsync } from "../store/actions";
+import Swal from 'sweetalert2'
 
 export default function FormProcess() {
   const dispatch = useDispatch();
@@ -14,9 +15,33 @@ export default function FormProcess() {
   }, [dispatch]);
   const dataPatient = useSelector((state) => state.dataPatient);
 
-  const handleIsTested = () => {
-    dispatch(changeIsTested(dataId))
-    history.push('/')
+  const handleIsTested = (e) => {
+    e.preventDefault()
+
+    Swal.fire({
+      title: `Confirm`,
+      text: `User with id ${dataPatient.id} is ready to test`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, change status to tested'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(changeIsTested(dataId))
+          .then(({ data }) => {
+            dispatch(fetchAllPatientsAsync())
+            history.push('/patients')
+          })
+          .catch((err) => console.log(err, 'err dari actions'));
+
+        Swal.fire(
+          'Success!',
+          'User already tested',
+          'success'
+        )
+      }
+    })
   }
 
   return (
@@ -24,7 +49,7 @@ export default function FormProcess() {
       <div class="mx-5">
         <div class="md:grid md:gap-6">
           <div class="mt-5 md:mt-0 md:col-span-2">
-            <form onSubmit={() => handleIsTested()}>
+            <form onSubmit={(e) => handleIsTested(e)}>
               <div class="shadow sm:rounded-md sm:overflow-hidden">
                 <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
                   <div class="grid grid-cols-3 gap-6">
@@ -120,27 +145,6 @@ export default function FormProcess() {
                         name="about"
                         rows="3"
                         class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
-                        value={dataPatient?.User?.identity_card_address}
-                      ></textarea>
-                    </div>
-                    <p class="mt-2 text-sm text-gray-500">
-                      Addres based on identity card
-                    </p>
-                  </div>
-
-                  <div>
-                    <label
-                      for="about"
-                      class="block text-sm font-medium text-gray-700"
-                    >
-                      Address (Domicile)
-                    </label>
-                    <div class="mt-1">
-                      <textarea
-                        id="about"
-                        name="about"
-                        rows="3"
-                        class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
                         value={`RT ${dataPatient?.User?.RT}, RW ${dataPatient?.User?.RW}, ${dataPatient?.User?.sub_district},${dataPatient?.User?.sub_district},${dataPatient?.User?.regency},${dataPatient?.User?.province}`}
                       ></textarea>
                     </div>
@@ -148,14 +152,12 @@ export default function FormProcess() {
                   </div>
                 </div>
                 <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
-                  {/* <Link to="/"> */}
-                    <button
-                      type="submit"
-                      class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    >
-                      Confirm and process
-                    </button>
-                  {/* </Link> */}
+                  <button
+                    type="submit"
+                    class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  >
+                    Confirm and process
+                  </button>
                 </div>
               </div>
             </form>

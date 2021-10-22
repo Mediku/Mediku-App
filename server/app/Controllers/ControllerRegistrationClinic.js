@@ -80,7 +80,6 @@ class ControllerRegistrationClinic {
   }
 
   static async editIsTestedRegistration(req, res, next) {
-    console.log("masuk static edit is tested");
     const { id } = req.params;
     try {
       const data = {
@@ -101,12 +100,10 @@ class ControllerRegistrationClinic {
         where: { id: foundRegistration.id },
         returning: true,
       });
-      console.log(cek, "server");
       res.status(200).json({
         message: `user ${foundRegistration.User.full_name} is already tested`,
       });
     } catch (err) {
-      console.log(err, "<<<<<<< errornya");
       next(err);
     }
   }
