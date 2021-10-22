@@ -1,15 +1,14 @@
-import React, {useState, useEffect} from 'react'
+import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from "react-redux";
 import { fetchPatientByDay } from "./../store/actions/";
 import TableBodyHome from './TableBodyHome'
 
 export default function Tablepatient() {
-  const dispatch = useDispatch();
-  const getName = localStorage.username;
+	const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(fetchPatientByDay());
-  }, [dispatch]);
+	useEffect(() => {
+		dispatch(fetchPatientByDay());
+	}, [dispatch]);
 
 	const patients = useSelector((state) => state.patientToday);
 
@@ -55,14 +54,14 @@ export default function Tablepatient() {
 								</tr>
 							</thead>
 							<tbody class="bg-white divide-y divide-gray-200">
-							
-							{
-								patients?.map((patient, index) => {
-									return(
-										<TableBodyHome key={patient.id} patient={patient} index={index}/>
-									)
-								})
-							}
+
+								{
+									patients?.map((patient, index) => {
+										return (
+											<TableBodyHome key={patient.id} patient={patient} index={index} />
+										)
+									})
+								}
 
 							</tbody>
 						</table>

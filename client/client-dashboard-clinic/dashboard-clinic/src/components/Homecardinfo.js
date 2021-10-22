@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux'
 import { getCompletedTest, fetchAllPatientsAsync } from './../store/actions/'
 
@@ -7,8 +7,8 @@ export default function Homecardinfo() {
 	const patients = useSelector((state) => state.patientToday)
 
 	useEffect(() => {
-    	dispatch(fetchAllPatientsAsync());
-  	}, [dispatch]);
+		dispatch(fetchAllPatientsAsync());
+	}, [dispatch]);
 
 	useEffect(() => {
 		dispatch(getCompletedTest())

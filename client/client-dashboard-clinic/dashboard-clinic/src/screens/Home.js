@@ -1,11 +1,11 @@
-import React, {setState, setDispatch} from 'react'
+import React from 'react'
 import Sidebar from './../components/Sidebar'
 import Header from './../components/Header'
 import Table from './../components/Tablepatient'
 import Card from './../components/Homecardinfo'
 
 export default function Home() {
-	
+
 	return (
 		<div class="flex min-h-screen flex">
 			<Sidebar />

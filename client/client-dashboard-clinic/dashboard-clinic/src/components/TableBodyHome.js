@@ -1,25 +1,25 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-export default function TableBodyHome({patient, index}) {
+export default function TableBodyHome({ patient, index }) {
 
 	const Status = () => {
-		
+
 		if (patient.is_tested === false) {
-			return(
+			return (
 				<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-500">
 					Waiting
 				</span>
 			)
-		}else {
+		} else {
 			if (patient.test_result === null) {
-				return(
+				return (
 					<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-white-800">
 						Waiting
 					</span>
 				)
-			}else{
-				return(
+			} else {
+				return (
 					<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
 						Completed
 					</span>
@@ -31,11 +31,11 @@ export default function TableBodyHome({patient, index}) {
 	const TestResult = () => {
 		{
 			if (!patient.test_result) {
-				return(
+				return (
 					<p>Waiting</p>
 				)
-			}else {
-				return(
+			} else {
+				return (
 					<p>{patient.test_result}</p>
 				)
 			}
@@ -45,11 +45,11 @@ export default function TableBodyHome({patient, index}) {
 	const Process = () => {
 		{
 			if (!patient.is_tested) {
-				return(
+				return (
 					<p>test</p>
 				)
-			}else{	
-				return(
+			} else {
+				return (
 					<Link to='/process?name=John'
 						class="text-indigo-600 hover:text-indigo-900"
 					>
@@ -79,28 +79,28 @@ export default function TableBodyHome({patient, index}) {
 						</div>
 					</div>
 				</div>
-		</td>
-		<td class="px-6 py-4 whitespace-nowrap">
-			<div class="text-sm text-gray-900">
-				SWAB
-			</div>
-			<div class="text-sm text-gray-500">
-				{patient.service_name}
-			</div>
-		</td>
-		<td class="px-6 py-4 whitespace-nowrap">
-			<Status />
-		</td>
-		<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+			</td>
+			<td class="px-6 py-4 whitespace-nowrap">
+				<div class="text-sm text-gray-900">
+					SWAB
+				</div>
+				<div class="text-sm text-gray-500">
+					{patient.service_name}
+				</div>
+			</td>
+			<td class="px-6 py-4 whitespace-nowrap">
+				<Status />
+			</td>
+			<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
 				<TestResult />
-		</td>
-		<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-			<a
-				href="#"
-				class="text-indigo-600 hover:text-indigo-900"
-			>
-			</a>
-		</td>
-	</tr>
+			</td>
+			<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+				<a
+					href="#"
+					class="text-indigo-600 hover:text-indigo-900"
+				>
+				</a>
+			</td>
+		</tr>
 	)
 }

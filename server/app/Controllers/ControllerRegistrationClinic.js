@@ -80,7 +80,6 @@ class ControllerRegistrationClinic {
   }
 
   static async editIsTestedRegistration(req, res, next) {
-    console.log('masuk static edit is tested');
     const { id } = req.params;
     try {
       const data = {

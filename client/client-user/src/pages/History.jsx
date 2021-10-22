@@ -122,7 +122,7 @@ function History() {
                       </button>
                       <button
                         onClick={() => confirmPayment(data.id)}
-                        className="button button-grow unpaid right"
+                        className="button button-grow unpaid right bg-green-200"
                       >
                         Confirm payment
                       </button>
