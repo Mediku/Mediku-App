@@ -9,15 +9,15 @@ export default function Header() {
 	}
 
 	return (
-		<div class="flex justify-between align-items-center w-full">
-			<div class="ml-5">
-				<i class="fas fa-bars"></i>
+		<div className="flex justify-between align-items-center w-full">
+			<div className="ml-5">
+				<i className="fas fa-bars"></i>
 			</div>
-			<div class="flex align-items-center space-x-2 mr-5">
+			<div className="flex align-items-center space-x-2 mr-5">
 				<div>
 					<button 
 						onClick={Logout}
-						class="text-sm bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+						className="text-sm bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
 					  logout
 					</button>
 				</div>

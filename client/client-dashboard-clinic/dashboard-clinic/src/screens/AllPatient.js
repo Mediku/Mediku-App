@@ -6,15 +6,15 @@ import FilterNav from './../components/FilterNav'
 
 export default function AllPatient() {
 	return (
-		<div class="flex min-h-screen flex">
+		<div className="flex min-h-screen flex">
 			<Sidebar />
-			<div class="flex flex-col space-y-5 py-5 w-full">
+			<div className="flex flex-col space-y-5 py-5 w-full">
 				<Header />
-				<div class="flex flex-col w-full bg-gray-100 space-y-5 shadow-md">
-					<div class="mx-5 mt-5">
-						<p class="font-bold font-xl">Dashboard <span class="text-gray-300">|</span> <span class="text-sm font-light">Registered patients</span></p>
+				<div className="flex flex-col w-full bg-gray-100 space-y-5 shadow-md">
+					<div className="mx-5 mt-5">
+						<p className="font-bold font-xl">Dashboard <span className="text-gray-300">|</span> <span className="text-sm font-light">Registered patients</span></p>
 					</div>
-					<div class="mx-3 mt-5">
+					<div className="mx-3 mt-5">
 						<FilterNav />
 					</div>
 					<Table />

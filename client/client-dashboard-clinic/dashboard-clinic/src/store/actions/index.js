@@ -1,11 +1,8 @@
-import { clinicApi } from "./../apis";
 import axios from "axios";
 import {
-  GET_REGISTRATIONS,
   SET_REGISTRATIONS,
   SET_USER_LOGIN,
   SET_PATIENT_DAY,
-  GET_PATIENT_DAY,
   SET_COMPLETED_TEST,
   FETCH_ALL_PATIENTS,
   FETCH_PATIENT,

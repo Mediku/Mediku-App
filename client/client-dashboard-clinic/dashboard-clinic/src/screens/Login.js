@@ -8,7 +8,6 @@ export default function Login() {
 	const history = useHistory()
 	const dispatch = useDispatch()
 	const [loading, setLoading] = useState(false)
-	const [error, setError] = useState(false)
 	const [userInput, setUserInput] = useState({
 		email: '',
 		password: ''
