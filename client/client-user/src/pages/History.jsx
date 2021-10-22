@@ -10,7 +10,6 @@ function History() {
     dispatch(dataRegistrationAsync());
   }, [dispatch]);
   const dataRegistrations = useSelector((state) => state.dataRegistrations);
-  console.log(dataRegistrations)
   const sitePayment = useSelector((state) => state.sitePayment);
 
   const goToPaymentSite = async (id) => {

@@ -109,7 +109,6 @@ function Register() {
     };
     dispatch(addUserAsync(payload))
       .then((res) => {
-        console.log(res);
         return res.json();
       })
       .then((data) => {

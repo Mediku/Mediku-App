@@ -92,29 +92,26 @@ export const fetchPatientAsync = (id) => {
   };
 };
 
-export const updateTestResult = (result,id) => {
+export const updateTestResult = (result, id) => {
   return (dispatch) => {
-    axios.patch(`${baseUrl}/registrations/clinic/test/result/${id}`,{
+    axios.patch(`${baseUrl}/registrations/clinic/test/result/${id}`, {
       test_result: result
-    },{
+    }, {
       headers: {
         access_token: localStorage.access_token
       }
     })
-        .then( (_) => {
-            dispatch(fetchAllPatientsAsync())
-        })
-        .then(_ => {
-            console.log('success')
-        })
-        .catch(err => console.log(err.response.data))
+      .then((_) => {
+        dispatch(fetchAllPatientsAsync())
+      })
+      .catch(err => console.log(err.response.data))
   };
 };
 
 export const changeIsTested = (id) => {
   return (dispatch) => {
     return axios
-      .patch(`${baseUrl}/registrations/clinic/istested/${id}`,{
+      .patch(`${baseUrl}/registrations/clinic/istested/${id}`, {
         is_tested: true
       }, {
         headers: {
@@ -140,25 +137,24 @@ export const setFiltered = (filter) => {
       .then(({ data }) => {
 
         let filtered;
-        switch (filter){
+        switch (filter) {
 
           case "completed":
-          filtered = data.filter( e => e.test_result !== null)
-          break
+            filtered = data.filter(e => e.test_result !== null)
+            break
 
           case "tested":
-          filtered = data.filter( e => e.is_tested === true && e.test_result === null )
-          break
+            filtered = data.filter(e => e.is_tested === true && e.test_result === null)
+            break
 
           case "waiting":
-          filtered = data.filter( e => e.is_tested === false )
-          break
+            filtered = data.filter(e => e.is_tested === false)
+            break
 
           default:
-          filtered = [...data]
+            filtered = [...data]
 
         }
-        // console.log(filtered)
         dispatch(fetchAllPatients(filtered));
 
       })

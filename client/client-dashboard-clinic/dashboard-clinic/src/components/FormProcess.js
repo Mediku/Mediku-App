@@ -19,30 +19,29 @@ export default function FormProcess() {
     e.preventDefault()
 
     Swal.fire({
-        title: `Confirm`,
-        text: `User with id ${dataPatient.id} is ready to test`,
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, change status to tested'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          dispatch(changeIsTested(dataId))
-            .then(({ data }) => {
-              console.log(data, 'data dari actions')
-              dispatch(fetchAllPatientsAsync())
-              history.push('/patients')
-            })
-            .catch((err) => console.log(err, 'err dari actions'));          
+      title: `Confirm`,
+      text: `User with id ${dataPatient.id} is ready to test`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, change status to tested'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(changeIsTested(dataId))
+          .then(({ data }) => {
+            dispatch(fetchAllPatientsAsync())
+            history.push('/patients')
+          })
+          .catch((err) => console.log(err, 'err dari actions'));
 
-          Swal.fire(
-            'Success!',
-            'User already tested',
-            'success'
-          )
-        }
-      })
+        Swal.fire(
+          'Success!',
+          'User already tested',
+          'success'
+        )
+      }
+    })
   }
 
   return (
@@ -153,12 +152,12 @@ export default function FormProcess() {
                   </div>
                 </div>
                 <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
-                    <button
-                      type="submit"
-                      class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    >
-                      Confirm and process
-                    </button>
+                  <button
+                    type="submit"
+                    class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  >
+                    Confirm and process
+                  </button>
                 </div>
               </div>
             </form>
