@@ -11,6 +11,8 @@ import {
   addUser,
 } from "../store/action/index";
 import { useHistory } from "react-router-dom";
+import Swal from "sweetalert2";
+
 function Register() {
   const history = useHistory();
   const dispatch = useDispatch();
@@ -108,15 +110,21 @@ function Register() {
       regency,
     };
     dispatch(addUserAsync(payload))
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
+      .then(({data}) => {
         dispatch(addUser(data));
+        Swal.fire({
+          icon: "info",
+          title: "Success !",
+          text: `You are registered`,
+        });
         history.push("/login");
       })
       .catch((err) => {
-        console.log(err);
+        Swal.fire({
+          icon: "info",
+          title: "Oops...",
+          text: `${err.response.data.message}`,
+        });
       });
   }
   const provincesList = useSelector((state) => state.provinces);

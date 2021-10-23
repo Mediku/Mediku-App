@@ -1,4 +1,4 @@
-// actions
+import axios from 'axios'
 import {
   ADD_USER,
   ADD_PATIENT,
@@ -79,25 +79,31 @@ export function dataClinic(payload) {
 const baseUrl = `http://localhost:9000`;
 export function addUserAsync(data) {
   return function (dispatch) {
-    return fetch(`${baseUrl}/users/register`, {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    return axios.post(`${baseUrl}/users/register`, data)
+    // return fetch(`${baseUrl}/users/register`, {
+    //   method: "POST",
+    //   body: JSON.stringify(data),
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // });
   };
 }
 export function addPatientAsync(data) {
   return function (dispatch) {
-    return fetch(`${baseUrl}/registrations/user`, {
-      method: "POST",
-      body: JSON.stringify(data),
+    return axios.post(`${baseUrl}/registrations/user`, data, {
       headers: {
-        "Content-Type": "application/json",
-        access_token: localStorage.getItem("access_token"),
-      },
-    });
+        access_token: localStorage.getItem("access_token")
+      }
+    })
+    // return fetch(`${baseUrl}/registrations/user`, {
+    //   method: "POST",
+    //   body: JSON.stringify(data),
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     access_token: localStorage.getItem("access_token"),
+    //   },
+    // });
   };
 }
 
@@ -194,13 +200,14 @@ export function dataClinicAsync() {
 
 export function loginUserAsync(data) {
   return function (dispatch) {
-    return fetch(`${baseUrl}/users/login`, {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    return axios.post(`${baseUrl}/users/login`, data)
+    // return fetch(`${baseUrl}/users/login`, {
+    //   method: "POST",
+    //   body: JSON.stringify(data),
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // });
   };
 }
 

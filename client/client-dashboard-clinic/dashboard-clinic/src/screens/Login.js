@@ -26,21 +26,23 @@ export default function Login() {
     dispatch(userLogin(userInput))
       .then(({ data }) => {
         dispatch(setUserLogin(data));
-        console.log(data)
         localStorage.setItem("access_token", data.access_token);
         localStorage.setItem("name", data.name);
         localStorage.setItem("image", data.imageURL);
-
         history.push("/");
       })
       .catch((err) => {
+        const deleteUserInput = {
+          email: '',
+          password: ''
+        }
         setLoading(false);
-        console.log(err.response.data.message)
         Swal.fire({
+          icon: "error",
           title: "Fail",
           text: `${err.response.data.message}`,
-          icon: "error",
         });
+        setUserInput(deleteUserInput)
       })
       .finally((_) => setLoading(false));
   };
@@ -117,6 +119,7 @@ export default function Login() {
               </label>
               <input
                 onChange={(e) => handleInput(e, "email")}
+                value={userInput.email}
                 id="email-address"
                 name="email"
                 type="email"
@@ -132,6 +135,7 @@ export default function Login() {
               </label>
               <input
                 onChange={(e) => handleInput(e, "password")}
+                value={userInput.password}
                 id="password"
                 name="password"
                 type="password"
