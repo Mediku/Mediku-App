@@ -33,7 +33,7 @@ class ControllerXendit {
         Service name: ${foundRegistration.service_name}
         Price: ${foundRegistration.total_price}
         Date: ${foundRegistration.date}
-        Your Invoice ID: ${invoice.id} (!IMPORTANT, this is your ID for submitting when you've paid to clinic ${foundRegistration.Clinic.name})
+        Your Payment ID: ${invoice.id} [ IMPORTANT !! , please copy this is ID for confirming your payment to Mediku ]
         
         Please complete your payment`
       );

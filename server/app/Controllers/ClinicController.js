@@ -20,7 +20,9 @@ class ClinicController {
           });
           res.status(200).json({
             id: clinic.id,
+            name: clinic.name,
             email: clinic.email,
+            imageURL: clinic.imageURL,
             access_token,
           });
         } else {
