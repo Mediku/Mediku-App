@@ -8,7 +8,7 @@ export default function Sidebar() {
 			<h1 className="text-center sidebar-logo text-blue-500">Mediku</h1>
 			<div className="mx-auto mt-5 flex flex-col">
 				<div className="box-border border-2 border-2 p-2 h-20 w-20 rounded-md shadow-lg">
-					<img src={localStorage.imageURL}
+					<img src={localStorage.image}
 						alt=""
 						className="object-cover h-16"
 					/>

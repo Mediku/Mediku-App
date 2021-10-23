@@ -62,7 +62,7 @@ export default function TableAllPatient() {
     } else {
       return (
         <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-300 text-gray-500">
-          Waiting
+          
         </span>
       )
     }
@@ -149,12 +149,12 @@ export default function TableAllPatient() {
                         <td className="px-6 py-4 whitespace-nowrap">
                           {
                             (patient.is_tested === false && patient.test_result === null) ?
-                              <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-gray-800">
+                              <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">
                                 Waiting
                               </span>
                               :
                               (patient.is_tested === true && patient.test_result === null) ?
-                                <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-300 text-gray-800">
+                                <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-500 text-white">
                                   Tested
                                 </span>
                                 :

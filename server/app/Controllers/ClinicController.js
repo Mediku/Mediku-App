@@ -4,17 +4,13 @@ const { signToken } = require("../helpers/jwt");
 
 class ClinicController {
   static async login(req, res, next) {
-    console.log('sdadasdasdassadasdasdasd')
     try {
-      console.log('masuk login ClinicController')
       const { email, password } = req.body;
       const clinic = await Clinic.findOne({
         where: {
           email,
         },
       });
-
-      console.log(clinic, '<<<<<<<<<<')
       
       if (clinic) {
         const checkPass = checkPassword(password, clinic.password);
