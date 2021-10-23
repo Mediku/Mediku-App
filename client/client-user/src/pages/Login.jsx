@@ -24,6 +24,7 @@ function Login() {
         .then((res) => res.json())
         .then((data) => {
         localStorage.setItem("access_token", data.access_token);
+        localStorage.setItem("email", data.email);
         dispatch(loginUser(data));
         history.push('/register-test')
         })

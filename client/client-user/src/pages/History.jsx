@@ -17,8 +17,8 @@ function History() {
     if (sitePayment.invoiceURL && sitePayment.invoiceID) {
       await Swal.fire({
         icon: "info",
-        title: "IMPORTANT!!",
-        text: `Please memorize your payment ID : ${sitePayment.invoiceID}, you will need this ID to confirming your payment after you paid it`,
+        title: "Email Sent",
+        text: `Your payment ID was sent to ${localStorage.email}`,
       });
       await window.open(`${sitePayment.invoiceURL}`);
     }
@@ -35,7 +35,8 @@ function History() {
       confirmButtonText: "Submit",
       showLoaderOnConfirm: true,
       preConfirm: (invoiceID) => {
-        return fetch(`https://mediku-app-server.herokuapp.com/xendits/invoice/${id}/status`, {
+        // return fetch(`https://mediku-app-server.herokuapp.com/xendits/invoice/${id}/status`, {
+        return fetch(`http://localhost:9000/xendits/invoice/${id}/status`, {
           method: "PATCH",
           body: JSON.stringify({
             invoiceID: invoiceID,
@@ -58,7 +59,6 @@ function History() {
                 );
               } else if (data.message[0] === "H") {
                 Swal.fire({
-                  icon: "success",
                   title: "Thankyou for confirming your payment",
                   text: "Your payment is confirmed by system and we will send a confirmation email to the Clinic by now",
                 });
@@ -113,18 +113,18 @@ function History() {
                     total price : RP. {data.total_price}
                   </p>
                   {data.is_paid === false ? (
-                    <div>
+                    <div className="flex-button">
                       <button
                         onClick={() => goToPaymentSite(data.id)}
-                        className="button button-grow unpaid"
+                        className="right button-grow"
                       >
-                        Pay now
+                        Pay Now
                       </button>
                       <button
                         onClick={() => confirmPayment(data.id)}
-                        className="button button-grow unpaid right bg-green-200"
+                        className="button-grow left"
                       >
-                        Confirm payment
+                        Confirm Payment
                       </button>
                     </div>
                   ) : (

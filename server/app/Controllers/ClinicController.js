@@ -25,7 +25,7 @@ class ClinicController {
             name: clinic.name,
             email: clinic.email,
             imageURL: clinic.imageURL,
-            access_token
+            access_token,
           });
         } else {
           throw { name: "Unauthorized" };
