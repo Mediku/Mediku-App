@@ -16,9 +16,9 @@ export default function Homecardinfo() {
 
 	const complete = useSelector((state) => state.allPatients)
 	let completed = [...complete]
-	completed = completed.filter(e => e.test_result !== null)
-	let tested = complete.filter(e => e.is_tested)
-	let waiting = complete.filter(e => e.is_tested === true && e.test_result === null)
+	completed = completed.filter(e => e.test_result)
+	let tested = complete.filter(e => e.is_tested && !e.test_result)
+	let waiting = complete.filter(e => !e.is_tested && !e.test_result)
 
 	return (
 		<div className="flex space-x-11 mx-5">

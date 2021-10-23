@@ -12,6 +12,12 @@ export default function Tablepatient() {
 
 	const patients = useSelector((state) => state.patientToday);
 
+	  if(patients .length === 0){
+	    return(
+	      <p>No Patient today</p>
+	    )
+	  }
+
 	return (
 		<div className="flex flex-col mx-5 bg-white rounded-lg shadow-md">
 			<p className="mx-5 my-3 text-md font-medium text-gray-900">Register Today</p>

@@ -1,11 +1,16 @@
 import React from 'react'
 import {useHistory} from 'react-router-dom'
+import Swal from 'sweetalert2'
 
 export default function Header() {
 	const history = useHistory()
 	const Logout = () => {
 		localStorage.clear()
 		history.push('/')
+		Swal.fire(
+		  'You`re loged out',
+		  'success'
+		)
 	}
 
 	return (

@@ -22,7 +22,7 @@ export const setUserLogin = (payload) => ({
 });
 
 export const userLogin = (payload) => {
-  return (dispatch) => {
+  return () => {
     return axios.post(`${baseUrl}/clinic/login`, payload);
   };
 };

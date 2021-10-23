@@ -11,6 +11,7 @@ class ClinicController {
           email,
         },
       });
+      
       if (clinic) {
         const checkPass = checkPassword(password, clinic.password);
         if (checkPass) {
@@ -18,6 +19,7 @@ class ClinicController {
             id: clinic.id,
             email: clinic.email,
           });
+          
           res.status(200).json({
             id: clinic.id,
             name: clinic.name,
@@ -32,6 +34,7 @@ class ClinicController {
         throw { name: "Unauthorized" };
       }
     } catch (err) {
+      console.log(err)
       next(err);
     }
   }

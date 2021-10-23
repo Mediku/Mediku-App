@@ -11,6 +11,8 @@ import {
   addPatientAsync,
 } from "../store/action/index";
 import { useHistory } from "react-router-dom";
+import Swal from "sweetalert2";
+
 function RegisterTest() {
   const history = useHistory();
   const dispatch = useDispatch();
@@ -22,7 +24,6 @@ function RegisterTest() {
   }, [dispatch]);
   const [full_name, setFullName] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [phone_number, setPhoneNumber] = useState("");
   const [identity_card_number, setIdentityCardNumber] = useState("");
   const [identity_card_address, setIdentityCardAddress] = useState("");
@@ -45,7 +46,6 @@ function RegisterTest() {
   useEffect(() => {
     setFullName(dataLogin.full_name);
     setEmail(dataLogin.email);
-    setPassword(dataLogin.password);
     setPhoneNumber(dataLogin.phone_number);
     setIdentityCardNumber(dataLogin.identity_card_number);
     setIdentityCardAddress(dataLogin.identity_card_address);
@@ -109,9 +109,6 @@ function RegisterTest() {
   function setAddRW(e) {
     setRW(e.target.value);
   }
-  function setAddPassword(e) {
-    setPassword(e.target.value);
-  }
   const provincesList = useSelector((state) => state.provinces);
   const regenciesList = useSelector((state) => state.regencies);
   const districtsList = useSelector((state) => state.districts);
@@ -146,24 +143,26 @@ function RegisterTest() {
       ClinicId,
     };
     dispatch(addPatientAsync(payload))
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
+      .then(({ data }) => {
         dispatch(addPatient(data));
         history.push("/");
       })
       .catch((err) => {
-        console.log(err);
+        Swal.fire({
+          icon: "info",
+          title: "Oops...",
+          text: `${err.response.data.message}`,
+        });
       });
   }
+
   return (
     <div>
       <div className="register">
         <div className="flex justify-center items-center w-full my-10">
           <div className="w-1/2 bg-white rounded shadow-2xl p-8 m-4">
             <h2 className="block w-full text-center text-gray-800 text-2xl font-bold mb-6">
-              Form pendaftaran test
+              Form Pendaftaran Test
             </h2>
             <form onSubmit={submitTest}>
               <div className="flex flex-col mb-4">
@@ -516,17 +515,6 @@ function RegisterTest() {
                   id="date"
                   value={date}
                   onChange={setAddDate}
-                ></input>
-              </div>
-              <div className="flex flex-col mb-4">
-                <input
-                  className="border py-2 px-3 text-grey-800"
-                  type="password"
-                  name="password"
-                  id="password"
-                  placeholder="Password"
-                  value={password}
-                  onChange={setAddPassword}
                 ></input>
               </div>
               <button
