@@ -35,7 +35,7 @@ function History() {
       confirmButtonText: "Submit",
       showLoaderOnConfirm: true,
       preConfirm: (invoiceID) => {
-        return fetch(`https://mediku-server.herokuapp.com/xendits/invoice/${id}/status`, {
+        return fetch(`https://mediku-app-server.herokuapp.com/xendits/invoice/${id}/status`, {
           method: "PATCH",
           body: JSON.stringify({
             invoiceID: invoiceID,
