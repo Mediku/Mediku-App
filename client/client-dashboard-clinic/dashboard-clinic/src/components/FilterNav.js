@@ -19,7 +19,7 @@ export default function FilterNav() {
 			  </button>
 			  <button 
 			  	onClick={() => Filtering('tested')}
-			  	className="text-sm bg-blue-300 text-gray-800 hover:bg-gray-200 font-bold py-2 px-4 rounded-r">
+			  	className="text-sm bg-yellow-500 text-white hover:bg-gray-200 font-bold py-2 px-4 rounded-r">
 			    Tested
 			  </button>
 			  <button 

@@ -12,10 +12,10 @@ export default function TableBodyHome({ patient, index }) {
 				</span>
 			)
 		} else {
-			if (patient.test_result === null) {
+			if (patient.is_tested && !patient.test_result) {
 				return (
-					<span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-white-800">
-						Waiting
+					<span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-500 text-white">
+						Tested
 					</span>
 				)
 			} else {
@@ -28,6 +28,10 @@ export default function TableBodyHome({ patient, index }) {
 		}
 	}
 
+	const upperCase = (string) => {
+		return string.charAt(0).toUpperCase() + string.slice(1);
+	}
+
 	const TestResult = () => {
 		{
 			if (!patient.test_result) {
@@ -36,7 +40,7 @@ export default function TableBodyHome({ patient, index }) {
 				)
 			} else {
 				return (
-					<p>{patient.test_result}</p>
+					<p>{ upperCase(patient.test_result)}</p>
 				)
 			}
 		}
