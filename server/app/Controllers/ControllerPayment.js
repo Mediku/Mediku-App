@@ -8,7 +8,14 @@ class ControllerXendit {
     const { email } = req.user;
     const randomID = Math.random().toString(36).slice(2);
     try {
-      const foundRegistration = await Registration.findByPk(id)
+      const foundRegistration = await Registration.findByPk(id, {
+        include: [
+          {
+            model: Clinic,
+            attributes: { exclude: ["password"] }
+          }
+        ]
+      })
       const invoice = await XenditInvoice.createInvoice({
         externalID: `${randomID}`,
         payerEmail: email,
@@ -16,6 +23,20 @@ class ControllerXendit {
         amount: foundRegistration.total_price,
         shouldSendEmail: true,
       });
+      sendNodemailer(
+        `${req.user.email}`,
+        "Registration Payment Pending",
+        `Hello, ${req.user.full_name}. Thank you for registering on Mediku. Here are your registration informations:
+
+        Your name: ${req.user.full_name}
+        Clinic name: ${foundRegistration.Clinic.name}
+        Service name: ${foundRegistration.service_name}
+        Price: ${foundRegistration.total_price}
+        Date: ${foundRegistration.date}
+        Your Invoice ID: ${invoice.id} (!IMPORTANT, this is your ID for submitting when you've paid to clinic ${foundRegistration.Clinic.name})
+        
+        Please complete your payment`
+      );
       res.status(201).json({
         invoice_id: invoice.id,
         external_id: invoice.external_id,
@@ -51,7 +72,7 @@ class ControllerXendit {
         res.status(200).json({ message: `sorry your payment still on process or maybe you haven't paid it, please click this site for payment processing --> ${invoiceStatus.invoice_url} or you can see your email inbox to check it` })
       } else if (invoiceStatus.status == 'PAID') {
         sendNodemailer(
-          'rheina.tamara@outlook.com',
+          `${req.user.email}`,
           "Registration Payment Succeess",
           `Hello, ${req.user.full_name}. Thank you for registering on Mediku. Here are your registration informations:
   
