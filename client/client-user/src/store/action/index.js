@@ -75,8 +75,8 @@ export function dataClinic(payload) {
   };
 }
 
-const baseUrl = `https://mediku-app-server.herokuapp.com`;
-// const baseUrl = `http://localhost:9000`;
+// const baseUrl = `https://mediku-app-server.herokuapp.com`;
+const baseUrl = `http://localhost:9000`;
 export function addUserAsync(data) {
   return function (dispatch) {
     return fetch(`${baseUrl}/users/register`, {

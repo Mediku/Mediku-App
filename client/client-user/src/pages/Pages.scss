@@ -344,8 +344,21 @@ span {
     font-weight: 500;
   }
   button.right {
+    color: green;
     margin-left: 1rem;
-    background-color: #333;
+    border: 1px solid green;
+    background-color: none;
+    padding: 0.5rem 1rem;
+    border-radius: 25px;
+  }
+
+  button.left {
+    color: $primary-color;
+    margin-left: 1rem;
+    border: 1px solid $primary-color;
+    background-color: none;
+    padding: 0.5rem 1rem;
+    border-radius: 25px;
   }
 }
 
@@ -426,4 +439,12 @@ span {
 }
 #mapid {
   height: 25rem;
+}
+
+.flex-button {
+  display: flex;
+  justify-content: space-between;
+  .left {
+    margin-right: 1rem;
+  }
 }
