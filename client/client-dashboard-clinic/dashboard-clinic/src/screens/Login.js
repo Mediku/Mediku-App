@@ -26,15 +26,19 @@ export default function Login() {
     dispatch(userLogin(userInput))
       .then(({ data }) => {
         dispatch(setUserLogin(data));
+        console.log(data)
         localStorage.setItem("access_token", data.access_token);
+        localStorage.setItem("name", data.name);
+        localStorage.setItem("image", data.imageURL);
+
         history.push("/");
       })
       .catch((err) => {
         setLoading(false);
-
+        console.log(err.response.data.message)
         Swal.fire({
-          title: <strong>Oops!</strong>,
-          html: <i>({`${err.response.error}`})</i>,
+          title: "Fail",
+          text: `${err.response.data.message}`,
           icon: "error",
         });
       })

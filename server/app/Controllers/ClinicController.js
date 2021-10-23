@@ -4,13 +4,18 @@ const { signToken } = require("../helpers/jwt");
 
 class ClinicController {
   static async login(req, res, next) {
+    console.log('sdadasdasdassadasdasdasd')
     try {
+      console.log('masuk login ClinicController')
       const { email, password } = req.body;
       const clinic = await Clinic.findOne({
         where: {
           email,
         },
       });
+
+      console.log(clinic, '<<<<<<<<<<')
+      
       if (clinic) {
         const checkPass = checkPassword(password, clinic.password);
         if (checkPass) {
@@ -18,10 +23,13 @@ class ClinicController {
             id: clinic.id,
             email: clinic.email,
           });
+          
           res.status(200).json({
             id: clinic.id,
+            name: clinic.name,
             email: clinic.email,
-            access_token,
+            imageURL: clinic.imageURL,
+            access_token
           });
         } else {
           throw { name: "Unauthorized" };
@@ -30,6 +38,7 @@ class ClinicController {
         throw { name: "Unauthorized" };
       }
     } catch (err) {
+      console.log(err)
       next(err);
     }
   }
