@@ -12,7 +12,7 @@ class ControllerXendit {
       const invoice = await XenditInvoice.createInvoice({
         externalID: `${randomID}`,
         payerEmail: email,
-        description: `Invoice for Service Antigen Test`,
+        description: `Invoice for Service ${foundRegistration.service_name} Test`,
         amount: foundRegistration.total_price,
         shouldSendEmail: true,
       });
