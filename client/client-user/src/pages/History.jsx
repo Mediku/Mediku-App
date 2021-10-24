@@ -11,7 +11,7 @@ function History() {
   }, [dispatch]);
   const dataRegistrations = useSelector((state) => state.dataRegistrations);
   const sitePayment = useSelector((state) => state.sitePayment);
-  console.log(dataRegistrations.length, '<<<<<');
+  console.log(dataRegistrations.length, "<<<<<");
   const goToPaymentSite = async (id) => {
     await dispatch(getEndpoint(id));
     if (sitePayment.invoiceURL && sitePayment.invoiceID) {
@@ -83,62 +83,67 @@ function History() {
   return (
     <div>
       <div className="history-container">
-        <h1>Your Registration's List</h1>
+        {dataRegistrations.length === 0 ? (
+          <h1>Sorry, you havent added any registration</h1>
+        ) : (
+          <h1> Your registrations list </h1>
+        )}
         <div className="grid-template">
-            
-          {
-          dataRegistrations.length !== 0 ? dataRegistrations?.map((data) => {
-            return (
-              <div
-                key={data.id}
-                className="max-w-2xl bg-white border-2 border-gray-300 p-6 rounded-md tracking-wide shadow-lg container-history"
-              >
-                <div id="header" className="flex items-center mb-4">
-                  <img
-                    alt="avatar"
-                    className="w-20  border-2 border-gray-300"
-                    src={data.Clinic.imageURL}
-                  />
-                  <div id="header-text" className="leading-6 ml-8 sm">
-                    <h4 id="name" className="text-xl font-semibold">
-                      {data.Clinic.name}
-                    </h4>
-                    <h5 id="job" className="font-semibold text-gray-600">
-                      {data.Clinic.address}
-                    </h5>
+          {dataRegistrations.length !== 0 ? (
+            dataRegistrations?.map((data) => {
+              return (
+                <div
+                  key={data.id}
+                  className="max-w-2xl bg-white border-2 border-gray-300 p-6 rounded-md tracking-wide shadow-lg container-history"
+                >
+                  <div id="header" className="flex items-center mb-4">
+                    <img
+                      alt="avatar"
+                      className="w-20  border-2 border-gray-300"
+                      src={data.Clinic.imageURL}
+                    />
+                    <div id="header-text" className="leading-6 ml-8 sm">
+                      <h4 id="name" className="text-xl font-semibold">
+                        {data.Clinic.name}
+                      </h4>
+                      <h5 id="job" className="font-semibold text-gray-600">
+                        {data.Clinic.address}
+                      </h5>
+                    </div>
+                  </div>
+                  <div id="quote">
+                    <p className=" text-gray-600">
+                      name : {data.User.full_name} <br />
+                      chosen service : {data.service_name} <br />
+                      total price : RP. {data.total_price}
+                    </p>
+                    {data.is_paid === false ? (
+                      <div className="flex-button">
+                        <button
+                          onClick={() => goToPaymentSite(data.id)}
+                          className="right button-grow"
+                        >
+                          Pay Now
+                        </button>
+                        <button
+                          onClick={() => confirmPayment(data.id)}
+                          className="button-grow left"
+                        >
+                          Confirm Payment
+                        </button>
+                      </div>
+                    ) : (
+                      <button disabled className="paid">
+                        Paid
+                      </button>
+                    )}
                   </div>
                 </div>
-                <div id="quote">
-                  <p className=" text-gray-600">
-                    name : {data.User.full_name} <br />
-                    chosen service : {data.service_name} <br />
-                    total price : RP. {data.total_price}
-                  </p>
-                  {data.is_paid === false ? (
-                    <div className="flex-button">
-                      <button
-                        onClick={() => goToPaymentSite(data.id)}
-                        className="right button-grow"
-                      >
-                        Pay Now
-                      </button>
-                      <button
-                        onClick={() => confirmPayment(data.id)}
-                        className="button-grow left"
-                      >
-                        Confirm Payment
-                      </button>
-                    </div>
-                  ) : (
-                    <button disabled className="paid">
-                      Paid
-                    </button>
-                  )}
-                </div>
-              </div>
-            );
-          }) : <div></div>
-        }
+              );
+            })
+          ) : (
+            <div></div>
+          )}
         </div>
       </div>
     </div>
