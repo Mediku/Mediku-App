@@ -18,7 +18,7 @@ function Map() {
         },
         {
             longitude: [-6.18107396627464, 106.81508716835624],
-            name: "Jatibaru"  
+            name: "Klinik Mediku"  
         },
         {
             longitude: [-6.218830079923572, 106.83308881863816],

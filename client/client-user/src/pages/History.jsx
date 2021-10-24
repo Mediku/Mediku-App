@@ -11,7 +11,7 @@ function History() {
   }, [dispatch]);
   const dataRegistrations = useSelector((state) => state.dataRegistrations);
   const sitePayment = useSelector((state) => state.sitePayment);
-
+  console.log(dataRegistrations.length, '<<<<<');
   const goToPaymentSite = async (id) => {
     await dispatch(getEndpoint(id));
     if (sitePayment.invoiceURL && sitePayment.invoiceID) {
@@ -85,7 +85,9 @@ function History() {
       <div className="history-container">
         <h1>Your Registration's List</h1>
         <div className="grid-template">
-          {dataRegistrations?.map((data) => {
+            
+          {
+          dataRegistrations.length !== 0 ? dataRegistrations?.map((data) => {
             return (
               <div
                 key={data.id}
@@ -135,7 +137,8 @@ function History() {
                 </div>
               </div>
             );
-          })}
+          }) : <div></div>
+        }
         </div>
       </div>
     </div>

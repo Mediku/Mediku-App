@@ -9,7 +9,7 @@ import {
   FETCH_SUBDISTRICTS,
   CLINIC,
   DATA_REGISTRATIONS,
-  SITE_PAYMENT
+  SITE_PAYMENT,
 } from "../keys";
 const initialState = {
   users: [],
@@ -21,7 +21,7 @@ const initialState = {
   regencies: [],
   dataClinic: {},
   dataRegistrations: [],
-  sitePayment: {}
+  sitePayment: {},
 };
 function reducer(state = initialState, action) {
   switch (action.type) {
