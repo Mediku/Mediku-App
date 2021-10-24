@@ -10,21 +10,21 @@ export default function FilterNav() {
 	}
 
 	return (
-		<div class="flex space-x-2 w-full px-3">
-			<div class="inline-flex">
+		<div className="flex space-x-2 w-full px-3">
+			<div className="inline-flex">
 			  <button 
 			  	onClick={() => Filtering('completed')}
-			  	class="text-sm bg-green-100 text-green-800 hover:bg-gray-200 font-bold py-2 px-4 rounded-l">
+			  	className="text-sm bg-green-100 text-green-800 hover:bg-gray-200 font-bold py-2 px-4 rounded-l">
 			    Completed
 			  </button>
 			  <button 
 			  	onClick={() => Filtering('tested')}
-			  	class="text-sm bg-blue-300 text-gray-800 hover:bg-gray-200 font-bold py-2 px-4 rounded-r">
+			  	className="text-sm bg-yellow-500 text-white hover:bg-gray-200 font-bold py-2 px-4 rounded-r">
 			    Tested
 			  </button>
 			  <button 
 			  	onClick={() => Filtering('waiting')}
-			  	class="text-sm bg-gray-300 text-gray-500 hover:bg-gray-200 font-bold py-2 px-4 rounded-r">
+			  	className="text-sm bg-gray-300 text-gray-500 hover:bg-gray-200 font-bold py-2 px-4 rounded-r">
 			    Waiting
 			  </button>
 			</div>

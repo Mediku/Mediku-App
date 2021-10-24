@@ -1,26 +1,26 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-export default function TableBodyHome({patient, index}) {
+export default function TableBodyHome({ patient, index }) {
 
 	const Status = () => {
-		
+
 		if (patient.is_tested === false) {
-			return(
-				<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-500">
+			return (
+				<span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-500">
 					Waiting
 				</span>
 			)
-		}else {
-			if (patient.test_result === null) {
-				return(
-					<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-white-800">
-						Waiting
+		} else {
+			if (patient.is_tested && !patient.test_result) {
+				return (
+					<span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-500 text-white">
+						Tested
 					</span>
 				)
-			}else{
-				return(
-					<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+			} else {
+				return (
+					<span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
 						Completed
 					</span>
 				)
@@ -28,15 +28,19 @@ export default function TableBodyHome({patient, index}) {
 		}
 	}
 
+	const upperCase = (string) => {
+		return string.charAt(0).toUpperCase() + string.slice(1);
+	}
+
 	const TestResult = () => {
 		{
 			if (!patient.test_result) {
-				return(
+				return (
 					<p>Waiting</p>
 				)
-			}else {
-				return(
-					<p>{patient.test_result}</p>
+			} else {
+				return (
+					<p>{ upperCase(patient.test_result)}</p>
 				)
 			}
 		}
@@ -45,13 +49,13 @@ export default function TableBodyHome({patient, index}) {
 	const Process = () => {
 		{
 			if (!patient.is_tested) {
-				return(
+				return (
 					<p>test</p>
 				)
-			}else{	
-				return(
+			} else {
+				return (
 					<Link to='/process?name=John'
-						class="text-indigo-600 hover:text-indigo-900"
+						className="text-indigo-600 hover:text-indigo-900"
 					>
 						"process"
 					</Link>
@@ -63,44 +67,44 @@ export default function TableBodyHome({patient, index}) {
 
 	return (
 		<tr key={index}>
-			<td class="px-6 py-4 whitespace-nowrap">
-				<div class="text-sm text-gray-900">
+			<td className="px-6 py-4 whitespace-nowrap">
+				<div className="text-sm text-gray-900">
 					{index + 1}
 				</div>
 			</td>
-			<td class="px-6 py-4 whitespace-nowrap">
-				<div class="flex items-center">
+			<td className="px-6 py-4 whitespace-nowrap">
+				<div className="flex items-center">
 					<div>
-						<div class="text-sm font-medium text-gray-900">
+						<div className="text-sm font-medium text-gray-900">
 							{patient.User.full_name}
 						</div>
-						<div class="text-sm text-gray-500">
+						<div className="text-sm text-gray-500">
 							{patient.User.full_name}
 						</div>
 					</div>
 				</div>
-		</td>
-		<td class="px-6 py-4 whitespace-nowrap">
-			<div class="text-sm text-gray-900">
-				SWAB
-			</div>
-			<div class="text-sm text-gray-500">
-				{patient.service_name}
-			</div>
-		</td>
-		<td class="px-6 py-4 whitespace-nowrap">
-			<Status />
-		</td>
-		<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+			</td>
+			<td className="px-6 py-4 whitespace-nowrap">
+				<div className="text-sm text-gray-900">
+					SWAB
+				</div>
+				<div className="text-sm text-gray-500">
+					{patient.service_name}
+				</div>
+			</td>
+			<td className="px-6 py-4 whitespace-nowrap">
+				<Status />
+			</td>
+			<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
 				<TestResult />
-		</td>
-		<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-			<a
-				href="#"
-				class="text-indigo-600 hover:text-indigo-900"
-			>
-			</a>
-		</td>
-	</tr>
+			</td>
+			<td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+				<a
+					href="#"
+					className="text-indigo-600 hover:text-indigo-900"
+				>
+				</a>
+			</td>
+		</tr>
 	)
 }

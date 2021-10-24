@@ -8,16 +8,37 @@ class ControllerXendit {
     const { email } = req.user;
     const randomID = Math.random().toString(36).slice(2);
     try {
-      const foundRegistration = await Registration.findByPk(id)
+      const foundRegistration = await Registration.findByPk(id, {
+        include: [
+          {
+            model: Clinic,
+            attributes: { exclude: ["password"] }
+          }
+        ]
+      })
       const invoice = await XenditInvoice.createInvoice({
         externalID: `${randomID}`,
         payerEmail: email,
-        description: `Invoice for Service Antigen Test`,
+        description: `Invoice for Service ${foundRegistration.service_name} Test`,
         amount: foundRegistration.total_price,
         shouldSendEmail: true,
       });
+      sendNodemailer(
+        `${req.user.email}`,
+        "Registration Payment Pending",
+        `Hello, ${req.user.full_name}. Thank you for registering on Mediku. Here are your registration informations:
+
+        Your name: ${req.user.full_name}
+        Clinic name: ${foundRegistration.Clinic.name}
+        Service name: ${foundRegistration.service_name}
+        Price: ${foundRegistration.total_price}
+        Date: ${foundRegistration.date}
+        Your Payment ID: ${invoice.id} [ IMPORTANT !! , please copy this is ID for confirming your payment to Mediku ]
+        
+        Please complete your payment`
+      );
       res.status(201).json({
-        invoice_id: invoice.id, // client tolong kasi ini key buat si user input saat dia konfirmasi kalau dia sudah bayar
+        invoice_id: invoice.id,
         external_id: invoice.external_id,
         status: invoice.status,
         amount: invoice.amount,
@@ -47,12 +68,11 @@ class ControllerXendit {
       const invoiceStatus = await XenditInvoice.getInvoice({
         invoiceID,
       });
-      console.log(invoiceStatus.status)
       if (invoiceStatus.status == 'PENDING') {
         res.status(200).json({ message: `sorry your payment still on process or maybe you haven't paid it, please click this site for payment processing --> ${invoiceStatus.invoice_url} or you can see your email inbox to check it` })
       } else if (invoiceStatus.status == 'PAID') {
         sendNodemailer(
-          'rheina.tamara@outlook.com',
+          `${req.user.email}`,
           "Registration Payment Succeess",
           `Hello, ${req.user.full_name}. Thank you for registering on Mediku. Here are your registration informations:
   

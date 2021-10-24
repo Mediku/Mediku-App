@@ -1,4 +1,4 @@
-// actions
+import axios from 'axios'
 import {
   ADD_USER,
   ADD_PATIENT,
@@ -8,7 +8,8 @@ import {
   FETCH_SUBDISTRICTS,
   DATA_LOGIN,
   CLINIC,
-  DATA_REGISTRATION,
+  DATA_REGISTRATIONS,
+  SITE_PAYMENT
 } from "../keys";
 
 export function addUser(payload) {
@@ -17,9 +18,16 @@ export function addUser(payload) {
     payload,
   };
 }
-export function dataRegistration(payload) {
+export function dataRegistrations(payload) {
   return {
-    type: DATA_REGISTRATION,
+    type: DATA_REGISTRATIONS,
+    payload,
+  };
+}
+
+export function paymentSite(payload) {
+  return {
+    type: SITE_PAYMENT,
     payload,
   };
 }
@@ -67,28 +75,35 @@ export function dataClinic(payload) {
   };
 }
 
+// const baseUrl = `https://mediku-app-server.herokuapp.com`;
 const baseUrl = `http://localhost:9000`;
 export function addUserAsync(data) {
   return function (dispatch) {
-    return fetch(`${baseUrl}/users/register`, {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    return axios.post(`${baseUrl}/users/register`, data)
+    // return fetch(`${baseUrl}/users/register`, {
+    //   method: "POST",
+    //   body: JSON.stringify(data),
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // });
   };
 }
 export function addPatientAsync(data) {
   return function (dispatch) {
-    return fetch(`${baseUrl}/registrations/user`, {
-      method: "POST",
-      body: JSON.stringify(data),
+    return axios.post(`${baseUrl}/registrations/user`, data, {
       headers: {
-        "Content-Type": "application/json",
-        access_token: localStorage.getItem("access_token"),
-      },
-    });
+        access_token: localStorage.getItem("access_token")
+      }
+    })
+    // return fetch(`${baseUrl}/registrations/user`, {
+    //   method: "POST",
+    //   body: JSON.stringify(data),
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     access_token: localStorage.getItem("access_token"),
+    //   },
+    // });
   };
 }
 
@@ -100,7 +115,6 @@ export function fetchProvincesAsync() {
       })
       .then((data) => {
         dispatch(fetchProvinces(data));
-        // console.log(data, "provinces");
       })
       .catch((err) => {
         console.log(err);
@@ -109,7 +123,7 @@ export function fetchProvincesAsync() {
 }
 export function dataRegistrationAsync() {
   return function (dispatch) {
-    fetch(`${baseUrl}/registrations/user/loginned`, {
+    fetch(`${baseUrl}/registrations/user/logined`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -120,7 +134,7 @@ export function dataRegistrationAsync() {
         return res.json();
       })
       .then((data) => {
-        dispatch(dataRegistration(data));
+        dispatch(dataRegistrations(data));
       })
       .catch((err) => {
         console.log(err);
@@ -186,12 +200,34 @@ export function dataClinicAsync() {
 
 export function loginUserAsync(data) {
   return function (dispatch) {
-    return fetch(`${baseUrl}/users/login`, {
+    return axios.post(`${baseUrl}/users/login`, data)
+    // return fetch(`${baseUrl}/users/login`, {
+    //   method: "POST",
+    //   body: JSON.stringify(data),
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // });
+  };
+}
+
+export function getEndpoint(id) {
+  return function (dispatch) {
+    return fetch(`${baseUrl}/xendits/invoice/${id}`, {
       method: "POST",
-      body: JSON.stringify(data),
       headers: {
-        "Content-Type": "application/json",
+        access_token: localStorage.access_token
       },
-    });
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        dispatch(paymentSite({
+          invoiceURL: data.invoiceURL,
+          invoiceID: data.invoice_id
+        }));
+      })
+      .catch((err) => console.log(err))
   };
 }

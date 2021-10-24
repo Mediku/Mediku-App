@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAllPatientsAsync,fetchPatientAsync, updateTestResult } from "../store/actions/index.js";
+import { fetchAllPatientsAsync, updateTestResult } from "../store/actions/index.js";
 import Swal from 'sweetalert2'
 import moment from 'moment'
 
@@ -14,193 +14,189 @@ export default function TableAllPatient() {
 
   const allPatients = useSelector((state) => state.allPatients);
 
-  const [testResult, setTestResult] = useState('')
-  let selected = ''
-
   const getValueSelect = (e, id) => {
-      console.log(id)
-      Swal.fire({
-        title: 'Updating Test Result',
-        text: `User with id ${id.id}`,
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, update and send email'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          dispatch(updateTestResult(e.target.value, id.id))
-          Swal.fire(
-            'Success!',
-            'Test result sent',
-            'success'
-          )
-        }
-      })
+    Swal.fire({
+      title: 'Updating Test Result',
+      text: `User with id ${id.id}`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, update and send email'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(updateTestResult(e.target.value, id.id))
+        Swal.fire(
+          'Success!',
+          'Test result sent',
+          'success'
+        )
+      }
+    })
   }
 
   const SelectOption = (id) => {
-      
-      return(
-        <select onChange={(e) => getValueSelect(e, id)} class="border-0 focus:ring-white">
-          <option selected value='' disabled class="ring-white">--Update test result--</option>
-          <option value='positive'>Positif</option>
-          <option value='negative'>Negatif</option>
-        </select>
-      )       
+
+    return (
+      <select onChange={(e) => getValueSelect(e, id)} className="border-0 focus:ring-white">
+        <option selected value='' disabled className="ring-white">--Update test result--</option>
+        <option value='positive'>Positif</option>
+        <option value='negative'>Negatif</option>
+      </select>
+    )
   }
 
   const TestResult = (result) => {
-    if(result === 'positive'){
-      return(
-          <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-            Positive
-          </span>
+    if (result === 'positive') {
+      return (
+        <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+          Positive
+        </span>
       )
-    }else if(result === 'negative'){
-      return(
-          <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-gray-800">
-            Negative
-          </span>
+    } else if (result === 'negative') {
+      return (
+        <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-gray-800">
+          Negative
+        </span>
       )
-    }else{
-      return(
-          <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-300 text-gray-500">
-            Waiting
-          </span>
+    } else {
+      return (
+        <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-300 text-gray-500">
+          
+        </span>
       )
     }
   };
 
   return (
-    <div class="flex flex-col mx-5 bg-white rounded-lg shadow-md">
-      <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-        <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-          <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-            <table class="min-w-full divide-y divide-gray-200">
-              <thead class="bg-gray-50">
+    <div className="flex flex-col mx-5 bg-white rounded-lg shadow-md">
+      <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+        <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+          <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-50">
                 <tr>
                   <th
                     scope="col"
-                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
                     #
                   </th>
                   <th
                     scope="col"
-                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
                     Name
                   </th>
                   <th
                     scope="col"
-                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
                     Service
                   </th>
                   <th
                     scope="col"
-                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
                     Status
                   </th>
                   <th
                     scope="col"
-                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
                     Result
                   </th>
                   <th
                     scope="col"
-                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
                     Test date
                   </th>
-                  <th scope="col" class="relative px-6 py-3">
-                    <span class="sr-only">Edit</span>
+                  <th scope="col" className="relative px-6 py-3">
+                    <span className="sr-only">Edit</span>
                   </th>
                 </tr>
               </thead>
-              <tbody class="bg-white divide-y divide-gray-200">
+              <tbody className="bg-white divide-y divide-gray-200">
                 {
                   allPatients.map((patient, index) => {
 
-                  return (
-                    <tr>
-                      <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="text-sm text-gray-900">{index + 1}</div>
-                      </td>
-                      <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="flex items-center">
-                          <div>
-                            <div class="text-sm font-medium text-gray-900">
-                              {patient.User.full_name}
-                            </div>
-                            <div class="text-sm text-gray-500">
-                              {patient.User.email}
+                    return (
+                      <tr>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm text-gray-900">{index + 1}</div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="flex items-center">
+                            <div>
+                              <div className="text-sm font-medium text-gray-900">
+                                {patient.User.full_name}
+                              </div>
+                              <div className="text-sm text-gray-500">
+                                {patient.User.email}
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                          <div class="text-sm text-gray-900">
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm text-gray-900">
                             SWAB
                           </div>
-                          <div class="text-sm text-gray-500">
+                          <div className="text-sm text-gray-500">
                             {patient.service_name}
                           </div>
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
+                        <td className="px-6 py-4 whitespace-nowrap">
                           {
-                           ( patient.is_tested === false && patient.test_result === null) ? 
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-gray-800">
-                              Waiting
-                            </span>
-                            :
-                            (patient.is_tested ===true && patient.test_result === null) ?
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-300 text-gray-800">
-                            Tested
-                          </span>
-                         : 
-                          <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                            Completed
-                          </span>    
+                            (patient.is_tested === false && patient.test_result === null) ?
+                              <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">
+                                Waiting
+                              </span>
+                              :
+                              (patient.is_tested === true && patient.test_result === null) ?
+                                <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-500 text-white">
+                                  Tested
+                                </span>
+                                :
+                                <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                  Completed
+                                </span>
                           }
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                          {   
-                              (patient.is_tested === true && patient.test_result === null) ?
-                              <SelectOption id={patient.id}/> : 
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          {
+                            (patient.is_tested === true && patient.test_result === null) ?
+                              <SelectOption id={patient.id} /> :
                               TestResult(patient?.test_result)
                           }
                         </td>
 
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                           {moment(patient.date).format('ll')}
                         </td>
-                      <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <a
-                          href="#"
-                          class="text-indigo-600 hover:text-indigo-900"
-                        ></a>
-                      </td>
-                      {
-                        patient.is_tested === false ? (
-                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                          <Link
-                            to={`/process/${patient.id}`}
-                            class="text-indigo-600 hover:text-indigo-900"
-                          >
-                            <i class="fas fa-exchange-alt"></i> Process
-                          </Link>
+                        <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                          <a
+                            href="#"
+                            className="text-indigo-600 hover:text-indigo-900"
+                          ></a>
                         </td>
-                        ) : (
-                          ""
-                        )
-                      }
-                    </tr>
-                  );
-                })}
+                        {
+                          patient.is_tested === false ? (
+                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                              <Link
+                                to={`/process/${patient.id}`}
+                                className="text-indigo-600 hover:text-indigo-900"
+                              >
+                                <i className="fas fa-exchange-alt"></i> Process
+                              </Link>
+                            </td>
+                          ) : (
+                            ""
+                          )
+                        }
+                      </tr>
+                    );
+                  })}
               </tbody>
             </table>
           </div>

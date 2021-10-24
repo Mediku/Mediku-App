@@ -1,17 +1,15 @@
-import { clinicApi } from "./../apis";
 import axios from "axios";
 import {
-  GET_REGISTRATIONS,
   SET_REGISTRATIONS,
   SET_USER_LOGIN,
   SET_PATIENT_DAY,
-  GET_PATIENT_DAY,
   SET_COMPLETED_TEST,
   FETCH_ALL_PATIENTS,
   FETCH_PATIENT,
 } from "./../keys";
 
-const baseUrl = "http://localhost:9000";
+const baseUrl = "https://mediku-app-server.herokuapp.com";
+// const baseUrl = "http://localhost:9000";
 
 export const setRegistration = (payload) => ({
   type: SET_REGISTRATIONS,
@@ -24,7 +22,7 @@ export const setUserLogin = (payload) => ({
 });
 
 export const userLogin = (payload) => {
-  return (dispatch) => {
+  return () => {
     return axios.post(`${baseUrl}/clinic/login`, payload);
   };
 };
@@ -92,29 +90,26 @@ export const fetchPatientAsync = (id) => {
   };
 };
 
-export const updateTestResult = (result,id) => {
+export const updateTestResult = (result, id) => {
   return (dispatch) => {
-    axios.patch(`${baseUrl}/registrations/clinic/test/result/${id}`,{
+    axios.patch(`${baseUrl}/registrations/clinic/test/result/${id}`, {
       test_result: result
-    },{
+    }, {
       headers: {
         access_token: localStorage.access_token
       }
     })
-        .then( (_) => {
-            dispatch(fetchAllPatientsAsync())
-        })
-        .then(_ => {
-            console.log('success')
-        })
-        .catch(err => console.log(err.response.data))
+      .then((_) => {
+        dispatch(fetchAllPatientsAsync())
+      })
+      .catch(err => console.log(err.response.data))
   };
 };
 
 export const changeIsTested = (id) => {
   return (dispatch) => {
     return axios
-      .patch(`${baseUrl}/registrations/clinic/istested/${id}`,{
+      .patch(`${baseUrl}/registrations/clinic/istested/${id}`, {
         is_tested: true
       }, {
         headers: {
@@ -140,25 +135,24 @@ export const setFiltered = (filter) => {
       .then(({ data }) => {
 
         let filtered;
-        switch (filter){
+        switch (filter) {
 
           case "completed":
-          filtered = data.filter( e => e.test_result !== null)
-          break
+            filtered = data.filter(e => e.test_result !== null)
+            break
 
           case "tested":
-          filtered = data.filter( e => e.is_tested === true && e.test_result === null )
-          break
+            filtered = data.filter(e => e.is_tested === true && e.test_result === null)
+            break
 
           case "waiting":
-          filtered = data.filter( e => e.is_tested === false )
-          break
+            filtered = data.filter(e => e.is_tested === false)
+            break
 
           default:
-          filtered = [...data]
+            filtered = [...data]
 
         }
-        // console.log(filtered)
         dispatch(fetchAllPatients(filtered));
 
       })
