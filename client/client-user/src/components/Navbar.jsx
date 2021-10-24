@@ -2,7 +2,13 @@ import React from "react";
 import "./navbar.scss";
 import "../App.scss";
 import { Link } from "react-router-dom";
+import {useHistory} from 'react-router-dom'
 function Navbar() {
+    const history = useHistory()
+    function logOut(){
+        localStorage.clear()
+        history.push('/login')
+    }
   return (
     <div className="container-navbar">
       <nav>
@@ -23,16 +29,22 @@ function Navbar() {
                 Locations
               </Link>
             </li>
-            {/* <li className="list">
-              <Link className="router list" to="/contact-us">
-                Contact Us
-              </Link>
-            </li> */}
-            <li className="list">
+            {
+                localStorage.getItem("access_token") ? 
+                <li className="list">
               <Link className="router list" to="/history">
                 History
               </Link>
-            </li>
+            </li> : ''
+            }
+            
+            {
+                localStorage.getItem("access_token") ?  <li className="list" onClick={()=>logOut()} style={{cursor: 'pointer'}}>
+                <i class="fas fa-sign-out-alt"></i>
+                </li> : ''
+            }
+
+
             <li className="list">
               <Link className="router button grow" to="/register">
                 Register Test
