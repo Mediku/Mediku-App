@@ -19,7 +19,7 @@ const initialState = {
   dataLogin: {},
   regencies: [],
   dataClinic: {},
-  dataRegistration: {},
+  dataRegistration: [],
 };
 function reducer(state = initialState, action) {
   switch (action.type) {
